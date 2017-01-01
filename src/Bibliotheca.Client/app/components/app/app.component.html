@@ -1,0 +1,11 @@
+<div class="body">
+
+    <div *ngIf="!userIsLoggedIn">Authorization....</div>
+    <div *ngIf="userIsLoggedIn">
+        <header class="site-header sticky">
+            <navbar></navbar>
+        </header>
+
+        <router-outlet></router-outlet>
+    </div>
+<div>

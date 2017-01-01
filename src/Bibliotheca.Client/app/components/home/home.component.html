@@ -1,0 +1,55 @@
+<main class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-3">
+
+                <!-- Groups -->
+                <p *ngIf="!groups"><em>Loading groups...</em></p>
+                <ul class="list-group" *ngIf="groups">
+                    <li *ngFor="let group of groups" class="list-group-item">{{ group }}</li>
+                </ul>
+                <!-- End Groups -->
+
+            </div>
+            <div class="col-sm-9">
+
+                <!-- Tags -->
+                <p *ngIf="!tags"><em>Loading tags...</em></p>
+                <div *ngIf="tags">
+                    <span *ngFor="let tag of tags">
+                        <input type="checkbox" value="{{ tag }}" /> {{ tag }}
+                    </span>
+                </div>
+                <!-- End Tags -->
+
+                <!-- Projects -->
+                <p *ngIf="!projects"><em>Loading projects...</em></p>
+                <div class="card-columns">
+                    <div class="card" *ngFor="let project of projects">
+                        <div class="card-header">
+                            {{ project.group }}
+                        </div>
+                        <div class="card-block">
+                            <h4 class="card-title">{{ project.name }}</h4>
+                            <h6 class="card-subtitle text-muted"><span *ngFor="let tag of project.tags"> {{ tag }} </span></h6>
+                        </div>
+                        <div class="card-block">
+                            <p class="card-text">{{ project.description }}</p>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <p *ngIf="!branches"><em>Loading branches...</em></p>
+                            <span *ngFor="let branch of branches" >
+                                <a [routerLink]="'/documentation'" [queryParams]="{ project: '' + project.id + '', branch: '' + branch.name + '', docs: '' + branch.docsDir +  '', file: 'index.md' }" routerLinkActive="active" *ngIf="branch.projectId == project.id">{{ branch.name }}</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Projects -->
+
+            </div>
+        </div>
+
+</main>
+
+
+
