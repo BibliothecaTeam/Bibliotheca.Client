@@ -1,0 +1,4 @@
+<p *ngIf="!branches"><em>Loading branches...</em></p>
+<span *ngFor="let branch of branches">
+    <a [routerLink]="'/documentation'" [queryParams]="{ project: '' + projectId + '', branch: '' + branch.name + '', docs: '' + branch.docsDir +  '', file: 'index.md' }" routerLinkActive="active">{{ branch.name }}</a>
+</span>

@@ -37,10 +37,7 @@
                             <p class="card-text">{{ project.description }}</p>
                         </div>
                         <div class="card-footer text-muted">
-                            <p *ngIf="!branches"><em>Loading branches...</em></p>
-                            <span *ngFor="let branch of branches" >
-                                <a [routerLink]="'/documentation'" [queryParams]="{ project: '' + project.id + '', branch: '' + branch.name + '', docs: '' + branch.docsDir +  '', file: 'index.md' }" routerLinkActive="active" *ngIf="branch.projectId == project.id">{{ branch.name }}</a>
-                            </span>
+                            <branches [projectId]="project.id"></branches>
                         </div>
                     </div>
                 </div>

@@ -10,13 +10,14 @@ import { SearchComponent }  from './components/search/search.component';
 import { NavbarComponent }  from './components/navbar/navbar.component';
 import { TreeViewComponent }  from './components/treeview/treeview.component';
 import { DocumentationComponent }  from './components/documentation/documentation.component';
+import { BranchesComponent }  from './components/branches/branches.component';
 
 import { HighlightJsModule, HighlightJsService } from 'angular2-highlight-js'; 
 import { HttpClient } from './services/httpClient.service'; 
 
 @NgModule({
   bootstrap:    [ AppComponent ],
-  declarations: [ AppComponent, HomeComponent, SearchComponent, NavbarComponent, DocumentationComponent, TreeViewComponent ],
+  declarations: [ AppComponent, HomeComponent, SearchComponent, NavbarComponent, DocumentationComponent, TreeViewComponent, BranchesComponent ],
   imports:      [ 
     BrowserModule, 
     HttpModule, 

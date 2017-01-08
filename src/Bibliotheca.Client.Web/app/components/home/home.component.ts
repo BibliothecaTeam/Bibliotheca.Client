@@ -15,7 +15,6 @@ export class HomeComponent {
     public projects: Project[];
     public allProjects: Number;
     public tags: string[];
-    public branches: Branch[];
 
     constructor(http: HttpClient) {
 
@@ -33,10 +32,6 @@ export class HomeComponent {
 
         http.get('http://localhost:5000/api/tags').subscribe(result => {
             this.tags = result.json();
-        });
-
-        http.get('http://localhost:5000/api/branches').subscribe(result => {
-            this.branches = result.json();
         });
     }
 }
