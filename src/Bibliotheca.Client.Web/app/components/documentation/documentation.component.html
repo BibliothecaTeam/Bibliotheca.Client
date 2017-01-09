@@ -16,7 +16,7 @@
 
         <article class="col-md-9 col-sm-9 main-content">
             <p *ngIf="!document"><em>Loading document...</em></p>
-            <div *ngIf="document" innerHtml="{{ document.pageContent }}" highlight-js-content=""></div>
+            <div *ngIf="document" innerHtml="{{ document }}" highlight-js-content=""></div>
         </article>
             
     </div>
