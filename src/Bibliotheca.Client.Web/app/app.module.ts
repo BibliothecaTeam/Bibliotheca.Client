@@ -1,8 +1,11 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule, JsonpModule } from '@angular/http';
+import { HttpModule, JsonpModule, XHRBackend, RequestOptions } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+import { JwtHelper } from 'angular2-jwt';
 
 import { AppComponent }  from './components/app/app.component';
 import { HomeComponent }  from './components/home/home.component';
@@ -12,10 +15,9 @@ import { DocumentationComponent }  from './components/documentation/documentatio
 import { BranchesComponent }  from './components/branches/branches.component';
 
 import { HighlightJsModule, HighlightJsService } from 'angular2-highlight-js'; 
-import { HttpClient } from './services/httpClient.service'; 
+import { HttpClientService } from './services/httpClient.service'; 
 import { HeaderService } from './services/header.service';
-
-import {MultiselectDropdownModule} from 'angular-2-dropdown-multiselect';
+import { AuthorizationService } from './services/authorization.service';
 
 @NgModule({
   bootstrap:    [ AppComponent ],
@@ -36,7 +38,14 @@ import {MultiselectDropdownModule} from 'angular-2-dropdown-multiselect';
     ]) 
   ],
   providers: [
-    HighlightJsService, HttpClient, HeaderService
+    HighlightJsService, HeaderService, AuthorizationService, JwtHelper,
+    {
+      provide: HttpClientService,
+      useFactory: (backend: XHRBackend, options: RequestOptions, authorization: AuthorizationService) => {
+        return new HttpClientService(backend, options, authorization);
+      },
+      deps: [XHRBackend, RequestOptions, AuthorizationService]
+    }
   ]
 })
 

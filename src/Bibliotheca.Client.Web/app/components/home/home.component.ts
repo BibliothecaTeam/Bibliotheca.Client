@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { Http, Response } from '@angular/http';
 import { Project } from '../../model/project';
 import { Branch } from '../../model/branch';
-import { HttpClient } from '../../services/httpClient.service';
+import { HttpClientService } from '../../services/httpClient.service';
 import { HeaderService } from '../../services/header.service';
 import {IMultiSelectOption, IMultiSelectSettings,IMultiSelectTexts} from 'angular-2-dropdown-multiselect';
 
@@ -41,7 +40,7 @@ export class HomeComponent {
         defaultTitle: 'Choose tags',
     };
 
-    constructor(http: HttpClient, header: HeaderService) {
+    constructor(http: HttpClientService, header: HeaderService) {
 
         header.title = "Projects";
 

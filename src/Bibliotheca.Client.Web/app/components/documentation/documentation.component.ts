@@ -6,7 +6,7 @@ import 'rxjs/add/operator/switchMap';
 import { Toc } from '../../model/toc';
 import { Branch } from '../../model/branch';
 import { Project } from '../../model/project';
-import { HttpClient } from '../../services/httpClient.service';
+import { HttpClientService } from '../../services/httpClient.service';
 import {IMultiSelectOption, IMultiSelectSettings,IMultiSelectTexts} from 'angular-2-dropdown-multiselect';
 import { HeaderService } from '../../services/header.service';
 
@@ -48,7 +48,7 @@ export class DocumentationComponent {
         defaultTitle: 'Change branch',
     };
 
-    constructor(private route: ActivatedRoute, private http: HttpClient, private header: HeaderService) {
+    constructor(private route: ActivatedRoute, private http: HttpClientService, private header: HeaderService) {
     }
 
     ngOnInit() {

@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Project } from '../../model/project';
 import { Branch } from '../../model/branch';
-import { HttpClient } from '../../services/httpClient.service';
+import { HttpClientService } from '../../services/httpClient.service';
 
 @Component({
     selector: 'branches',
@@ -16,9 +16,9 @@ export class BranchesComponent {
 
     public branches: Branch[];
 
-    private httpClient:HttpClient;
+    private httpClient:HttpClientService;
 
-    constructor(httpClient: HttpClient) {
+    constructor(httpClient: HttpClientService) {
         this.httpClient = httpClient;
     }
 

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Authentication } from 'adal-ts';
+import { Router } from '@angular/router';
 import { HeaderService } from '../../services/header.service';
+import { AuthorizationService } from '../../services/authorization.service';
+import { Authentication } from 'adal-ts';
 
 @Component({
     selector: 'app',
@@ -9,16 +10,9 @@ import { HeaderService } from '../../services/header.service';
 })
 export class AppComponent 
 {
-    public userIsLoggedIn: boolean;
-
-    constructor(private header:HeaderService)
+    constructor(private header:HeaderService, private router: Router, private authorization: AuthorizationService)
     {
-        let context = Authentication.getContext(this.createConfig());
-        this.userIsLoggedIn = context.getUser() != null;
-        if(this.userIsLoggedIn == false) 
-        {
-            context.login();
-        }
+        authorization.checkIfUserIsSignedIn();
     }
 
     ngOnInit() 
@@ -26,13 +20,8 @@ export class AppComponent
         Authentication.getAadRedirectProcessor().process();
     }
 
-    private createConfig() : any {
-        let config: any = {
-            tenant: 'UNIT4.onmicrosoft.com',
-            clientId: '6b2d04ca-b3c7-4e45-bf12-e72e7c0b7097',
-            postLogoutRedirectUrl: window.location.origin + '/',
-            redirectUri: window.location.origin + '/'
-        };
-        return config;
+    public onSearch(event: Event) {
+        event.preventDefault();
+         this.router.navigate(['/search']);
     }
 }

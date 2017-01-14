@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Http, Response } from '@angular/http';
+import { HeaderService } from '../../services/header.service';
 
 @Component({
     selector: 'search',
@@ -7,4 +8,7 @@ import { Http, Response } from '@angular/http';
 })
 
 export class SearchComponent { 
+    constructor(private header:HeaderService) {
+        header.title = "Searching";
+    }
 }

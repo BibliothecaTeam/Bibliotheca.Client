@@ -1,75 +1,69 @@
-    <!-- Left sidebar -->
-    <aside class="main-sidebar">
-        <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar" style="height: auto;">
+<!-- Left sidebar -->
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar" style="height: auto;">
 
-            <!-- sidebar menu: : style can be found in sidebar.less -->
-            <ul class="sidebar-menu">
-                <li class="header">TABLE OF CONTENTS</li>
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
+            <li class="header">TABLE OF CONTENTS</li>
 
-                <li class="treeview" *ngFor="let item of toc">
-                    <a href="#">
-                        <i class="fa fa-file-o"></i> <span>{{ item.name }}</span>
-                        <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu" tree-view [items]="item.children" [projectId]="projectId" [branchName]="branchName" [docsDir]="docsDir"></ul>
-                </li>
+            <li class="treeview" *ngFor="let item of toc">
+                <a href="#">
+                    <i class="fa fa-file-o"></i> <span>{{ item.name }}</span>
+                    <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu" tree-view [items]="item.children" [projectId]="projectId" [branchName]="branchName" [docsDir]="docsDir"></ul>
+            </li>
 
-            </ul>
-        </section>
-        <!-- /.sidebar -->
-    </aside>
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>
 
-    <!-- Content Wrapper -->
-    <div class="content-wrapper" style="min-height: 1126px;">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
+<!-- Content Wrapper -->
+<div class="content-wrapper" style="min-height: 1126px;">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
 
-            <div class="document-header pull-left">
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                    <li><a href="#">Examples</a></li>
-                    <li class="active">Blank page</li>
-                </ol>
-            </div>
+        <div class="document-header pull-left">
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li><a href="#">Examples</a></li>
+                <li class="active">Blank page</li>
+            </ol>
+        </div>
 
-            <!-- Branches -->
-            <div class="pull-right">
-                <select class="form-control">
-                    <option *ngFor="let item of branches">{{ item.name }}</option>
-                </select>
-            </div>
-            <div class="clearfix"></div>
-        </section>
+        <!-- Branches -->
+        <div class="pull-right">
+            <select class="form-control">
+                <option *ngFor="let item of branches">{{ item.name }}</option>
+            </select>
+        </div>
+        <div class="clearfix"></div>
+    </section>
 
-        <!-- Main content -->
-        <section class="content">
+    <!-- Main content -->
+    <section class="content">
 
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box box-primary">
-                        <div class="box-body">
-                            <!-- Document -->
-                            <div *ngIf="!document" class="page-loader loader">
-                                <i class="fa fa-refresh fa-spin"></i>
-                            </div>
-                            <div *ngIf="document" innerHtml="{{ document }}" highlight-js-content="" class="document-content"></div>
-                            <!-- End Document -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-body">
+                        <!-- Document -->
+                        <div *ngIf="!document" class="page-loader loader">
+                            <i class="fa fa-refresh fa-spin"></i>
                         </div>
-                        <div class="box-footer">
-                            Here we can add some general information....
-                        </div>
+                        <div *ngIf="document" innerHtml="{{ document }}" highlight-js-content="" class="document-content"></div>
+                        <!-- End Document -->
+                    </div>
+                    <div class="box-footer">
+                        Here we can add some general information....
                     </div>
                 </div>
             </div>
+        </div>
 
-        </section>
-    </div>
-
-<!--<ul>
-    <li *ngFor="let branch of branches">
-        <a [routerLink]="'/documentation'" [queryParams]="{ project: '' + projectId + '', branch: '' + branch.name + '', docs: '' + branch.docsDir +  '', file: 'index.md' }" routerLinkActive="active">{{ branch.name }}</a>
-    </li>
-</ul>-->
+    </section>
+</div>

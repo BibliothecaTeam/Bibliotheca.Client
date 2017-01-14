@@ -38,6 +38,9 @@
       // adal-ts
       'adal-ts': 'npm:/adal-ts/dist',
 
+      // angular2-jwt
+      'angular2-jwt': 'npm:/angular2-jwt',
+
       // other libraries
       'rxjs':                      'npm:rxjs',
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js'
@@ -47,7 +50,8 @@
       app: { main: './main.js', defaultExtension: 'js' },
       rxjs: { defaultExtension: 'js' },
       'angular2-highlight-js': { main: 'highlight-js.module', defaultExtension: 'js'},
-      'adal-ts': { main: 'index.js', defaultExtension: 'js' }
+      'adal-ts': { main: 'index.js', defaultExtension: 'js' },
+      'angular2-jwt': { main: 'angular2-jwt.js', defaultExtension: 'js' },
     }
   });
 })(this);

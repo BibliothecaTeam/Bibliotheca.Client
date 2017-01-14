@@ -1,10 +1,38 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Request, XHRBackend, RequestOptions, Response, Http, RequestOptionsArgs, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
+import { AuthorizationService } from './authorization.service';
 
 @Injectable()
-export class HttpClient {
+export class HttpClientService extends Http {
 
-    constructor(private http: Http) { }
+    constructor(backend: XHRBackend, defaultOptions: RequestOptions, private authorization: AuthorizationService) {
+        super(backend, defaultOptions);
+    }
+
+    request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
+        if (typeof url === 'string') {
+            if (!options) {
+                options = { headers: new Headers() };
+            }
+            this.setHeaders(options);
+        } else {
+            this.setHeaders(url);
+        }
+
+        return super.request(url, options).catch(this.catchErrors());
+    }
+
+    private catchErrors() {
+        return (res: Response) => {
+            if (res.status === 401) {
+                this.authorization.checkIfUserIsSignedIn();
+            }
+            return Observable.throw(res);
+        };
+    }
 
     createAuthorizationHeader(headers: Headers) {
         var token = localStorage.getItem("adal.idtoken");
@@ -14,19 +42,7 @@ export class HttpClient {
         }
     }
 
-    get(url: string) {
-        let headers = new Headers();
-        this.createAuthorizationHeader(headers);
-        return this.http.get(url, {
-            headers: headers
-        });
-    }
-
-    post(url: string, data: any) {
-        let headers = new Headers();
-        this.createAuthorizationHeader(headers);
-        return this.http.post(url, data, {
-            headers: headers
-        });
+    private setHeaders(objectToSetHeadersTo: Request | RequestOptionsArgs) {
+        this.createAuthorizationHeader(objectToSetHeadersTo.headers);
     }
 }
