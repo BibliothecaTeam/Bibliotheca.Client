@@ -1,4 +1,5 @@
 import { NgModule }      from '@angular/core';
+import { FormsModule }      from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule, JsonpModule, XHRBackend, RequestOptions } from '@angular/http';
 import { RouterModule } from '@angular/router';
@@ -25,6 +26,7 @@ import { AuthorizationService } from './services/authorization.service';
   imports:      [ 
     BrowserModule, 
     HttpModule, 
+    FormsModule,
     JsonpModule,
     HighlightJsModule,
     MultiselectDropdownModule,
@@ -32,7 +34,7 @@ import { AuthorizationService } from './services/authorization.service';
     RouterModule.forRoot([
         { path: '', redirectTo: 'home', pathMatch: 'full' },
         { path: 'home', component: HomeComponent },
-        { path: 'search', component: SearchComponent },
+        { path: 'search/:keywords', component: SearchComponent },
         { path: 'documentation', component: DocumentationComponent },
         { path: '**', redirectTo: 'home' }
     ]) 

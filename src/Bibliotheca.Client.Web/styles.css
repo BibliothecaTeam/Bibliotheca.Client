@@ -140,3 +140,40 @@ pre {
 pre code.hljs {
     display: block;
 }
+
+.search-result-stats {
+    color: #777;
+    font-size: 12px;
+}
+
+.search-result {
+    max-width: 650px;
+    padding-left: 20px;
+    padding-bottom: 40px;
+}
+
+.search-header {
+    padding-bottom: 4px;
+}
+
+.search-title {
+    font-size: 18px;
+    color: #4a5c69;
+    font-weight: 600;
+}
+
+.search-project {
+    text-transform: uppercase;
+}
+
+.search-body {
+    line-height: 1.5em;
+    max-height: 7.5em;       /* height is 2x line-height, so two lines will display */
+    overflow: hidden;  /* prevents extra lines from being visible */
+}
+
+.search-body em {
+    font-weight: bold;
+    font-style: normal;
+    color: #4a5c69;
+}

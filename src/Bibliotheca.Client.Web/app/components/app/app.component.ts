@@ -10,8 +10,11 @@ import { Authentication } from 'adal-ts';
 })
 export class AppComponent 
 {
+    private searchKeywords: string;
+
     constructor(private header:HeaderService, private router: Router, private authorization: AuthorizationService)
     {
+        this.searchKeywords = "";
         authorization.checkIfUserIsSignedIn();
     }
 
@@ -22,6 +25,6 @@ export class AppComponent
 
     public onSearch(event: Event) {
         event.preventDefault();
-         this.router.navigate(['/search']);
+        this.router.navigate(['/search', this.searchKeywords]);
     }
 }
