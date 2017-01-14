@@ -3,20 +3,47 @@ import { Http, Response } from '@angular/http';
 import { Project } from '../../model/project';
 import { Branch } from '../../model/branch';
 import { HttpClient } from '../../services/httpClient.service';
+import { HeaderService } from '../../services/header.service';
+import {IMultiSelectOption, IMultiSelectSettings,IMultiSelectTexts} from 'angular-2-dropdown-multiselect';
 
 @Component({
     selector: 'home',
     templateUrl: './app/components/home/home.component.html',
     styleUrls: ['./app/components/home/home.component.css']
 })
-
 export class HomeComponent { 
     public groups: string[];
     public projects: Project[];
     public allProjects: Number;
-    public tags: string[];
 
-    constructor(http: HttpClient) {
+    public tagsArray: string[];
+    private tags: IMultiSelectOption[] = [];
+
+    private mySettings: IMultiSelectSettings = {
+        pullRight: true,
+        enableSearch: true,
+        checkedStyle: 'checkboxes',
+        buttonClasses: 'btn btn-default',
+        selectionLimit: 0,
+        closeOnSelect: false,
+        showCheckAll: true,
+        showUncheckAll: true,
+        dynamicTitleMaxItems: 3,
+        maxHeight: '500px',
+    };
+
+    private myTexts: IMultiSelectTexts = {
+        checkAll: 'Check all',
+        uncheckAll: 'Uncheck all',
+        checked: 'checked',
+        checkedPlural: 'checked',
+        searchPlaceholder: 'Search...',
+        defaultTitle: 'Choose tags',
+    };
+
+    constructor(http: HttpClient, header: HeaderService) {
+
+        header.title = "Projects";
 
         http.get('http://localhost:5000/api/groups').subscribe(result => {
             var groups: string[] = result.json();
@@ -31,7 +58,10 @@ export class HomeComponent {
         });
 
         http.get('http://localhost:5000/api/tags').subscribe(result => {
-            this.tags = result.json();
+            this.tagsArray = result.json();
+            this.tagsArray.forEach(element => {
+                this.tags.push({ id: element, name: element });
+            });
         });
     }
 }

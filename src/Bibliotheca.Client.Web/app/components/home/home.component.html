@@ -1,52 +1,57 @@
-<main class="container-fluid">
+<!-- Left sidebar -->
+<aside class="main-sidebar">
+    <section class="sidebar" style="height: auto;">
 
-        <div class="row">
-            <div class="col-sm-3">
-
-                <!-- Groups -->
-                <p *ngIf="!groups"><em>Loading groups...</em></p>
-                <ul class="list-group" *ngIf="groups">
-                    <li *ngFor="let group of groups" class="list-group-item">{{ group }}</li>
-                </ul>
-                <!-- End Groups -->
-
-            </div>
-            <div class="col-sm-9">
-
-                <!-- Tags -->
-                <p *ngIf="!tags"><em>Loading tags...</em></p>
-                <div *ngIf="tags">
-                    <span *ngFor="let tag of tags">
-                        <input type="checkbox" value="{{ tag }}" /> {{ tag }}
+        <ul class="sidebar-menu">
+            <li class="header">PRODUCTS</li>
+            <li *ngFor="let group of groups">
+                <a href="#">
+                    <i class="fa fa-file-text"></i> <span>{{ group }}</span>
+                    <span class="pull-right-container">
                     </span>
-                </div>
-                <!-- End Tags -->
+                </a>
+            </li>
+        </ul>
 
-                <!-- Projects -->
-                <p *ngIf="!projects"><em>Loading projects...</em></p>
-                <div class="card-columns">
-                    <div class="card" *ngFor="let project of projects">
-                        <div class="card-header">
-                            {{ project.group }}
-                        </div>
-                        <div class="card-block">
-                            <h4 class="card-title">{{ project.name }}</h4>
-                            <h6 class="card-subtitle text-muted"><span *ngFor="let tag of project.tags"> {{ tag }} </span></h6>
-                        </div>
-                        <div class="card-block">
-                            <p class="card-text">{{ project.description }}</p>
-                        </div>
-                        <div class="card-footer text-muted">
-                            <branches [projectId]="project.id"></branches>
-                        </div>
+    </section>
+</aside>
+
+<!-- Content Wrapper -->
+<div class="content-wrapper" style="min-height: 1126px;">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <button class="btn btn-default">Add project</button>
+        <!-- Tags -->
+        <div class="pull-right">
+            <ss-multiselect-dropdown [options]="tags" [texts]="myTexts" [settings]="mySettings"></ss-multiselect-dropdown>
+        </div>
+        <div class="clearfix"></div>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        
+        <!-- Projects -->
+        <div class="row">
+            <div *ngIf="!projects" class="page-loader loader">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+            <div class="col-lg-4 col-md-6" *ngFor="let project of projects">
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">{{ project.name }}</h3>
+                        <small *ngFor="let tag of project.tags" class="label pull-right bg-light-blue document-tag"> {{ tag }} </small> 
+                    </div>
+                    <div class="box-body">
+                        <p>{{ project.description }}</p>
+                    </div>
+                    <div class="box-footer">
+                        <branches [projectId]="project.id"></branches>
                     </div>
                 </div>
-                <!-- End Projects -->
-
             </div>
         </div>
+        <!-- End Projects -->
 
-</main>
-
-
-
+    </section>
+</div>

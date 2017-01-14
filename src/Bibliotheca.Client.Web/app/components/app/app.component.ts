@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Authentication } from 'adal-ts';
+import { HeaderService } from '../../services/header.service';
 
 @Component({
     selector: 'app',
     templateUrl: './app/components/app/app.component.html'
 })
-
 export class AppComponent 
 {
     public userIsLoggedIn: boolean;
 
-    constructor()
+    constructor(private header:HeaderService)
     {
         let context = Authentication.getContext(this.createConfig());
         this.userIsLoggedIn = context.getUser() != null;

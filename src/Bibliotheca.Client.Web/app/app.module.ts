@@ -7,22 +7,25 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent }  from './components/app/app.component';
 import { HomeComponent }  from './components/home/home.component';
 import { SearchComponent }  from './components/search/search.component';
-import { NavbarComponent }  from './components/navbar/navbar.component';
 import { TreeViewComponent }  from './components/treeview/treeview.component';
 import { DocumentationComponent }  from './components/documentation/documentation.component';
 import { BranchesComponent }  from './components/branches/branches.component';
 
 import { HighlightJsModule, HighlightJsService } from 'angular2-highlight-js'; 
 import { HttpClient } from './services/httpClient.service'; 
+import { HeaderService } from './services/header.service';
+
+import {MultiselectDropdownModule} from 'angular-2-dropdown-multiselect';
 
 @NgModule({
   bootstrap:    [ AppComponent ],
-  declarations: [ AppComponent, HomeComponent, SearchComponent, NavbarComponent, DocumentationComponent, TreeViewComponent, BranchesComponent ],
+  declarations: [ AppComponent, HomeComponent, SearchComponent, DocumentationComponent, TreeViewComponent, BranchesComponent ],
   imports:      [ 
     BrowserModule, 
     HttpModule, 
     JsonpModule,
     HighlightJsModule,
+    MultiselectDropdownModule,
     NgbModule.forRoot(),
     RouterModule.forRoot([
         { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -33,7 +36,7 @@ import { HttpClient } from './services/httpClient.service';
     ]) 
   ],
   providers: [
-    HighlightJsService, HttpClient
+    HighlightJsService, HttpClient, HeaderService
   ]
 })
 

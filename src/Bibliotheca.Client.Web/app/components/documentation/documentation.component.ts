@@ -5,7 +5,10 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/switchMap';
 import { Toc } from '../../model/toc';
 import { Branch } from '../../model/branch';
+import { Project } from '../../model/project';
 import { HttpClient } from '../../services/httpClient.service';
+import {IMultiSelectOption, IMultiSelectSettings,IMultiSelectTexts} from 'angular-2-dropdown-multiselect';
+import { HeaderService } from '../../services/header.service';
 
 @Component({
     selector: 'search',
@@ -16,13 +19,36 @@ export class DocumentationComponent {
     public document: string;
     public toc: Toc[];
     public branches: Branch[];
+    public project: Project;
 
     public projectId: string;
     public branchName: string;
     public fileName: string;
     public docsDir: string;
 
-    constructor(private route: ActivatedRoute, private http: HttpClient) {
+    private mySettings: IMultiSelectSettings = {
+        pullRight: true,
+        enableSearch: true,
+        checkedStyle: 'checkboxes',
+        buttonClasses: 'btn btn-default',
+        selectionLimit: 0,
+        closeOnSelect: false,
+        showCheckAll: false,
+        showUncheckAll: false,
+        dynamicTitleMaxItems: 3,
+        maxHeight: '500px',
+    };
+
+    private myTexts: IMultiSelectTexts = {
+        checkAll: 'Check all',
+        uncheckAll: 'Uncheck all',
+        checked: 'checked',
+        checkedPlural: 'checked',
+        searchPlaceholder: 'Search...',
+        defaultTitle: 'Change branch',
+    };
+
+    constructor(private route: ActivatedRoute, private http: HttpClient, private header: HeaderService) {
     }
 
     ngOnInit() {
@@ -41,6 +67,8 @@ export class DocumentationComponent {
 
                         this.http.get('http://localhost:5000/api/projects/' + this.projectId + '/branches/' + this.branchName + '/toc').map((res: Response) => res.json()),
 
+                        this.http.get('http://localhost:5000/api/projects/' + this.projectId).map((res: Response) => res.json()),
+
                         this.http.get('http://localhost:5000/api/projects/' + this.projectId + '/branches').map((res: Response) => res.json())
                     );
                 }
@@ -52,7 +80,10 @@ export class DocumentationComponent {
                 if (Array.isArray(data)) {
                     this.prepareDocument(data[0]);
                     this.toc = data[1];
-                    this.branches = data[2];
+                    this.project = data[2];
+                    this.branches = data[3];
+
+                    this.header.title = this.project.name;
                 }
                 else {
                     this.prepareDocument(data);
@@ -73,7 +104,9 @@ export class DocumentationComponent {
 
             if (!match[2].startsWith("http")) {
 
-                var fullPath = this.getFullPath(this.fileName, match[2]);
+                var filePath = this.fileName.replace(/\+/g, "/");
+                filePath = filePath.substring(0, filePath.lastIndexOf('/'));
+                var fullPath = this.getFullPath(filePath, match[2]);
 
                 document = document.replace(match[0], "src=\"http://localhost:5000/api/projects/" + this.projectId + "/branches/" + this.branchName + "/documents/" + fullPath + "/content?access_token=" + localStorage["adal.idtoken"] + "\"");
             }
@@ -84,9 +117,12 @@ export class DocumentationComponent {
     }
 
     getFullPath(prefixPath: string, suffixPath: string): string {
+
         var path = this.docsDir + "/" + prefixPath + "/" + suffixPath;
-        path = path.replace("\\\\", "/");
-        path = path.replace("\\", "/");
+        path = path.replace(/\\\\/g, "/");
+        path = path.replace(/\\/g, "/");
+        path = path.replace(/\/\//g, "/");
+
         var pathParts = path.split('/');
 
         var dotsNumber = 0;

@@ -3,15 +3,18 @@ import { Toc } from '../../model/toc';
 import { EncodeFilterPipe } from '../../pipes/encode.pipe';
 
 @Component({
-    selector: 'tree-view',
+    selector: '[tree-view]',
     template: `
-        <ul *ngIf="items?.length > 0">
             <li *ngFor="let item of items">
-                <a *ngIf="item.url" [routerLink]="'/documentation'" [queryParams]="{ project: '' + projectId + '', branch: '' + branchName + '', docs: '' + docsDir + '', file: '' + item.url }" routerLinkActive="active">{{ item.name }}</a>
-                <span *ngIf="!item.url">{{ item.name }}</span>
-                <tree-view [items]="item.children" [projectId]="projectId" [branchName]="branchName" [docsDir]="docsDir"></tree-view>
+                <a *ngIf="item.url"  [routerLink]="'/documentation'" [queryParams]="{ project: '' + projectId + '', branch: '' + branchName + '', docs: '' + docsDir + '', file: '' + item.url }" routerLinkActive="active"> {{ item.name }}</a>
+                <a *ngIf="!item.url" href="#"> {{ item.name }}
+                    <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu" tree-view [items]="item.children" [projectId]="projectId" [branchName]="branchName" [docsDir]="docsDir"></ul>
             </li>
-        </ul>`
+            `
 })
 export class TreeViewComponent {
     
@@ -27,3 +30,4 @@ export class TreeViewComponent {
     @Input()
     public docsDir: string;
 }
+

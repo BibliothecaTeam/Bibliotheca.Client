@@ -27,13 +27,16 @@
       '@angular/upgrade/static': 'npm:@angular/upgrade/bundles/upgrade-static.umd.js',
 
       // bootstrap
-      '@ng-bootstrap/ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js',
+      '@ng-bootstrap/ng-bootstrap': 'npm:/@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js',
 
       // highlight
-      'angular2-highlight-js': 'node_modules/angular2-highlight-js/lib',
+      'angular2-highlight-js': 'npm:/angular2-highlight-js/lib',
+
+      // multiselect
+      'angular-2-dropdown-multiselect': 'npm:/angular-2-dropdown-multiselect/src/multiselect-dropdown.js',
 
       // adal-ts
-      'adal-ts': 'node_modules/adal-ts/dist',
+      'adal-ts': 'npm:/adal-ts/dist',
 
       // other libraries
       'rxjs':                      'npm:rxjs',

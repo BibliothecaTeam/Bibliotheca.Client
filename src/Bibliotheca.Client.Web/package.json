@@ -27,26 +27,29 @@
     "@angular/router": "~3.2.1",
     "@angular/upgrade": "~2.2.1",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.13",
+    "adal-ts": "^0.5.8-alpha1",
+    "admin-lte": "^2.3.8",
     "angular-in-memory-web-api": "~0.1.16",
     "angular2-highlight-js": "^4.0.0",
-    "bootstrap": "^4.0.0-alpha.6",
+    "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
+    "jquery": "^3.1.1",
     "reflect-metadata": "^0.1.8",
     "rxjs": "5.0.0-beta.12",
     "systemjs": "0.19.41",
-    "zone.js": "^0.6.26",
-    "adal-ts": "^0.5.8-alpha1"
+    "zone.js": "^0.6.26"
   },
   "devDependencies": {
-    "concurrently": "^3.1.0",
-    "lite-server": "^2.2.2",
-    "typescript": "^2.0.10",
+    "@types/core-js": "^0.9.34",
+    "@types/node": "^6.0.48",
+    "angular-2-dropdown-multiselect": "0.3.3",
     "canonical-path": "^0.0.2",
+    "concurrently": "^3.1.0",
     "http-server": "^0.9.0",
+    "lite-server": "^2.2.2",
     "lodash": "^4.17.2",
     "rimraf": "^2.5.4",
-    "@types/core-js": "^0.9.34",
-    "@types/node": "^6.0.48"
+    "typescript": "^2.0.10"
   },
   "repository": {}
 }
