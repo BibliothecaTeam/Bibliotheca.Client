@@ -48,7 +48,7 @@
     <section class="content">
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-9">
                 <div class="box box-primary">
                     <div class="box-body">
                         <!-- Document -->
@@ -58,11 +58,34 @@
                         <div *ngIf="document" innerHtml="{{ document }}" highlight-js-content="" class="document-content"></div>
                         <!-- End Document -->
                     </div>
-                    <div class="box-footer">
-                        Here we can add some general information....
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <i class="fa fa-info"></i>
+                        <h3 class="box-title">Properties</h3>
+                    </div>
+                    <div *ngIf="project" class="box-body">
+                        <dl>
+                            <dt>Description</dt>
+                            <dd>{{ project.description }}</dd>
+                            <dt>Group</dt>
+                            <dd>{{ project.group }}</dd>
+                            <dt>Tags</dt>
+                            <dd>
+                                <span *ngFor="let tag of project.tags">{{ tag }}</span>
+                            </dd>
+                            <dt *ngIf="project.contactPeople">Contact people</dt>
+                            <dd *ngFor="let person of project.contactPeople"><a href="mailto:{{ person.email }}">{{ person.name }}</a></dd>
+                            <dt *ngIf="project.projectSite">Project site</dt>
+                            <dd *ngIf="project.projectSite"><a href="{{ project.projectSite }}" target="_blank">{{ project.projectSite }}</a></dd>
+                        </dl>
                     </div>
                 </div>
             </div>
+
         </div>
 
     </section>

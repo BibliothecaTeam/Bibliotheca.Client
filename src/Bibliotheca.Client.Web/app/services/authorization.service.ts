@@ -22,6 +22,7 @@ export class AuthorizationService {
 
         if (this.isUserLoggedIn == false) {
             context.login();
+            return false;
         }
         else
         {
@@ -31,8 +32,11 @@ export class AuthorizationService {
             if(this.isTokenExpired == true)
             {
                 context.login();
+                return false;
             }
         }
+
+        return true;
     }
 
     private createConfig() : any {

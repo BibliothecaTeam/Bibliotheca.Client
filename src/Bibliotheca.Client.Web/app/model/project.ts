@@ -1,3 +1,5 @@
+import { ContactPerson } from './contactPerson';
+
 export class Project {
     id: string;
     name: string;
@@ -6,4 +8,6 @@ export class Project {
     group: string;
     visibleBranches: string[];
     tags: string[];
+    projectSite: string;
+    contactPeople: ContactPerson[];
 }

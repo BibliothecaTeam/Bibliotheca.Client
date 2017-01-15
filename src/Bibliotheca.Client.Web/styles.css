@@ -20,8 +20,16 @@ img {
     border-radius: none;
 }
 
+.box .box-header {
+    color: #4a5c69;
+}
+
 .box .box-body {
     color: #7d7d7d;
+}
+
+.box .box-body dt {
+    padding-top: 12px;
 }
 
 .box .box-footer {

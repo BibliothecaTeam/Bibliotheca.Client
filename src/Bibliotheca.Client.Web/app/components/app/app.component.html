@@ -1,5 +1,8 @@
-<div class="topbar"></div>
-<div class="wrapper" style="height: auto;">
+<div *ngIf="!isUserSignedIn">
+    Authorization...
+</div>
+<div *ngIf="isUserSignedIn" class="topbar"></div>
+<div *ngIf="isUserSignedIn" class="wrapper" style="height: auto;">
 
     <!-- Header -->
     <header class="main-header">

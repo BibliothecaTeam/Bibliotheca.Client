@@ -11,15 +11,22 @@ import { Authentication } from 'adal-ts';
 export class AppComponent 
 {
     private searchKeywords: string;
+    private isUserSignedIn: boolean = false;
 
     constructor(private header:HeaderService, private router: Router, private authorization: AuthorizationService)
     {
         this.searchKeywords = "";
-        authorization.checkIfUserIsSignedIn();
+
+        // If user is not signed in we have to redirect to OAuth provider.
+        if(authorization.checkIfUserIsSignedIn())
+        {
+            this.isUserSignedIn = true;
+        }
     }
 
     ngOnInit() 
     {
+        // Process the redirect after login.
         Authentication.getAadRedirectProcessor().process();
     }
 
