@@ -16,9 +16,7 @@ export class BranchesComponent {
 
     public branches: Branch[];
 
-    private httpClient:HttpClientService;
-
-    constructor(httpClient: HttpClientService) {
+    constructor(private httpClient: HttpClientService) {
         this.httpClient = httpClient;
     }
 

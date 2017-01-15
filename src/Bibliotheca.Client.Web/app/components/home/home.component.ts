@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Project } from '../../model/project';
 import { Branch } from '../../model/branch';
 import { HttpClientService } from '../../services/httpClient.service';
@@ -40,27 +41,43 @@ export class HomeComponent {
         defaultTitle: 'Choose tags',
     };
 
-    constructor(http: HttpClientService, header: HeaderService) {
+    constructor(private httpClient: HttpClientService, private header: HeaderService, private router: Router) {
 
         header.title = "Projects";
 
-        http.get('http://localhost:5000/api/groups').subscribe(result => {
+        httpClient.get('http://localhost:5000/api/groups').subscribe(result => {
             var groups: string[] = result.json();
             groups.unshift("All projects");
             this.groups = groups;
         });
 
-        http.get('http://localhost:5000/api/projects').subscribe(result => {
+        httpClient.get('http://localhost:5000/api/projects').subscribe(result => {
             var json = result.json();
             this.projects = json.results;
             this.allProjects = json.allResults;
         });
 
-        http.get('http://localhost:5000/api/tags').subscribe(result => {
+        httpClient.get('http://localhost:5000/api/tags').subscribe(result => {
             this.tagsArray = result.json();
             this.tagsArray.forEach(element => {
                 this.tags.push({ id: element, name: element });
             });
+        });
+    }
+
+    openDocumentation(id: string) {
+
+        var defaultBranch = '';
+        for(let project of this.projects) {
+            if(project.id == id) {
+                defaultBranch = project.defaultBranch;
+                break;
+            }
+        }
+
+        this.httpClient.get('http://localhost:5000/api/projects/' + id + '/branches/' + defaultBranch).subscribe(result => {
+            var branch = result.json();
+            this.router.navigate(['/documentation'], { queryParams: { project: id, branch: defaultBranch, docs: branch.docsDir, file: 'index.md' } });
         });
     }
 }

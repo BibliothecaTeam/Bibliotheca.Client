@@ -32,6 +32,11 @@ img {
     padding-top: 12px;
 }
 
+.box .box-title a {
+    color: #4a5c69;
+    cursor: pointer;
+}
+
 .box .box-footer {
     height: 41px;
 }

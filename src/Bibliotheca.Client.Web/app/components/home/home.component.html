@@ -39,7 +39,7 @@
             <div class="col-lg-4 col-md-6" *ngFor="let project of projects">
                 <div class="box box-default">
                     <div class="box-header with-border">
-                        <h3 class="box-title">{{ project.name }}</h3>
+                        <h3 class="box-title"><a (click)="openDocumentation(project.id)">{{ project.name }}</a></h3>
                         <small *ngFor="let tag of project.tags" class="label pull-right bg-light-blue document-tag"> {{ tag }} </small> 
                     </div>
                     <div class="box-body">
