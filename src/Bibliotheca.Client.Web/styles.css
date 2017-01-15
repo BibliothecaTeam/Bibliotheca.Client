@@ -147,6 +147,9 @@ pre {
 
 pre code.hljs {
     display: block;
+    font-size: 12px;
+    font-family: monospace;
+    font-weight: lighter;
 }
 
 .search-result-stats {
