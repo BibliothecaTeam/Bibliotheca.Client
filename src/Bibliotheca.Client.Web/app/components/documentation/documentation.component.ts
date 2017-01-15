@@ -48,7 +48,7 @@ export class DocumentationComponent {
         defaultTitle: 'Change branch',
     };
 
-    constructor(private route: ActivatedRoute, private http: HttpClientService, private header: HeaderService) {
+    constructor(private route: ActivatedRoute, private http: HttpClientService, private header: HeaderService, private router: Router) {
     }
 
     ngOnInit() {
@@ -91,6 +91,22 @@ export class DocumentationComponent {
             },
             err => console.error(err)
             );
+    }
+
+    navigateTo(value: string) {
+        if (value) {
+            
+            var docsDir = '';
+            for(let branch of this.branches) {
+                if(branch.name === value) {
+                    docsDir = branch.docsDir;
+                    break;
+                }
+            }
+
+            this.router.navigate(['/documentation'], { queryParams: { project: this.projectId, branch: value, docs: docsDir, file: 'index.md' } });
+        }
+        return false;
     }
 
     getEncodedUrl(url: String) {

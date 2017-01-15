@@ -37,8 +37,8 @@
 
         <!-- Branches -->
         <div class="pull-right">
-            <select class="form-control">
-                <option *ngFor="let item of branches">{{ item.name }}</option>
+            <select class="form-control" (change)="navigateTo($event.target.value)">
+                <option *ngFor="let item of branches" [selected]="item.name === branchName" [value]="item.name" >{{ item.name }}</option>
             </select>
         </div>
         <div class="clearfix"></div>
