@@ -14,6 +14,7 @@ import { SearchComponent }  from './components/search/search.component';
 import { TreeViewComponent }  from './components/treeview/treeview.component';
 import { DocumentationComponent }  from './components/documentation/documentation.component';
 import { BranchesComponent }  from './components/branches/branches.component';
+import { ProjectsComponent }  from './components/projects/projects.component';
 
 import { HighlightJsModule, HighlightJsService } from 'angular2-highlight-js'; 
 import { HttpClientService } from './services/httpClient.service'; 
@@ -22,7 +23,7 @@ import { AuthorizationService } from './services/authorization.service';
 
 @NgModule({
   bootstrap:    [ AppComponent ],
-  declarations: [ AppComponent, HomeComponent, SearchComponent, DocumentationComponent, TreeViewComponent, BranchesComponent ],
+  declarations: [ AppComponent, HomeComponent, SearchComponent, DocumentationComponent, TreeViewComponent, BranchesComponent, ProjectsComponent ],
   imports:      [ 
     BrowserModule, 
     HttpModule, 

@@ -89,7 +89,7 @@ export class DocumentationComponent {
                     this.prepareDocument(data);
                 }
             },
-            err => console.error(err)
+                err => console.error(err)
             );
     }
 
