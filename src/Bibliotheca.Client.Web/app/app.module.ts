@@ -15,15 +15,19 @@ import { TreeViewComponent }  from './components/treeview/treeview.component';
 import { DocumentationComponent }  from './components/documentation/documentation.component';
 import { BranchesComponent }  from './components/branches/branches.component';
 import { ProjectsComponent }  from './components/projects/projects.component';
+import { HeaderComponent }  from './components/header/header.component';
+import { FooterComponent }  from './components/footer/footer.component';
+import { LoginComponent }  from './components/login/login.component';
 
 import { HighlightJsModule, HighlightJsService } from 'angular2-highlight-js'; 
 import { HttpClientService } from './services/httpClient.service'; 
 import { HeaderService } from './services/header.service';
 import { AuthorizationService } from './services/authorization.service';
+import { AuthorizationGuard } from './services/authorizationGuard.service';
 
 @NgModule({
   bootstrap:    [ AppComponent ],
-  declarations: [ AppComponent, HomeComponent, SearchComponent, DocumentationComponent, TreeViewComponent, BranchesComponent, ProjectsComponent ],
+  declarations: [ AppComponent, HomeComponent, SearchComponent, DocumentationComponent, TreeViewComponent, BranchesComponent, ProjectsComponent, HeaderComponent, FooterComponent, LoginComponent ],
   imports:      [ 
     BrowserModule, 
     HttpModule, 
@@ -33,15 +37,16 @@ import { AuthorizationService } from './services/authorization.service';
     MultiselectDropdownModule,
     NgbModule.forRoot(),
     RouterModule.forRoot([
-        { path: '', redirectTo: 'home', pathMatch: 'full' },
-        { path: 'home', component: HomeComponent },
-        { path: 'search/:keywords', component: SearchComponent },
-        { path: 'documentation', component: DocumentationComponent },
-        { path: '**', redirectTo: 'home' }
+    { path: '', redirectTo: 'home', pathMatch: 'full', canActivate: [AuthorizationGuard] },
+        { path: 'home', component: HomeComponent, canActivate: [AuthorizationGuard] },
+        { path: 'search/:keywords', component: SearchComponent, canActivate: [AuthorizationGuard] },
+        { path: 'documentation', component: DocumentationComponent, canActivate: [AuthorizationGuard] },
+        { path: 'login', component: LoginComponent },
+        { path: '**', redirectTo: 'home', canActivate: [AuthorizationGuard] }
     ]) 
   ],
   providers: [
-    HighlightJsService, HeaderService, AuthorizationService, JwtHelper,
+    HighlightJsService, HeaderService, AuthorizationService, JwtHelper, AuthorizationGuard,
     {
       provide: HttpClientService,
       useFactory: (backend: XHRBackend, options: RequestOptions, authorization: AuthorizationService) => {

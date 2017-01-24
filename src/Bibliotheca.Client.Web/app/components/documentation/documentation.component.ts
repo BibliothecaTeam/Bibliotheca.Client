@@ -7,11 +7,11 @@ import { Toc } from '../../model/toc';
 import { Branch } from '../../model/branch';
 import { Project } from '../../model/project';
 import { HttpClientService } from '../../services/httpClient.service';
-import {IMultiSelectOption, IMultiSelectSettings,IMultiSelectTexts} from 'angular-2-dropdown-multiselect';
+import { IMultiSelectOption, IMultiSelectSettings,IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { HeaderService } from '../../services/header.service';
 
 @Component({
-    selector: 'search',
+    selector: 'documentation',
     templateUrl: './app/components/documentation/documentation.component.html'
 })
 export class DocumentationComponent {
@@ -63,17 +63,17 @@ export class DocumentationComponent {
 
                     return Observable.forkJoin(
 
-                        this.http.get('http://localhost:5000/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/' + this.docsDir + '+' + this.fileName + '/content').map((res: Response) => res.text() as any),
+                        this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/' + this.docsDir + ':' + this.fileName + '/content').map((res: Response) => res.text() as any),
 
-                        this.http.get('http://localhost:5000/api/projects/' + this.projectId + '/branches/' + this.branchName + '/toc').map((res: Response) => res.json()),
+                        this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/toc').map((res: Response) => res.json()),
 
-                        this.http.get('http://localhost:5000/api/projects/' + this.projectId).map((res: Response) => res.json()),
+                        this.http.get('/api/projects/' + this.projectId).map((res: Response) => res.json()),
 
-                        this.http.get('http://localhost:5000/api/projects/' + this.projectId + '/branches').map((res: Response) => res.json())
+                        this.http.get('/api/projects/' + this.projectId + '/branches').map((res: Response) => res.json())
                     );
                 }
                 else {
-                    return this.http.get('http://localhost:5000/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/' + this.docsDir + '+' + this.fileName + '/content').map((res: Response) => res.text() as any);
+                    return this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/' + this.docsDir + ':' + this.fileName + '/content').map((res: Response) => res.text() as any);
                 }
             })
             .subscribe(data => {
@@ -120,16 +120,19 @@ export class DocumentationComponent {
 
             if (!match[2].startsWith("http")) {
 
-                var filePath = this.fileName.replace(/\+/g, "/");
-                filePath = filePath.substring(0, filePath.lastIndexOf('/'));
-                var fullPath = this.getFullPath(filePath, match[2]);
+                var folderPath = this.getFolderPath(this.fileName);
+                var fullPath = this.getFullPath(folderPath, match[2]);
 
-                document = document.replace(match[0], "src=\"http://localhost:5000/api/projects/" + this.projectId + "/branches/" + this.branchName + "/documents/" + fullPath + "/content?access_token=" + localStorage["adal.idtoken"] + "\"");
+                document = document.replace(match[0], "src=\"" + this.http.serverAddress + "/api/projects/" + this.projectId + "/branches/" + this.branchName + "/documents/" + fullPath + "/content?access_token=" + localStorage["adal.idtoken"] + "\"");
             }
             var match = regex.exec(document);
         }
 
         this.document = document;
+    }
+
+    getFolderPath(uri: string) {
+        return uri.substring(0, uri.lastIndexOf(':'));
     }
 
     getFullPath(prefixPath: string, suffixPath: string): string {
@@ -138,6 +141,8 @@ export class DocumentationComponent {
         path = path.replace(/\\\\/g, "/");
         path = path.replace(/\\/g, "/");
         path = path.replace(/\/\//g, "/");
+        path = path.replace(/\:/g, "/");
+        path = path.replace(/\/.\//g, "/");
 
         var pathParts = path.split('/');
 
@@ -158,7 +163,7 @@ export class DocumentationComponent {
         }
 
         pathParsed.reverse();
-        path = pathParsed.join("+");
+        path = pathParsed.join(":");
         return path;
     }
 }

@@ -26,8 +26,8 @@ export class SearchComponent {
         this.route.params
             .switchMap((params: Params) => {
                 return Observable.forkJoin(
-                    this.http.get("http://localhost:5000/api/search?query=" + params['keywords']).map((res: Response) => res.json()),
-                    this.http.get('http://localhost:5000/api/projects').map((res: Response) => res.json())
+                    this.http.get("/api/search?query=" + params['keywords']).map((res: Response) => res.json()),
+                    this.http.get('/api/projects').map((res: Response) => res.json())
                 );
             })
             .subscribe(data => {

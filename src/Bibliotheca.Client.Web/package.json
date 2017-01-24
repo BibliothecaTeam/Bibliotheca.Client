@@ -27,7 +27,6 @@
     "@angular/router": "~3.2.1",
     "@angular/upgrade": "~2.2.1",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.13",
-    "adal-ts": "^0.5.8-alpha1",
     "admin-lte": "^2.3.8",
     "angular-in-memory-web-api": "~0.1.16",
     "angular2-highlight-js": "^4.0.0",

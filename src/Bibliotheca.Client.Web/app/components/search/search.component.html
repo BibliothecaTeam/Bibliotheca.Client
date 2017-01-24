@@ -1,51 +1,68 @@
-<!-- Left sidebar -->
+<!-- Header -->
+<header-component></header-component>
 
+<!-- Left sidebar -->
 
 <!-- Content Wrapper -->
 <div class="content-wrapper" style="min-height: 1126px;">
-
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div *ngIf="searchResults" class="search-result-stats">Search results {{ searchResults.numberOfResults }} ({{ searchResults.elapsedMilliseconds / 1000.0 }} s)</div>
-    </section>
 
     <!-- Main content -->
     <section class="content">
 
         <div class="row">
             <div class="col-md-8">
-                <div class="box box-primary">
-                    <div class="box-body">
 
-                        <div *ngIf="!searchResults" class="page-loader loader">
-                            <i class="fa fa-refresh fa-spin"></i>
-                        </div>
+                <section class="content-header">
+                    <h1>
+                    Search results
+                    </h1>
+                </section>
 
-                        <div *ngIf="searchResults && searchResults.numberOfResults > 0">
-                            <div class="search-result" *ngFor="let result of searchResults.results">
-                                <div class="search-header">
-                                    <div class="search-title pull-left">{{ result.document.title }}</div>
-                                    <div class="search-project pull-right">{{ result.document.projectName }} ({{ result.document.branchName }})</div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="search-body">
-                                    <span *ngFor="let item of result.highlights.content" innerHtml="{{ item }}">
-                                    </span>
+                <section class="content">
+                    <div class="box box-primary">
+                        <div class="box-body">
+
+                            <div *ngIf="!searchResults" class="page-loader loader">
+                                <i class="fa fa-refresh fa-spin"></i>
+                            </div>
+
+                            <div *ngIf="searchResults" class="search-result-stats">Search results {{ searchResults.numberOfResults }} ({{ searchResults.elapsedMilliseconds / 1000.0 }} s)</div>
+
+                            <div *ngIf="searchResults && searchResults.numberOfResults > 0">
+                                <div class="search-result" *ngFor="let result of searchResults.results">
+                                    <div class="search-header">
+                                        <div class="search-title pull-left">{{ result.document.title }}</div>
+                                        <div class="search-project pull-right">{{ result.document.projectName }} ({{ result.document.branchName }})</div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="search-body">
+                                        <span *ngFor="let item of result.highlights.content" innerHtml="{{ item }}">
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div *ngIf="searchResults && searchResults.numberOfResults == 0">
-                            There are no results that match your search criteria.
-                        </div>
+                            <div *ngIf="searchResults && searchResults.numberOfResults == 0">
+                                There are no results that match your search criteria.
+                            </div>
 
+                        </div>
                     </div>
-                </div>
+                </section>
+
             </div>
             <div class="col-md-4">
-                <div class="row">
-                    <projects [projects]="projects" [style]="'col-md-12'"></projects>
-                </div>
+                <section class="content-header">
+                    <h1>
+                        Projects
+                    </h1>
+                </section>
+
+                <section class="content">
+                    <div class="row">
+                        <projects [projects]="projects" [style]="'col-md-12'"></projects>
+                    </div>
+                </section>
             </div>
         </div>
 

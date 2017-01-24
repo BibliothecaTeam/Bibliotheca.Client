@@ -41,43 +41,27 @@ export class HomeComponent {
         defaultTitle: 'Choose tags',
     };
 
-    constructor(private httpClient: HttpClientService, private header: HeaderService, private router: Router) {
+    constructor(private httpClient: HttpClientService, private header: HeaderService) {
 
         header.title = "Projects";
 
-        httpClient.get('http://localhost:5000/api/groups').subscribe(result => {
+        httpClient.get('/api/groups').subscribe(result => {
             var groups: string[] = result.json();
             groups.unshift("All projects");
             this.groups = groups;
         });
 
-        httpClient.get('http://localhost:5000/api/projects').subscribe(result => {
+        httpClient.get('/api/projects').subscribe(result => {
             var json = result.json();
             this.projects = json.results;
             this.allProjects = json.allResults;
         });
 
-        httpClient.get('http://localhost:5000/api/tags').subscribe(result => {
+        httpClient.get('/api/tags').subscribe(result => {
             this.tagsArray = result.json();
             this.tagsArray.forEach(element => {
                 this.tags.push({ id: element, name: element });
             });
-        });
-    }
-
-    openDocumentation(id: string) {
-
-        var defaultBranch = '';
-        for(let project of this.projects) {
-            if(project.id == id) {
-                defaultBranch = project.defaultBranch;
-                break;
-            }
-        }
-
-        this.httpClient.get('http://localhost:5000/api/projects/' + id + '/branches/' + defaultBranch).subscribe(result => {
-            var branch = result.json();
-            this.router.navigate(['/documentation'], { queryParams: { project: id, branch: defaultBranch, docs: branch.docsDir, file: 'index.md' } });
         });
     }
 }

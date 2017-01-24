@@ -92,7 +92,7 @@ img {
 
 .logo-lg img
 {
-    width: 150px;
+    width: 170px;
 }
 
 .header-title{
@@ -159,6 +159,8 @@ pre code.hljs {
 
 .search-result-stats {
     color: #777;
+    padding-left: 20px;
+    padding-bottom: 20px;
     font-size: 12px;
 }
 

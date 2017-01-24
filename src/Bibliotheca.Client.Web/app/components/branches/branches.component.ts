@@ -21,7 +21,7 @@ export class BranchesComponent {
     }
 
     ngOnInit() {
-        this.httpClient.get('http://localhost:5000/api/projects/' + this.projectId + '/branches').subscribe(result => {
+        this.httpClient.get('/api/projects/' + this.projectId + '/branches').subscribe(result => {
             this.branches = result.json();
         });
     }

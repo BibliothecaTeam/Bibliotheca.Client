@@ -35,9 +35,6 @@
       // multiselect
       'angular-2-dropdown-multiselect': 'npm:/angular-2-dropdown-multiselect/src/multiselect-dropdown.js',
 
-      // adal-ts
-      'adal-ts': 'npm:/adal-ts/dist',
-
       // angular2-jwt
       'angular2-jwt': 'npm:/angular2-jwt',
 
@@ -50,7 +47,6 @@
       app: { main: './main.js', defaultExtension: 'js' },
       rxjs: { defaultExtension: 'js' },
       'angular2-highlight-js': { main: 'highlight-js.module', defaultExtension: 'js'},
-      'adal-ts': { main: 'index.js', defaultExtension: 'js' },
       'angular2-jwt': { main: 'angular2-jwt.js', defaultExtension: 'js' },
     }
   });

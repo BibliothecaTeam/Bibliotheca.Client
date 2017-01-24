@@ -1,9 +1,12 @@
+<!-- Header -->
+<header-component></header-component>
+
 <!-- Left sidebar -->
 <aside class="main-sidebar">
     <section class="sidebar" style="height: auto;">
-
+        
         <ul class="sidebar-menu">
-            <li class="header">PRODUCTS</li>
+            <li class="header"></li>
             <li *ngFor="let group of groups">
                 <a href="#">
                     <i class="fa fa-file-text"></i> <span>{{ group }}</span>
@@ -20,7 +23,6 @@
 <div class="content-wrapper" style="min-height: 1126px;">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <button class="btn btn-default">Add project</button>
         <!-- Tags -->
         <div class="pull-right">
             <ss-multiselect-dropdown [options]="tags" [texts]="myTexts" [settings]="mySettings"></ss-multiselect-dropdown>
@@ -39,3 +41,6 @@
 
     </section>
 </div>
+
+<!-- Footer -->
+<footer-component></footer-component>

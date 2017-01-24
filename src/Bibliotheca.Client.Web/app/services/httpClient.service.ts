@@ -8,18 +8,25 @@ import { AuthorizationService } from './authorization.service';
 @Injectable()
 export class HttpClientService extends Http {
 
+    public serverAddress = "http://localhost:3000/";
+
     constructor(backend: XHRBackend, defaultOptions: RequestOptions, private authorization: AuthorizationService) {
         super(backend, defaultOptions);
     }
 
     request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
+
+        var resourceUrl:string;
+
         if (typeof url === 'string') {
             if (!options) {
                 options = { headers: new Headers() };
             }
             this.setHeaders(options);
+            url = this.serverAddress + url;
         } else {
             this.setHeaders(url);
+            url.url = this.serverAddress + url.url;
         }
 
         return super.request(url, options).catch(this.catchErrors());
@@ -28,7 +35,7 @@ export class HttpClientService extends Http {
     private catchErrors() {
         return (res: Response) => {
             if (res.status === 401) {
-                this.authorization.checkIfUserIsSignedIn();
+                this.authorization.initImplicitFlow();
             }
             return Observable.throw(res);
         };
