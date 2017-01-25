@@ -19,6 +19,9 @@ export class HomeComponent {
     public tagsArray: string[];
     private tags: IMultiSelectOption[] = [];
 
+    private selectedTags: string[] = [];
+    private selectedGroup: string = "";
+
     private mySettings: IMultiSelectSettings = {
         pullRight: true,
         enableSearch: true,
@@ -61,21 +64,64 @@ export class HomeComponent {
             this.tagsArray = result.json();
             this.tagsArray.forEach(element => {
                 this.tags.push({ id: element, name: element });
+                //this.selectedTags.push(element);
             });
         });
     }
 
-    showGroup(group: string) {
+    filterProject() {
 
         var groupfilter = "";
-        if(group != "All projects") {
-            groupfilter = "?groups=" + group;
+        if(this.selectedGroup != "") {
+            groupfilter = "?groups=" + this.selectedGroup;
         }
 
-        this.httpClient.get('/api/projects' + groupfilter).subscribe(result => {
+        var tagsFilter = "";
+        if(this.selectedTags.length > 0) {
+            var separator = "&";
+            if(groupfilter == "") {
+                separator = "?";
+            }
+
+            for(let selectedtag of this.selectedTags) {
+                tagsFilter +=  separator + "tags=" + selectedtag;
+                separator = "&";
+            }
+        }
+
+        this.httpClient.get('/api/projects' + groupfilter + tagsFilter).subscribe(result => {
             var json = result.json();
             this.projects = json.results;
             this.allProjects = json.allResults;
         });
+
+    }
+
+    showGroup(group: string) {
+        if(group != "All projects") {
+            this.selectedGroup = group;
+        }
+        else {
+            this.selectedGroup = "";
+        }
+
+        this.filterProject();
+    }
+
+    onTagsChange(event:string[]) {
+        this.selectedTags = event;
+        this.filterProject();
+    }
+
+    getGroupStyle(group: string) {
+        if(this.selectedGroup == group) {
+            return "active";
+        }
+
+        if(this.selectedGroup == "" && group == "All projects") {
+            return "active";
+        }
+
+        return "";
     }
 }
