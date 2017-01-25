@@ -195,3 +195,7 @@ pre code.hljs {
     font-style: normal;
     color: #4a5c69;
 }
+
+.cursor-pointer {
+    cursor: pointer;
+}

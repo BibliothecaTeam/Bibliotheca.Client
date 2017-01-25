@@ -64,4 +64,18 @@ export class HomeComponent {
             });
         });
     }
+
+    showGroup(group: string) {
+
+        var groupfilter = "";
+        if(group != "All projects") {
+            groupfilter = "?groups=" + group;
+        }
+
+        this.httpClient.get('/api/projects' + groupfilter).subscribe(result => {
+            var json = result.json();
+            this.projects = json.results;
+            this.allProjects = json.allResults;
+        });
+    }
 }
