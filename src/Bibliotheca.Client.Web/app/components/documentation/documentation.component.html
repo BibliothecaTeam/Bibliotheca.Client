@@ -11,7 +11,10 @@
             <li class="header">TABLE OF CONTENTS</li>
 
             <li class="treeview" *ngFor="let item of toc">
-                <a href="#">
+                <a *ngIf="item.url"  [routerLink]="'/documentation'" [queryParams]="{ project: '' + projectId + '', branch: '' + branchName + '', file: '' + item.url }" routerLinkActive="active"> 
+                    <i class="fa fa-file-o"></i> <span>{{ item.name }}</span>
+                </a>
+                <a *ngIf="!item.url"  href="#">
                     <i class="fa fa-file-o"></i> <span>{{ item.name }}</span>
                     <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
