@@ -8,7 +8,7 @@ import { AuthorizationService } from './authorization.service';
 @Injectable()
 export class HttpClientService extends Http {
 
-    public serverAddress = "http://localhost:3000/";
+    public serverAddress = "http://localhost:5000";
 
     constructor(backend: XHRBackend, defaultOptions: RequestOptions, private authorization: AuthorizationService) {
         super(backend, defaultOptions);

@@ -23,8 +23,7 @@ export class DocumentationComponent {
 
     public projectId: string;
     public branchName: string;
-    public fileName: string;
-    public docsDir: string;
+    public fileUri: string;
 
     private mySettings: IMultiSelectSettings = {
         pullRight: true,
@@ -54,8 +53,7 @@ export class DocumentationComponent {
     ngOnInit() {
         this.route.queryParams
             .switchMap((params: Params) => {
-                this.fileName = params['file'].replace(/\//g, "+");
-                this.docsDir = params['docs'];
+                this.fileUri = params['file'].replace(/\//g, ":");
 
                 if (this.projectId != params['project'] || this.branchName != params['branch']) {
                     this.projectId = params['project'];
@@ -63,7 +61,7 @@ export class DocumentationComponent {
 
                     return Observable.forkJoin(
 
-                        this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/' + this.docsDir + ':' + this.fileName + '/content').map((res: Response) => res.text() as any),
+                        this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/' + this.fileUri + '/content').map((res: Response) => res.text() as any),
 
                         this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/toc').map((res: Response) => res.json()),
 
@@ -73,7 +71,7 @@ export class DocumentationComponent {
                     );
                 }
                 else {
-                    return this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/' + this.docsDir + ':' + this.fileName + '/content').map((res: Response) => res.text() as any);
+                    return this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/' + this.fileUri + '/content').map((res: Response) => res.text() as any);
                 }
             })
             .subscribe(data => {
@@ -99,18 +97,18 @@ export class DocumentationComponent {
             var docsDir = '';
             for(let branch of this.branches) {
                 if(branch.name === value) {
-                    docsDir = branch.docsDir;
+                    docsDir = branch.docsDir + "/";
                     break;
                 }
             }
 
-            this.router.navigate(['/documentation'], { queryParams: { project: this.projectId, branch: value, docs: docsDir, file: 'index.md' } });
+            this.router.navigate(['/documentation'], { queryParams: { project: this.projectId, branch: value, file: docsDir + 'index.md' } });
         }
         return false;
     }
 
     getEncodedUrl(url: String) {
-        return url.replace(/\//g, "+");
+        return url.replace(/\//g, ":");
     }
 
     prepareDocument(document: string) {
@@ -120,7 +118,7 @@ export class DocumentationComponent {
 
             if (!match[2].startsWith("http")) {
 
-                var folderPath = this.getFolderPath(this.fileName);
+                var folderPath = this.getFolderPath(this.fileUri);
                 var fullPath = this.getFullPath(folderPath, match[2]);
 
                 document = document.replace(match[0], "src=\"" + this.http.serverAddress + "/api/projects/" + this.projectId + "/branches/" + this.branchName + "/documents/" + fullPath + "/content?access_token=" + localStorage["adal.idtoken"] + "\"");
@@ -137,7 +135,7 @@ export class DocumentationComponent {
 
     getFullPath(prefixPath: string, suffixPath: string): string {
 
-        var path = this.docsDir + "/" + prefixPath + "/" + suffixPath;
+        var path = prefixPath + "/" + suffixPath;
         path = path.replace(/\\\\/g, "/");
         path = path.replace(/\\/g, "/");
         path = path.replace(/\/\//g, "/");

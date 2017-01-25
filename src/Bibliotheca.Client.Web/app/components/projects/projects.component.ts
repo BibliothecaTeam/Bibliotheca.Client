@@ -32,7 +32,7 @@ export class ProjectsComponent {
 
         this.httpClient.get('/api/projects/' + id + '/branches/' + defaultBranch).subscribe(result => {
             var branch = result.json();
-            this.router.navigate(['/documentation'], { queryParams: { project: id, branch: defaultBranch, docs: branch.docsDir, file: 'index.md' } });
+            this.router.navigate(['/documentation'], { queryParams: { project: id, branch: defaultBranch, file: branch.docsDir + '/index.md' } });
         });
     }
 }
