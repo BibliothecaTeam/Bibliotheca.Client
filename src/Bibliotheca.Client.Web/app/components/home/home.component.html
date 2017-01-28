@@ -35,6 +35,11 @@
         
         <!-- Projects -->
         <div class="row">
+
+            <div *ngIf="projects && projects.length == 0" class="col-md-12">
+                <noresults></noresults>
+            </div>
+
             <projects [projects]="projects" [style]="'col-lg-4 col-md-6'"></projects>
         </div>
         <!-- End Projects -->

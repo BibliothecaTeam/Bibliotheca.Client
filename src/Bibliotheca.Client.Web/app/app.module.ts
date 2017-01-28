@@ -18,6 +18,7 @@ import { ProjectsComponent }  from './components/projects/projects.component';
 import { HeaderComponent }  from './components/header/header.component';
 import { FooterComponent }  from './components/footer/footer.component';
 import { LoginComponent }  from './components/login/login.component';
+import { NoResultsComponent } from './components/noresults/noresults.component';
 
 import { HighlightJsModule, HighlightJsService } from 'angular2-highlight-js'; 
 import { HttpClientService } from './services/httpClient.service'; 
@@ -27,7 +28,7 @@ import { AuthorizationGuard } from './services/authorizationGuard.service';
 
 @NgModule({
   bootstrap:    [ AppComponent ],
-  declarations: [ AppComponent, HomeComponent, SearchComponent, DocumentationComponent, TreeViewComponent, BranchesComponent, ProjectsComponent, HeaderComponent, FooterComponent, LoginComponent ],
+  declarations: [ AppComponent, HomeComponent, SearchComponent, DocumentationComponent, TreeViewComponent, BranchesComponent, ProjectsComponent, HeaderComponent, FooterComponent, LoginComponent, NoResultsComponent ],
   imports:      [ 
     BrowserModule, 
     HttpModule, 
