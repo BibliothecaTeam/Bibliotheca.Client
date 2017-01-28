@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { Toc } from '../../model/toc';
-import { EncodeFilterPipe } from '../../pipes/encode.pipe';
 
 @Component({
     selector: '[tree-view]',
