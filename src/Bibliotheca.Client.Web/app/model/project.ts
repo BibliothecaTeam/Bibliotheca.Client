@@ -1,4 +1,5 @@
 import { ContactPerson } from './contactPerson';
+import { EditLink } from './editLink';
 
 export class Project {
     id: string;
@@ -10,4 +11,5 @@ export class Project {
     tags: string[];
     projectSite: string;
     contactPeople: ContactPerson[];
+    editLinks: EditLink[];
 }

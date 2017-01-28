@@ -6,6 +6,7 @@ import 'rxjs/add/operator/switchMap';
 import { Toc } from '../../model/toc';
 import { Branch } from '../../model/branch';
 import { Project } from '../../model/project';
+import { EditLink } from '../../model/editLink';
 import { HttpClientService } from '../../services/httpClient.service';
 import { IMultiSelectOption, IMultiSelectSettings,IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { HeaderService } from '../../services/header.service';
@@ -24,6 +25,7 @@ export class DocumentationComponent {
     public projectId: string;
     public branchName: string;
     public fileUri: string;
+    public editLink: string;
 
     private mySettings: IMultiSelectSettings = {
         pullRight: true,
@@ -61,13 +63,13 @@ export class DocumentationComponent {
 
                     return Observable.forkJoin(
 
-                        this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/' + this.fileUri + '/content').map((res: Response) => res.text() as any),
-
                         this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/toc').map((res: Response) => res.json()),
 
                         this.http.get('/api/projects/' + this.projectId).map((res: Response) => res.json()),
 
-                        this.http.get('/api/projects/' + this.projectId + '/branches').map((res: Response) => res.json())
+                        this.http.get('/api/projects/' + this.projectId + '/branches').map((res: Response) => res.json()),
+
+                        this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/' + this.fileUri + '/content').map((res: Response) => res.text() as any)
                     );
                 }
                 else {
@@ -76,19 +78,34 @@ export class DocumentationComponent {
             })
             .subscribe(data => {
                 if (Array.isArray(data)) {
-                    this.prepareDocument(data[0]);
-                    this.toc = data[1];
-                    this.project = data[2];
-                    this.branches = data[3];
+                    this.toc = data[0];
+                    this.project = data[1];
+                    this.branches = data[2];
+
+                    this.prepareDocument(data[3]);
+                    this.prepareEditLink();
 
                     this.header.title = this.project.name;
                 }
                 else {
                     this.prepareDocument(data);
+                    this.prepareEditLink();
                 }
             },
                 err => console.error(err)
             );
+    }
+
+    prepareEditLink() {
+        this.editLink = null;
+
+        for(let link of this.project.editLinks) {
+            if(link.branchName == this.branchName) {
+                var file = this.fileUri.replace(/\:/g, "%2F");
+                this.editLink = link.link.replace("{FILE}", file);
+                break;
+            }
+        }
     }
 
     navigateTo(value: string) {
