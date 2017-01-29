@@ -25,7 +25,13 @@ export class DocumentationComponent {
     public projectId: string;
     public branchName: string;
     public fileUri: string;
+
     public editLink: string;
+    public previousArticle: Toc;
+    public nextArticle: Toc;
+    public flatToc: Toc[];
+
+    public breadcrumbs: Toc[];
 
     private mySettings: IMultiSelectSettings = {
         pullRight: true,
@@ -56,6 +62,7 @@ export class DocumentationComponent {
         this.route.queryParams
             .switchMap((params: Params) => {
                 this.fileUri = params['file'].replace(/\//g, ":");
+                window.scrollTo(0,0);
 
                 if (this.projectId != params['project'] || this.branchName != params['branch']) {
                     this.projectId = params['project'];
@@ -82,18 +89,122 @@ export class DocumentationComponent {
                     this.project = data[1];
                     this.branches = data[2];
 
+                    this.header.title = this.project.name;
+
+                    this.flatToc = [];
+                    this.changeTocToDictionary(this.toc, null);
+
                     this.prepareDocument(data[3]);
                     this.prepareEditLink();
-
-                    this.header.title = this.project.name;
+                    this.prepareShortcutsToArticles();
+                    this.prepareBreadcrumb();
                 }
                 else {
                     this.prepareDocument(data);
                     this.prepareEditLink();
+                    this.prepareShortcutsToArticles();
+                    this.prepareBreadcrumb();
                 }
             },
                 err => console.error(err)
             );
+    }
+
+    prepareBreadcrumb() {
+        this.breadcrumbs = [];
+
+        var currentToc: Toc = null;
+        for(let toc of this.flatToc) {
+            if(toc.url == this.fileUri) {
+                currentToc = toc;
+                break;
+            }
+        }
+
+        var breadcrumbs: Toc[] = [];
+        if(currentToc) {
+            while(currentToc) {
+                breadcrumbs.push(currentToc);
+
+                if(currentToc.parentIndex) {
+                    currentToc = this.flatToc[currentToc.parentIndex];
+                }
+                else {
+                    currentToc = null;
+                }
+            }
+        }
+
+        this.breadcrumbs = breadcrumbs.reverse();
+    }
+
+    changeTocToDictionary(tocs: Toc[], parentIndex: number) {
+        for(let item of tocs) {
+            
+            var newToc = new Toc();
+            newToc.name = item.name;
+            if(item.url) {
+                newToc.url = item.url.replace(/\//g, ":");
+            }
+            newToc.parentIndex = parentIndex;
+
+            this.flatToc.push(newToc);            
+
+            if(item.children && item.children.length > 0) {
+                var index = this.flatToc.length - 1;
+                this.changeTocToDictionary(item.children, index);
+            }
+
+        }
+    }
+
+    goToPreviousArticle() {
+        window.scrollTo(0,0);
+        this.router.navigate(['/documentation'], { queryParams: { project: this.projectId, branch: this.branchName, file: this.previousArticle.url } });
+    }
+
+    goToNextArticle() {
+        window.scrollTo(0,0);
+        this.router.navigate(['/documentation'], { queryParams: { project: this.projectId, branch: this.branchName, file: this.nextArticle.url } });
+    }
+
+    prepareShortcutsToArticles() {
+
+        var currentTocIndex = 0;
+        for(var i = 0; i < this.flatToc.length; i++) {
+            let toc = this.flatToc[i];
+
+            if(toc.url == this.fileUri) {
+                currentTocIndex = i;
+                break;
+            }
+
+        }
+
+
+        this.previousArticle = null;
+        var index = currentTocIndex - 1;
+        while(index >= 0) {
+
+            if(this.flatToc[index].url) {
+                this.previousArticle = this.flatToc[index];
+                break;
+            }
+
+            index--;
+        }
+
+        this.nextArticle = null;
+        index = currentTocIndex + 1;
+        while(index < this.flatToc.length) {
+
+            if(this.flatToc[index].url) {
+                this.nextArticle = this.flatToc[index];
+                break;
+            }
+
+            index++;
+        }
     }
 
     prepareEditLink() {
@@ -108,7 +219,7 @@ export class DocumentationComponent {
         }
     }
 
-    navigateTo(value: string) {
+    navigateToBranch(value: string) {
         if (value) {
             
             var docsDir = '';
@@ -119,8 +230,10 @@ export class DocumentationComponent {
                 }
             }
 
+            window.scrollTo(0,0);
             this.router.navigate(['/documentation'], { queryParams: { project: this.projectId, branch: value, file: docsDir + 'index.md' } });
         }
+
         return false;
     }
 
