@@ -246,3 +246,52 @@ pre code.hljs {
 .no-results-found-description {
     font-size: 16px;
 }
+
+.search-component-container {
+    margin-bottom: 0px; 
+    margin-top: 3px;
+}
+
+.search-component {
+    display: inline-table;
+}
+
+label.form-control.search-component-container {
+    display: table;
+    width: 100%;
+    max-width: 100%;
+    min-height: 0;
+    padding: 0;
+    font-weight: normal;
+    vertical-align: middle;
+    height: 24px;
+}
+
+.search-component-scope {
+    width: 1%;
+    padding-right: 8px;
+    padding-left: 8px;
+    font-size: 12px;
+    color: #767676;
+    white-space: nowrap;
+    vertical-align: middle;
+    border-right: 1px solid #eee;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    display: table-cell;
+    background-color: #f4f4f4;
+    border-right-color: rgb(210, 214, 222);
+}
+
+input.form-control.search-component-input {
+    display: table-cell;
+    width: 250px;
+    min-height: 26px;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: 13px;
+    background: none;
+    border: 0;
+    height: 24px;
+    box-shadow: none;
+}

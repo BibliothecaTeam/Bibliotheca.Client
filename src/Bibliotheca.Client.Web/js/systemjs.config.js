@@ -27,16 +27,16 @@
       '@angular/upgrade/static': 'npm:@angular/upgrade/bundles/upgrade-static.umd.js',
 
       // bootstrap
-      '@ng-bootstrap/ng-bootstrap': 'npm:/@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js',
+      '@ng-bootstrap/ng-bootstrap': 'npm:@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js',
 
       // highlight
-      'angular2-highlight-js': 'npm:/angular2-highlight-js/lib',
+      'angular2-highlight-js': 'npm:angular2-highlight-js/lib',
 
       // multiselect
-      'angular-2-dropdown-multiselect': 'npm:/angular-2-dropdown-multiselect/src/multiselect-dropdown.js',
+      'angular2-multiselect': 'npm:angular-2-dropdown-multiselect/src',
 
       // angular2-jwt
-      'angular2-jwt': 'npm:/angular2-jwt',
+      'angular2-jwt': 'npm:angular2-jwt',
 
       // other libraries
       'rxjs':                      'npm:rxjs',
@@ -48,6 +48,7 @@
       rxjs: { defaultExtension: 'js' },
       'angular2-highlight-js': { main: 'highlight-js.module', defaultExtension: 'js'},
       'angular2-jwt': { main: 'angular2-jwt.js', defaultExtension: 'js' },
+      'angular2-multiselect': { main: 'multiselect-dropdown.js', defaultExtension: 'js' }
     }
   });
 })(this);

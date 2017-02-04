@@ -4,18 +4,18 @@ import { Project } from '../../model/project';
 import { Branch } from '../../model/branch';
 import { HttpClientService } from '../../services/httpClient.service';
 import { HeaderService } from '../../services/header.service';
-import {IMultiSelectOption, IMultiSelectSettings,IMultiSelectTexts} from 'angular-2-dropdown-multiselect';
+import { IMultiSelectOption, IMultiSelectSettings,IMultiSelectTexts } from 'angular2-multiselect';
 
 @Component({
     selector: 'home',
     templateUrl: './app/pages/home/home.page.html'
 })
 export class HomePage { 
-    public groups: string[];
-    public projects: Project[];
-    public allProjects: Number;
+    private groups: string[];
+    private projects: Project[];
+    private allProjects: Number;
 
-    public tagsArray: string[];
+    private tagsArray: string[];
     private tags: IMultiSelectOption[] = [];
 
     private selectedTags: string[] = [];

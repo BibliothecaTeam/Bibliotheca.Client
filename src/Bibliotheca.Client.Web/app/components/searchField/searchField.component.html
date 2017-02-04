@@ -1,0 +1,8 @@
+<form class="navbar-form navbar-left" role="search" (submit)="onSearch($event)">
+    <div class="search-component">
+        <label class="form-control search-component-container">
+        <div class="search-component-scope">{{ scope }}</div>
+        <input type="text" class="form-control search-component-input" [(ngModel)]="searchKeywords" [ngModelOptions]="{standalone: true}" placeholder="Search" autocapitalize="off" />
+        </label>
+    </div>
+</form>

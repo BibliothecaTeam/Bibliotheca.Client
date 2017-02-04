@@ -5,7 +5,7 @@ import { HttpModule, JsonpModule, XHRBackend, RequestOptions } from '@angular/ht
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+import { MultiselectDropdownModule } from 'angular2-multiselect';
 import { JwtHelper } from 'angular2-jwt';
 import { HighlightJsModule, HighlightJsService } from 'angular2-highlight-js'; 
 
@@ -21,7 +21,8 @@ import { ProjectsComponent } from './components/projects/projects.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NoResultsComponent } from './components/noresults/noresults.component';
-import { SearchComponent } from './components/search/search.component';
+import { SearchFieldComponent } from './components/searchField/searchField.component';
+import { SearchResultsComponent } from './components/searchResults/searchResults.component';
 
 import { HttpClientService } from './services/httpClient.service'; 
 import { HeaderService } from './services/header.service';
@@ -32,7 +33,7 @@ import { AuthorizationGuard } from './services/authorizationGuard.service';
   bootstrap:    [ AppPage ],
   declarations: [ 
     AppPage, HomePage, LoginPage, SearchPage, DocumentationPage, 
-    TreeViewComponent, BranchesComponent, ProjectsComponent, HeaderComponent, FooterComponent, NoResultsComponent, SearchComponent ],
+    TreeViewComponent, BranchesComponent, ProjectsComponent, HeaderComponent, FooterComponent, NoResultsComponent, SearchFieldComponent, SearchResultsComponent ],
   imports:      [ 
     BrowserModule, 
     HttpModule, 
@@ -44,7 +45,7 @@ import { AuthorizationGuard } from './services/authorizationGuard.service';
     RouterModule.forRoot([
     { path: '', redirectTo: 'home', pathMatch: 'full', canActivate: [AuthorizationGuard] },
         { path: 'home', component: HomePage, canActivate: [AuthorizationGuard] },
-        { path: 'search/:keywords', component: SearchPage, canActivate: [AuthorizationGuard] },
+        { path: 'search', component: SearchPage, canActivate: [AuthorizationGuard] },
         { path: 'documentation', component: DocumentationPage, canActivate: [AuthorizationGuard] },
         { path: 'login', component: LoginPage },
         { path: '**', redirectTo: 'home', canActivate: [AuthorizationGuard] }

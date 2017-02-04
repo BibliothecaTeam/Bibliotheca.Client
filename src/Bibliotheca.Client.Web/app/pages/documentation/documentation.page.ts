@@ -5,10 +5,10 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/switchMap';
 import { Toc } from '../../model/toc';
 import { Branch } from '../../model/branch';
+import { SearchResults } from '../../model/searchResults';
 import { Project } from '../../model/project';
 import { EditLink } from '../../model/editLink';
 import { HttpClientService } from '../../services/httpClient.service';
-import { IMultiSelectOption, IMultiSelectSettings,IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { HeaderService } from '../../services/header.service';
 
 @Component({
@@ -17,43 +17,22 @@ import { HeaderService } from '../../services/header.service';
 })
 export class DocumentationPage {
 
-    public document: string;
-    public toc: Toc[];
-    public branches: Branch[];
-    public project: Project;
+    private document: string;
+    private toc: Toc[];
+    private branches: Branch[];
+    private project: Project;
 
-    public projectId: string;
-    public branchName: string;
-    public fileUri: string;
+    private projectId: string;
+    private branchName: string;
+    private fileUri: string;
 
-    public editLink: string;
-    public previousArticle: Toc;
-    public nextArticle: Toc;
-    public flatToc: Toc[];
+    private editLink: string;
+    private previousArticle: Toc;
+    private nextArticle: Toc;
+    private flatToc: Toc[];
 
-    public breadcrumbs: Toc[];
-
-    private mySettings: IMultiSelectSettings = {
-        pullRight: true,
-        enableSearch: true,
-        checkedStyle: 'checkboxes',
-        buttonClasses: 'btn btn-default',
-        selectionLimit: 0,
-        closeOnSelect: false,
-        showCheckAll: false,
-        showUncheckAll: false,
-        dynamicTitleMaxItems: 3,
-        maxHeight: '500px',
-    };
-
-    private myTexts: IMultiSelectTexts = {
-        checkAll: 'Check all',
-        uncheckAll: 'Uncheck all',
-        checked: 'checked',
-        checkedPlural: 'checked',
-        searchPlaceholder: 'Search...',
-        defaultTitle: 'Change branch',
-    };
+    private breadcrumbs: Toc[];
+    private searchResults: SearchResults;
 
     constructor(private route: ActivatedRoute, private http: HttpClientService, private header: HeaderService, private router: Router) {
     }
@@ -61,30 +40,58 @@ export class DocumentationPage {
     ngOnInit() {
         this.route.queryParams
             .switchMap((params: Params) => {
-                this.fileUri = params['file'].replace(/\//g, ":");
-                window.scrollTo(0,0);
 
-                if (this.projectId != params['project'] || this.branchName != params['branch']) {
-                    this.projectId = params['project'];
-                    this.branchName = params['branch'];
+                if(params["query"]) {
 
-                    return Observable.forkJoin(
+                    if (this.projectId != params['project'] || this.branchName != params['branch']) {
+                        this.projectId = params['project'];
+                        this.branchName = params['branch'];
 
-                        this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/toc').map((res: Response) => res.json()),
+                        return Observable.forkJoin(
 
-                        this.http.get('/api/projects/' + this.projectId).map((res: Response) => res.json()),
+                            this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/toc').map((res: Response) => res.json()),
 
-                        this.http.get('/api/projects/' + this.projectId + '/branches').map((res: Response) => res.json()),
+                            this.http.get('/api/projects/' + this.projectId).map((res: Response) => res.json()),
 
-                        this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/' + this.fileUri + '/content').map((res: Response) => res.text() as any)
-                    );
+                            this.http.get('/api/projects/' + this.projectId + '/branches').map((res: Response) => res.json()),
+
+                            this.http.get("/api/search/projects/" + params["project"] + "/branches/" + 
+                                params["branch"] + "?query=" + params["query"]).map((res: Response) => res.json())
+                        );
+                    }
+                    else {
+                        return this.http.get("/api/search/projects/" + params["project"] + "/branches/" + 
+                            params["branch"] + "?query=" + params["query"]).map((res: Response) => res.json());
+                    }
                 }
-                else {
-                    return this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/' + this.fileUri + '/content').map((res: Response) => res.text() as any);
+                else 
+                {
+                    this.fileUri = params['file'].replace(/\//g, ":");
+                    window.scrollTo(0,0);
+
+                    if (this.projectId != params['project'] || this.branchName != params['branch']) {
+                        this.projectId = params['project'];
+                        this.branchName = params['branch'];
+
+                        return Observable.forkJoin(
+
+                            this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/toc').map((res: Response) => res.json()),
+
+                            this.http.get('/api/projects/' + this.projectId).map((res: Response) => res.json()),
+
+                            this.http.get('/api/projects/' + this.projectId + '/branches').map((res: Response) => res.json()),
+
+                            this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/' + this.fileUri + '/content').map((res: Response) => res.text() as any)
+                        );
+                    }
+                    else {
+                        return this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/' + this.fileUri + '/content').map((res: Response) => res.text() as any);
+                    }
                 }
             })
             .subscribe(data => {
                 if (Array.isArray(data)) {
+                    this.searchResults = null;
                     this.toc = data[0];
                     this.project = data[1];
                     this.branches = data[2];
@@ -94,16 +101,42 @@ export class DocumentationPage {
                     this.flatToc = [];
                     this.changeTocToDictionary(this.toc, null);
 
-                    this.prepareDocument(data[3]);
-                    this.prepareEditLink();
-                    this.prepareShortcutsToArticles();
-                    this.prepareBreadcrumb();
+                    if(data[3].numberOfResults || data[3].numberOfResults == 0) {
+                        this.document = null;
+                        
+                        this.breadcrumbs = [];
+                        var toc = new Toc();
+                        toc.name = "Search results";
+                        this.breadcrumbs.push(toc);
+
+                        this.searchResults = data[3];
+                    }
+                    else {
+                        this.prepareDocument(data[3]);
+                        this.prepareEditLink();
+                        this.prepareShortcutsToArticles();
+                        this.prepareBreadcrumb();
+                    }
                 }
                 else {
-                    this.prepareDocument(data);
-                    this.prepareEditLink();
-                    this.prepareShortcutsToArticles();
-                    this.prepareBreadcrumb();
+                    if(data.numberOfResults || data.numberOfResults == 0) {
+                        this.document = null;
+                        
+                        this.breadcrumbs = [];
+                        var toc = new Toc();
+                        toc.name = "Search results";
+                        this.breadcrumbs.push(toc);
+
+                        this.searchResults = data;
+                    }
+                    else {
+                        this.searchResults = null;
+                        this.prepareDocument(data);
+                        this.prepareEditLink();
+                        this.prepareShortcutsToArticles();
+                        this.prepareBreadcrumb();
+                    }
+ 
                 }
             },
                 err => console.error(err)

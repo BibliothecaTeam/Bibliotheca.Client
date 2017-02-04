@@ -23,12 +23,23 @@ export class SearchPage {
     }
 
     ngOnInit() {
-        this.route.params
+        this.route.queryParams
             .switchMap((params: Params) => {
-                return Observable.forkJoin(
-                    this.http.get("/api/search?query=" + params["keywords"]).map((res: Response) => res.json()),
-                    this.http.get("/api/projects?query=" + params["keywords"]).map((res: Response) => res.json())
-                );
+
+                if(params["project"]) {
+                    return Observable.forkJoin(
+                        this.http.get("/api/search/projects/" + params["project"] + "/branches/" + 
+                            params["branch"] + "?query=" + params["query"]).map((res: Response) => res.json()),
+                        this.http.get("/api/projects?query=" + params["query"]).map((res: Response) => res.json())
+                    );
+                }
+                else {
+                    return Observable.forkJoin(
+                        this.http.get("/api/search?query=" + params["query"]).map((res: Response) => res.json()),
+                        this.http.get("/api/projects?query=" + params["query"]).map((res: Response) => res.json())
+                    );
+                }
+
             })
             .subscribe(data => {
                     this.searchResults = data[0];
