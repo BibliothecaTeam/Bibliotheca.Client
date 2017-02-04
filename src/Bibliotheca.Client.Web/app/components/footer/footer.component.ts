@@ -6,8 +6,4 @@ import { Http, Response } from '@angular/http';
     templateUrl: 'app/components/footer/footer.component.html'
 })
 export class FooterComponent {
-    
-    constructor() {
-    }
-    
 }

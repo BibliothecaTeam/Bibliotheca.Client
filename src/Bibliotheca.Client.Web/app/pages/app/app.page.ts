@@ -5,10 +5,7 @@ import { AuthorizationService } from '../../services/authorization.service';
 
 @Component({
     selector: 'app',
-    templateUrl: './app/components/app/app.component.html'
+    templateUrl: './app/pages/app/app.page.html'
 })
-export class AppComponent 
-{
-    constructor(private authorization: AuthorizationService) {
-    }
+export class AppPage {
 }

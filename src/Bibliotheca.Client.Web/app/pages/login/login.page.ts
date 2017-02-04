@@ -5,10 +5,10 @@ import { Router } from '@angular/router';
 import { AuthorizationService } from '../../services/authorization.service';
 
 @Component({
-    selector: 'login-component',
-    templateUrl: 'app/components/login/login.component.html'
+    selector: 'login',
+    templateUrl: 'app/pages/login/login.page.html'
 })
-export class LoginComponent {
+export class LoginPage {
 
     constructor(private authorization: AuthorizationService, private router: Router) {
         if (!this.authorization.userIsSignedIn()) {

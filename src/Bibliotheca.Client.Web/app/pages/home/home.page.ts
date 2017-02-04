@@ -8,10 +8,9 @@ import {IMultiSelectOption, IMultiSelectSettings,IMultiSelectTexts} from 'angula
 
 @Component({
     selector: 'home',
-    templateUrl: './app/components/home/home.component.html',
-    styleUrls: ['./app/components/home/home.component.css']
+    templateUrl: './app/pages/home/home.page.html'
 })
-export class HomeComponent { 
+export class HomePage { 
     public groups: string[];
     public projects: Project[];
     public allProjects: Number;

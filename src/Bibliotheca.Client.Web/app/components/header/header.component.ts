@@ -9,15 +9,6 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
 
-    private searchKeywords: string;
-
-    constructor(private header: HeaderService, private router: Router) {
-        this.searchKeywords = "";
+    constructor(private header: HeaderService) {
     }
-
-    public onSearch(event: Event) {
-        event.preventDefault();
-        this.router.navigate(['/search', this.searchKeywords]);
-    }
-
 }

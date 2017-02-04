@@ -21,12 +21,7 @@
         </a>
         <span class="header-title">{{ header.title }}</span>
         <div class="collapse navbar-collapse pull-right search-field" id="navbar-collapse">
-            <form class="navbar-form navbar-left" role="search" (submit)="onSearch($event)">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                    <input type="text" class="form-control" [(ngModel)]="searchKeywords" [ngModelOptions]="{standalone: true}" placeholder="Search">
-                </div>
-            </form>
+            <search-component></search-component>
         </div>
     </nav>
 </header>

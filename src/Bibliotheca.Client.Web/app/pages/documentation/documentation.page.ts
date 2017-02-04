@@ -13,9 +13,9 @@ import { HeaderService } from '../../services/header.service';
 
 @Component({
     selector: 'documentation',
-    templateUrl: './app/components/documentation/documentation.component.html'
+    templateUrl: './app/pages/documentation/documentation.page.html'
 })
-export class DocumentationComponent {
+export class DocumentationPage {
 
     public document: string;
     public toc: Toc[];
@@ -180,7 +180,6 @@ export class DocumentationComponent {
             }
 
         }
-
 
         this.previousArticle = null;
         var index = currentTocIndex - 1;
