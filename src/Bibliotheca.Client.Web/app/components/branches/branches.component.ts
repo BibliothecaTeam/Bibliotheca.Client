@@ -6,8 +6,7 @@ import { HttpClientService } from '../../services/httpClient.service';
 
 @Component({
     selector: 'branches',
-    templateUrl: 'app/components/branches/branches.component.html',
-    styleUrls: ['app/components/branches/branches.component.css']
+    templateUrl: 'app/components/branches/branches.component.html'
 })
 export class BranchesComponent {
     
