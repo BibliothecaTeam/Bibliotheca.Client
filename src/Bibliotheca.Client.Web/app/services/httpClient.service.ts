@@ -4,14 +4,17 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import { AuthorizationService } from './authorization.service';
+import { AppConfig } from './appConfig.service';
 
 @Injectable()
 export class HttpClientService extends Http {
 
-    public serverAddress = "http://localhost:5000";
+    public serverAddress: string = null;
 
-    constructor(backend: XHRBackend, defaultOptions: RequestOptions, private authorization: AuthorizationService) {
+    constructor(backend: XHRBackend, defaultOptions: RequestOptions, private authorization: AuthorizationService, private appConfig: AppConfig) {
         super(backend, defaultOptions);
+
+        this.serverAddress = appConfig.apiUrl;
     }
 
     request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {

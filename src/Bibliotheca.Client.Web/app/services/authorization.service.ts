@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { JwtHelper } from 'angular2-jwt';
+import { AppConfig } from './appConfig.service'
 
 @Injectable()
 export class AuthorizationService {
 
-    private tenant: string = "";
-    private clientId: string = "";
+    private tenant: string = null;
+    private clientId: string = null;
 
-    constructor(private jwtHeper: JwtHelper) {
+    constructor(private jwtHeper: JwtHelper, private appConfig: AppConfig) {
+        this.tenant = appConfig.oauthTenant;
+        this.clientId = appConfig.oauthClientid;
     }
 
     public userIsSignedIn() {

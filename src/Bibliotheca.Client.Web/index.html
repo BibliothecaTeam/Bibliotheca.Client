@@ -37,7 +37,7 @@
     <link rel="stylesheet" href="css/styles.css" />
 
     <!-- Custom skin.  -->
-    <link href="node_modules/admin-lte/dist/css/skins/skin-blue.css" rel="stylesheet" />
+    <link id="customStyle" href="" rel="stylesheet" />
 
     <!-- Hilight JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/highlight.min.js"></script> 
@@ -50,7 +50,7 @@
     </script>
   </head>
 
-  <body class="skin-blue sidebar-mini" style="height: auto;">
+  <body class="" style="height: auto;">
     <app>Loading...</app>
 
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
@@ -58,4 +58,19 @@
     <script data-pace-options='{ "ajax": true, "document": false, "eventLag": false }' src="node_modules/admin-lte/plugins/pace/pace.min.js"></script>
     <script src="node_modules/admin-lte/dist/js/app.min.js"></script>
   </body>
+  <script>
+    
+    function setSiteTitle(title) {
+        document.title = title;    
+    }
+
+    function setCustomStyleUrl(url) {
+      document.getElementById("customStyle").setAttribute("href", url);
+    }
+
+    function setCustomStyleClass(style) {
+      document.body.className = style + " sidebar-mini";
+    }
+
+</script>
 </html>

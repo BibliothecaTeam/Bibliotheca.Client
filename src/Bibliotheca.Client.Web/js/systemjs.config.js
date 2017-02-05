@@ -32,9 +32,6 @@
       // highlight
       'angular2-highlight-js': 'npm:angular2-highlight-js/lib',
 
-      // multiselect
-      'angular2-multiselect': 'npm:angular-2-dropdown-multiselect/src',
-
       // angular2-jwt
       'angular2-jwt': 'npm:angular2-jwt',
 
@@ -47,8 +44,7 @@
       app: { main: './main.js', defaultExtension: 'js' },
       rxjs: { defaultExtension: 'js' },
       'angular2-highlight-js': { main: 'highlight-js.module', defaultExtension: 'js'},
-      'angular2-jwt': { main: 'angular2-jwt.js', defaultExtension: 'js' },
-      'angular2-multiselect': { main: 'multiselect-dropdown.js', defaultExtension: 'js' }
+      'angular2-jwt': { main: 'angular2-jwt.js', defaultExtension: 'js' }
     }
   });
 })(this);

@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule, JsonpModule, XHRBackend, RequestOptions } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { MultiselectDropdownModule } from 'angular2-multiselect';
+import { MultiselectDropdownModule } from '../node_modules/angular-2-dropdown-multiselect/src/multiselect-dropdown.js';
 import { JwtHelper } from 'angular2-jwt';
 import { HighlightJsModule, HighlightJsService } from 'angular2-highlight-js'; 
 
@@ -28,6 +28,7 @@ import { HttpClientService } from './services/httpClient.service';
 import { HeaderService } from './services/header.service';
 import { AuthorizationService } from './services/authorization.service';
 import { AuthorizationGuard } from './services/authorizationGuard.service';
+import { AppConfig } from './services/appConfig.service';
 
 @NgModule({
   bootstrap:    [ AppPage ],
@@ -52,13 +53,18 @@ import { AuthorizationGuard } from './services/authorizationGuard.service';
     ]) 
   ],
   providers: [
-    HighlightJsService, HeaderService, AuthorizationService, JwtHelper, AuthorizationGuard,
+    HighlightJsService, HeaderService, AuthorizationService, JwtHelper, AuthorizationGuard, AppConfig,
     {
       provide: HttpClientService,
-      useFactory: (backend: XHRBackend, options: RequestOptions, authorization: AuthorizationService) => {
-        return new HttpClientService(backend, options, authorization);
+      useFactory: (backend: XHRBackend, options: RequestOptions, authorization: AuthorizationService, appConfig: AppConfig) => {
+        return new HttpClientService(backend, options, authorization, appConfig);
       },
-      deps: [XHRBackend, RequestOptions, AuthorizationService]
+      deps: [XHRBackend, RequestOptions, AuthorizationService, AppConfig]
+    },
+    { 
+      provide: APP_INITIALIZER, 
+      useFactory: (config: AppConfig) => () => config.load(), 
+      deps: [AppConfig], multi: true 
     }
   ]
 })
