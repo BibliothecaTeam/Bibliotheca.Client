@@ -8,6 +8,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MultiselectDropdownModule } from '../node_modules/angular-2-dropdown-multiselect/src/multiselect-dropdown.js';
 import { JwtHelper } from 'angular2-jwt';
 import { HighlightJsModule, HighlightJsService } from 'angular2-highlight-js'; 
+import { CompileHtmlService, CompileHtmlAttribute } from 'p3x-ng2-compile-html';
 
 import { AppPage } from './pages/app/app.page';
 import { DocumentationPage } from './pages/documentation/documentation.page';
@@ -34,7 +35,8 @@ import { AppConfig } from './services/appConfig.service';
   bootstrap:    [ AppPage ],
   declarations: [ 
     AppPage, HomePage, LoginPage, SearchPage, DocumentationPage, 
-    TreeViewComponent, BranchesComponent, ProjectsComponent, HeaderComponent, FooterComponent, NoResultsComponent, SearchFieldComponent, SearchResultsComponent ],
+    TreeViewComponent, BranchesComponent, ProjectsComponent, HeaderComponent, 
+    FooterComponent, NoResultsComponent, SearchFieldComponent, SearchResultsComponent, CompileHtmlAttribute ],
   imports:      [ 
     BrowserModule, 
     HttpModule, 
@@ -53,7 +55,7 @@ import { AppConfig } from './services/appConfig.service';
     ]) 
   ],
   providers: [
-    HighlightJsService, HeaderService, AuthorizationService, JwtHelper, AuthorizationGuard, AppConfig,
+    HighlightJsService, HeaderService, AuthorizationService, JwtHelper, AuthorizationGuard, AppConfig, CompileHtmlService,
     {
       provide: HttpClientService,
       useFactory: (backend: XHRBackend, options: RequestOptions, authorization: AuthorizationService, appConfig: AppConfig) => {

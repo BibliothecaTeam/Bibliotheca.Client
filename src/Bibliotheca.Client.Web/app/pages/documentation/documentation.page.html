@@ -69,7 +69,7 @@
                     </div>
                     <div class="box-body">
                         <!-- Document -->
-                        <div *ngIf="document" innerHtml="{{ document }}" highlight-js-content="" class="document-content"></div>
+                        <div *ngIf="document" [p3x-compile-html]="document" [p3x-compile-html-ref]="ref"></div>
                         <!-- End Document -->
                     </div>
                     <div *ngIf="previousArticle || nextArticle" class="box-footer document-footer">

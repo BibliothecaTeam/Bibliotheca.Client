@@ -16,6 +16,7 @@ import { HeaderService } from '../../services/header.service';
     templateUrl: './app/pages/documentation/documentation.page.html'
 })
 export class DocumentationPage {
+    public ref: DocumentationPage;
 
     private document: string;
     private toc: Toc[];
@@ -34,7 +35,9 @@ export class DocumentationPage {
     private breadcrumbs: Toc[];
     private searchResults: SearchResults;
 
-    constructor(private route: ActivatedRoute, private http: HttpClientService, private header: HeaderService, private router: Router) {
+    constructor(private route: ActivatedRoute, private http: HttpClientService, 
+    private header: HeaderService, private router: Router) {
+        this.ref = this;
     }
 
     ngOnInit() {
@@ -81,11 +84,11 @@ export class DocumentationPage {
 
                             this.http.get('/api/projects/' + this.projectId + '/branches').map((res: Response) => res.json()),
 
-                            this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/' + this.fileUri + '/content').map((res: Response) => res.text() as any)
+                            this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/content/' + this.fileUri).map((res: Response) => res.text() as any)
                         );
                     }
                     else {
-                        return this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/' + this.fileUri + '/content').map((res: Response) => res.text() as any);
+                        return this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/content/' + this.fileUri).map((res: Response) => res.text() as any);
                     }
                 }
             })
@@ -101,46 +104,56 @@ export class DocumentationPage {
                     this.flatToc = [];
                     this.changeTocToDictionary(this.toc, null);
 
-                    if(data[3].numberOfResults || data[3].numberOfResults == 0) {
+                    if(this.isSearchResultPage(data[3])) {
                         this.document = null;
-                        
-                        this.breadcrumbs = [];
-                        var toc = new Toc();
-                        toc.name = "Search results";
-                        this.breadcrumbs.push(toc);
-
-                        this.searchResults = data[3];
+                        this.prepareSearchResultPage(data[3]);
                     }
                     else {
-                        this.prepareDocument(data[3]);
-                        this.prepareEditLink();
-                        this.prepareShortcutsToArticles();
-                        this.prepareBreadcrumb();
+                        this.prepareDocumentPage(data[3]);
                     }
                 }
                 else {
-                    if(data.numberOfResults || data.numberOfResults == 0) {
+                    if(this.isSearchResultPage(data)) {
                         this.document = null;
-                        
-                        this.breadcrumbs = [];
-                        var toc = new Toc();
-                        toc.name = "Search results";
-                        this.breadcrumbs.push(toc);
-
-                        this.searchResults = data;
+                        this.prepareSearchResultPage(data);
                     }
                     else {
                         this.searchResults = null;
-                        this.prepareDocument(data);
-                        this.prepareEditLink();
-                        this.prepareShortcutsToArticles();
-                        this.prepareBreadcrumb();
+                        this.prepareDocumentPage(data);
                     }
  
                 }
             },
                 err => console.error(err)
             );
+    }
+
+    isSearchResultPage(response: any) : boolean {
+        return response.numberOfResults || response.numberOfResults == 0;
+    }
+
+    prepareSearchResultPage(searchResults: SearchResults) {
+        this.breadcrumbs = [];
+        var toc = new Toc();
+        toc.name = "Search results";
+        this.breadcrumbs.push(toc);
+
+        this.searchResults = searchResults;
+    }
+
+    prepareDocumentPage(document: string) {
+        this.prepareDocument(document);
+        this.prepareEditLink();
+        this.prepareShortcutsToArticles();
+        this.prepareBreadcrumb();
+    }
+
+    prepareDocument(document: string) {
+        var parsedDocument = this.changeImageSource(document);
+        parsedDocument = this.changeHrefToInternalPage(parsedDocument);
+        parsedDocument = this.escapeCurlyBrackets(parsedDocument);
+
+        this.document = parsedDocument;
     }
 
     prepareBreadcrumb() {
@@ -199,6 +212,11 @@ export class DocumentationPage {
     goToNextArticle() {
         window.scrollTo(0,0);
         this.router.navigate(['/documentation'], { queryParams: { project: this.projectId, branch: this.branchName, file: this.nextArticle.url } });
+    }
+
+    public goToDocument(file: string) {
+        window.scrollTo(0,0);
+        this.router.navigate(['/documentation'], { queryParams: { project: this.projectId, branch: this.branchName, file: file } });
     }
 
     prepareShortcutsToArticles() {
@@ -273,7 +291,31 @@ export class DocumentationPage {
         return url.replace(/\//g, ":");
     }
 
-    prepareDocument(document: string) {
+    escapeCurlyBrackets(document: string) : string {
+        var escapedDocument = document.replace(/{/g, "&#123;");
+        escapedDocument = escapedDocument.replace(/}/g, "&#125;");
+        return escapedDocument;
+    }
+
+    changeHrefToInternalPage(document: string) : string {
+        var regex = /(href=")(.*?)(")/igm;
+        var match = regex.exec(document);
+        while (match) {
+
+            if (!match[2].startsWith("http")) {
+
+                var folderPath = this.getFolderPath(this.fileUri);
+                var fullPath = this.getFullPath(folderPath, match[2]);
+
+                document = document.replace(match[0], "style=\"cursor: pointer;\" (click)=\"ref.goToDocument('" + fullPath + "')\"");
+            }
+            var match = regex.exec(document);
+        }
+
+        return document;
+    }
+
+    changeImageSource(document: string) : string {
         var regex = /(src=")(.*?)(")/igm;
         var match = regex.exec(document);
         while (match) {
@@ -283,12 +325,12 @@ export class DocumentationPage {
                 var folderPath = this.getFolderPath(this.fileUri);
                 var fullPath = this.getFullPath(folderPath, match[2]);
 
-                document = document.replace(match[0], "src=\"" + this.http.serverAddress + "/api/projects/" + this.projectId + "/branches/" + this.branchName + "/documents/" + fullPath + "/content?access_token=" + localStorage["adal.idtoken"] + "\"");
+                document = document.replace(match[0], "src=\"" + this.http.serverAddress + "/api/projects/" + this.projectId + "/branches/" + this.branchName + "/documents/content/" + fullPath + "?access_token=" + localStorage["adal.idtoken"] + "\"");
             }
             var match = regex.exec(document);
         }
 
-        this.document = document;
+        return document;
     }
 
     getFolderPath(uri: string) {
