@@ -29,11 +29,11 @@
       // bootstrap
       '@ng-bootstrap/ng-bootstrap': 'npm:@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js',
 
-       // compile-html
-      'p3x-ng2-compile-html': 'npm:p3x-ng2-compile-html/src',
-
       // highlight
       'angular2-highlight-js': 'npm:angular2-highlight-js/lib',
+
+      // toaster
+      'angular2-toaster': 'npm:angular2-toaster/bundles/angular2-toaster.umd.js',
 
       // angular2-jwt
       'angular2-jwt': 'npm:angular2-jwt',
@@ -47,8 +47,7 @@
       app: { main: './main.js', defaultExtension: 'js' },
       rxjs: { defaultExtension: 'js' },
       'angular2-highlight-js': { main: 'highlight-js.module', defaultExtension: 'js'},
-      'angular2-jwt': { main: 'angular2-jwt.js', defaultExtension: 'js' },
-      'p3x-ng2-compile-html': { main: 'index.js', defaultExtension: 'js' },
+      'angular2-jwt': { main: 'angular2-jwt.js', defaultExtension: 'js' }
     }
   });
 })(this);
