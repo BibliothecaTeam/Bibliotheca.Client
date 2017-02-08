@@ -158,10 +158,11 @@ export class DocumentationPage {
 
     prepareBreadcrumb() {
         this.breadcrumbs = [];
+        var fileUriWithoutAnchor = this.fileUri.split("#")[0];
 
         var currentToc: Toc = null;
         for(let toc of this.flatToc) {
-            if(toc.url == this.fileUri) {
+            if(toc.url == fileUriWithoutAnchor) {
                 currentToc = toc;
                 break;
             }
@@ -222,10 +223,12 @@ export class DocumentationPage {
     prepareShortcutsToArticles() {
 
         var currentTocIndex = 0;
+        var fileUriWithoutAnchor = this.fileUri.split("#")[0];
+
         for(var i = 0; i < this.flatToc.length; i++) {
             let toc = this.flatToc[i];
 
-            if(toc.url == this.fileUri) {
+            if(toc.url == fileUriWithoutAnchor) {
                 currentTocIndex = i;
                 break;
             }
