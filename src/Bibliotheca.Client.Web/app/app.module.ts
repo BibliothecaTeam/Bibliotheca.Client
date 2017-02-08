@@ -1,4 +1,4 @@
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule, ErrorHandler, APP_INITIALIZER } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule, JsonpModule, XHRBackend, RequestOptions } from '@angular/http';
@@ -8,7 +8,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MultiselectDropdownModule } from '../node_modules/angular-2-dropdown-multiselect/src/multiselect-dropdown.js';
 import { JwtHelper } from 'angular2-jwt';
 import { HighlightJsModule, HighlightJsService } from 'angular2-highlight-js'; 
-import { CompileHtmlService, CompileHtmlAttribute } from 'p3x-ng2-compile-html';
+import { ToasterModule, ToasterService } from 'angular2-toaster';
 
 import { AppPage } from './pages/app/app.page';
 import { DocumentationPage } from './pages/documentation/documentation.page';
@@ -24,19 +24,22 @@ import { FooterComponent } from './components/footer/footer.component';
 import { NoResultsComponent } from './components/noresults/noresults.component';
 import { SearchFieldComponent } from './components/searchField/searchField.component';
 import { SearchResultsComponent } from './components/searchResults/searchResults.component';
+import { HtmlCompileAttribute } from './components/htmlCompile/htmlCompileAttribute.component';
 
 import { HttpClientService } from './services/httpClient.service'; 
 import { HeaderService } from './services/header.service';
 import { AuthorizationService } from './services/authorization.service';
 import { AuthorizationGuard } from './services/authorizationGuard.service';
 import { AppConfig } from './services/appConfig.service';
+import { CustomErrorHandler } from './services/customErrorHandler.service';
+import { HtmlCompileService } from './services/htmlCompile.service';
 
 @NgModule({
   bootstrap:    [ AppPage ],
   declarations: [ 
     AppPage, HomePage, LoginPage, SearchPage, DocumentationPage, 
     TreeViewComponent, BranchesComponent, ProjectsComponent, HeaderComponent, 
-    FooterComponent, NoResultsComponent, SearchFieldComponent, SearchResultsComponent, CompileHtmlAttribute ],
+    FooterComponent, NoResultsComponent, SearchFieldComponent, SearchResultsComponent, HtmlCompileAttribute ],
   imports:      [ 
     BrowserModule, 
     HttpModule, 
@@ -44,6 +47,7 @@ import { AppConfig } from './services/appConfig.service';
     JsonpModule,
     HighlightJsModule,
     MultiselectDropdownModule,
+    ToasterModule,
     NgbModule.forRoot(),
     RouterModule.forRoot([
     { path: '', redirectTo: 'home', pathMatch: 'full', canActivate: [AuthorizationGuard] },
@@ -55,7 +59,7 @@ import { AppConfig } from './services/appConfig.service';
     ]) 
   ],
   providers: [
-    HighlightJsService, HeaderService, AuthorizationService, JwtHelper, AuthorizationGuard, AppConfig, CompileHtmlService,
+    HighlightJsService, HeaderService, AuthorizationService, JwtHelper, AuthorizationGuard, AppConfig, HtmlCompileService,
     {
       provide: HttpClientService,
       useFactory: (backend: XHRBackend, options: RequestOptions, authorization: AuthorizationService, appConfig: AppConfig) => {
@@ -68,6 +72,7 @@ import { AppConfig } from './services/appConfig.service';
       useFactory: (config: AppConfig) => () => config.load(), 
       deps: [AppConfig], multi: true 
     }
+    //, {provide: ErrorHandler, useClass: CustomErrorHandler}
   ]
 })
 
