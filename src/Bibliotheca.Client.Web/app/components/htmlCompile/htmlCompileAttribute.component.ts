@@ -21,7 +21,7 @@ export class HtmlCompileAttribute implements OnInit, OnChanges{
             });
         }
         catch(e) {
-            console.log('An error has occurred: ' + e.message)
+            console.error('An error has occurred: ' + e.message)
             this.toaster.pop('error', 'Error', 'Error during parsing documentation.');
         }
     }
