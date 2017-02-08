@@ -93,7 +93,7 @@
                             <dd>{{ project.group }}</dd>
                             <dt>Tags</dt>
                             <dd>
-                                <span *ngFor="let tag of project.tags">{{ tag }}</span>
+                                <small *ngFor="let tag of project.tags" class="label bg-light-blue document-tag"> {{ tag }} </small> 
                             </dd>
                             <dt *ngIf="project.contactPeople">Contact people</dt>
                             <dd *ngFor="let person of project.contactPeople"><a href="mailto:{{ person.email }}">{{ person.name }}</a></dd>
