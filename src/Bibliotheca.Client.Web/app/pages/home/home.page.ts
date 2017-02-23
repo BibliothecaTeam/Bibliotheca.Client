@@ -63,9 +63,14 @@ export class HomePage {
             this.tagsArray = result.json();
             this.tagsArray.forEach(element => {
                 this.tags.push({ id: element, name: element });
-                //this.selectedTags.push(element);
             });
         });
+    }
+
+    openHomeEvent(event: any) {
+        this.selectedTags = [];
+        this.selectedGroup = "";
+        this.filterProject();
     }
 
     filterProject() {

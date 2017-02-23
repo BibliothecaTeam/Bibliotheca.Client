@@ -1,7 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Injectable, Output, EventEmitter } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { HeaderService } from '../../services/header.service';
 import { Router } from '@angular/router';
+import { HeaderService } from '../../services/header.service';
 
 @Component({
     selector: 'header-component',
@@ -9,6 +9,13 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
 
-    constructor(private header: HeaderService) {
+    @Output() openHomeEvent: EventEmitter<any> = new EventEmitter();
+
+    constructor(private header: HeaderService, private router: Router) {
+    }
+
+    openHome() {
+        this.openHomeEvent.next(null);
+        this.router.navigate(['/home']);
     }
 }
