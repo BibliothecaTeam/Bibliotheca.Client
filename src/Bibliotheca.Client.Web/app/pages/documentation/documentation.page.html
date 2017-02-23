@@ -67,7 +67,7 @@
                     <div *ngIf="editLink" class="edit-link">
                         <a href="{{ editLink }}" target="_blank" class="btn btn-default">Edit</a>
                     </div>
-                    <div class="box-body">
+                    <div class="box-body" highlight-js-content="">
                         <!-- Document -->
                         <div *ngIf="document" [html-compile]="document" [html-compile-ref]="ref"></div>
                         <!-- End Document -->
