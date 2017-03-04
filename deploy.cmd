@@ -108,6 +108,7 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
 :: 4. Create configuration file
 (
   echo export const environment = {
+  echo    production: true,
   echo    site_title: "%SiteTitle%",
   echo    site_custom_style_url: "%SiteCustomStyleUrl%",
   echo    site_custom_style_name: "%SiteCustomStyleName%",
