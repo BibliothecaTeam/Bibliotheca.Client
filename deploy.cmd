@@ -105,24 +105,25 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   popd
 )
 
+:: 4. Create configuration file
+(
+  echo export const environment = {
+  echo    site_title: "%SiteTitle%",
+  echo    site_custom_style_url: "%SiteCustomStyleUrl%",
+  echo    site_custom_style_name: "%SiteCustomStyleName%",
+  echo    api_url: "%ApiUrl%",
+  echo    footer_name: "%FooterName%",
+  echo    footer_url: "%FooterUrl%",
+  echo    oauth_tenant: "%OAuthTenant%",
+  echo    oauth_clientid: "%OAuthClientId%"
+  echo };
+) > "%DEPLOYMENT_TARGET%"\src\environments\environment.prod.ts
+
 :: 4. Compile TypeScript
 echo Transpiling TypeScript
 pushd "%DEPLOYMENT_TARGET%"
-call :ExecuteCmd node "%DEPLOYMENT_TARGET%\node_modules\typescript\bin\tsc" -p .
+call :ExecuteCmd node "%DEPLOYMENT_TARGET%\node_modules\@angular\cli\bin\ng" build --prod --aot false
 
-:: 5. Create configuration file
-(
-  echo {
-  echo    "site_title": "%SiteTitle%",
-  echo    "site_custom_style_url": "%SiteCustomStyleUrl%",
-  echo    "site_custom_style_name": "%SiteCustomStyleName%",
-  echo    "api_url": "%ApiUrl%",
-  echo    "footer_name": "%FooterName%",
-  echo    "footer_url": "%FooterUrl%",
-  echo    "oauth_tenant": "%OAuthTenant%",
-  echo    "oauth_clientid": "%OAuthClientId%"
-  echo }
-) > "%DEPLOYMENT_TARGET%"\configuration.json
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
