@@ -122,7 +122,7 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
 :: 4. Compile TypeScript
 echo Transpiling TypeScript
 pushd "%DEPLOYMENT_TARGET%"
-call :ExecuteCmd node "%DEPLOYMENT_TARGET%\node_modules\@angular\cli\bin\ng" build --prod --aot false
+call :ExecuteCmd node "%DEPLOYMENT_TARGET%\node_modules\@angular\cli\bin\ng" build --prod --aot false --pr false
 
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
