@@ -120,11 +120,14 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   echo };
 ) > "%DEPLOYMENT_TARGET%"\src\environments\environment.prod.ts
 
-:: 4. Compile TypeScript
+:: 5. Compile TypeScript
 echo Transpiling TypeScript
 pushd "%DEPLOYMENT_TARGET%"
 call :ExecuteCmd node "%DEPLOYMENT_TARGET%\node_modules\@angular\cli\bin\ng" build --prod --aot false --pr false
 
+:: 6. Copy web.config
+echo Copying web config
+call copy web.config dist\
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
