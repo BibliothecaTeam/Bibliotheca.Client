@@ -1,5 +1,5 @@
 <!-- Header -->
-<header-component></header-component>
+<app-header></app-header>
 
 <!-- Left sidebar -->
 
@@ -19,11 +19,11 @@
                 </section>
 
                 <section *ngIf="searchResults && searchResults.numberOfResults > 0" class="content">
-                    <search-results-component [results]="searchResults"></search-results-component>
+                    <app-search-results [results]="searchResults"></app-search-results>
                 </section>
 
                 <div *ngIf="searchResults && searchResults.numberOfResults == 0">
-                    <noresults></noresults>
+                    <app-no-results></app-no-results>
                 </div>
 
             </div>
@@ -36,7 +36,7 @@
 
                 <section class="content">
                     <div class="row">
-                        <projects [projects]="projects" [style]="'col-md-12'"></projects>
+                        <app-projects [projects]="projects" [style]="'col-md-12'"></app-projects>
                     </div>
                 </section>
             </div>

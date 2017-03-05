@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 
 @Component({
-    selector: 'search-field-component',
+    selector: 'app-search-field',
     templateUrl: './search-field.component.html'
 })
 export class SearchFieldComponent {

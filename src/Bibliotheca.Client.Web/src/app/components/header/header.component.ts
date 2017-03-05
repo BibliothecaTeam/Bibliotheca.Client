@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { HeaderService } from '../../services/header.service';
 
 @Component({
-    selector: 'header-component',
+    selector: 'app-header',
     templateUrl: './header.component.html'
 })
 export class HeaderComponent {

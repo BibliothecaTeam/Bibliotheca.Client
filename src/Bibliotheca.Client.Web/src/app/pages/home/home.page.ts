@@ -7,7 +7,7 @@ import { HeaderService } from '../../services/header.service';
 import { IMultiSelectOption, IMultiSelectSettings,IMultiSelectTexts  } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
 
 @Component({
-    selector: 'home',
+    selector: 'app-home',
     templateUrl: './home.page.html'
 })
 export class HomePage { 

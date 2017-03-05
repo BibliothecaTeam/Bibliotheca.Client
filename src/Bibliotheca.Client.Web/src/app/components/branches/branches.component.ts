@@ -5,7 +5,7 @@ import { Branch } from '../../entities/branch';
 import { HttpClientService } from '../../services/http-client.service';
 
 @Component({
-    selector: 'branches',
+    selector: 'app-branches',
     templateUrl: './branches.component.html'
 })
 export class BranchesComponent {

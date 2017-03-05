@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
-    selector: 'search',
+    selector: 'app-search',
     templateUrl: './search.page.html'
 })
 

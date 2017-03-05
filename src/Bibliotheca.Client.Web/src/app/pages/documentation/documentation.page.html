@@ -1,5 +1,5 @@
 <!-- Header -->
-<header-component></header-component>
+<app-header></app-header>
 
 <!-- Left sidebar -->
 <aside class="main-sidebar">
@@ -56,11 +56,11 @@
             <div class="col-md-9">
 
                 <div *ngIf="searchResults && searchResults.numberOfResults > 0">
-                    <search-results-component [results]="searchResults"></search-results-component>
+                    <app-search-results [results]="searchResults"></app-search-results>
                 </div>
 
                 <div *ngIf="searchResults && searchResults.numberOfResults == 0">
-                    <noresults></noresults>
+                    <app-no-results></app-no-results>
                 </div>
 
                 <div *ngIf="document" class="box box-primary">
@@ -110,4 +110,4 @@
 </div>
 
 <!-- Footer -->
-<footer-component></footer-component>
+<app-footer></app-footer>

@@ -7,7 +7,7 @@ import { HttpClientService } from '../../services/http-client.service';
 import { ToasterService } from 'angular2-toaster';
 
 @Component({
-    selector: 'projects',
+    selector: 'app-projects',
     templateUrl: './projects.component.html'
 })
 export class ProjectsComponent {

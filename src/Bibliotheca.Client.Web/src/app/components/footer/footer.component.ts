@@ -3,7 +3,7 @@ import { Http, Response } from '@angular/http';
 import { AppConfigService } from '../../services/app-config.service'
 
 @Component({
-    selector: 'footer-component',
+    selector: 'app-footer',
     templateUrl: './footer.component.html'
 })
 export class FooterComponent {

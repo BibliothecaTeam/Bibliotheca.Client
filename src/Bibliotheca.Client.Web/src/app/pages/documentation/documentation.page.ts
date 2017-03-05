@@ -12,7 +12,7 @@ import { HttpClientService } from '../../services/http-client.service';
 import { HeaderService } from '../../services/header.service';
 
 @Component({
-    selector: 'documentation',
+    selector: 'app-documentation',
     templateUrl: './documentation.page.html'
 })
 export class DocumentationPage {

@@ -31,7 +31,7 @@ import { TreeViewComponent } from './components/tree-view/tree-view.component';
 import { DocumentationPage } from './pages/documentation/documentation.page';
 import { HomePage } from './pages/home/home.page';
 import { LoginPage } from './pages/login/login.page';
-import { SearchPage } from './pages/search-page/search.page';
+import { SearchPage } from './pages/search/search.page';
 import { Error400Page } from './pages/error400/error400.page'
 import { Error404Page } from './pages/error404/error404.page'
 import { Error500Page } from './pages/error500/error500.page'

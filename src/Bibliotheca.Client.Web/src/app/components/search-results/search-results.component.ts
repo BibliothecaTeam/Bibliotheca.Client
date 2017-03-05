@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Rx';
 import { SearchResults } from '../../entities/search-results';
 
 @Component({
-    selector: 'search-results-component',
+    selector: 'app-search-results',
     templateUrl: './search-results.component.html'
 })
 export class SearchResultsComponent {
