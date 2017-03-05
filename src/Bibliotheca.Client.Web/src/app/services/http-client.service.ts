@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Request, XHRBackend, RequestOptions, Response, Http, RequestOptionsArgs, Headers } from '@angular/http';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
@@ -11,7 +12,13 @@ export class HttpClientService extends Http {
 
     public serverAddress: string = null;
 
-    constructor(backend: XHRBackend, defaultOptions: RequestOptions, private authorization: AuthorizationService, private appConfig: AppConfigService) {
+    constructor(
+        backend: XHRBackend, 
+        defaultOptions: RequestOptions, 
+        private authorization: AuthorizationService, 
+        private appConfig: AppConfigService,
+        private router: Router) 
+    {
         super(backend, defaultOptions);
 
         this.serverAddress = appConfig.apiUrl;
@@ -37,9 +44,20 @@ export class HttpClientService extends Http {
 
     private catchErrors() {
         return (res: Response) => {
+
             if (res.status === 401) {
                 this.authorization.initImplicitFlow();
             }
+            else if(res.status === 400) {
+                this.router.navigate(['/error400']);
+            }
+            else if(res.status === 404) {
+                this.router.navigate(['/error404']);
+            }
+            else if(res.status === 500) {
+                this.router.navigate(['/error500']);
+            }
+
             return Observable.throw(res);
         };
     }

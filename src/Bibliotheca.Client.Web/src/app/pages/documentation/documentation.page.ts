@@ -35,8 +35,7 @@ export class DocumentationPage {
     private breadcrumbs: Toc[];
     private searchResults: SearchResults;
 
-    constructor(private route: ActivatedRoute, private http: HttpClientService, 
-    private header: HeaderService, private router: Router) {
+    constructor(private route: ActivatedRoute, private http: HttpClientService, private header: HeaderService, private router: Router) {
         this.ref = this;
     }
 
@@ -124,7 +123,9 @@ export class DocumentationPage {
  
                 }
             },
-                err => console.error(err)
+                error => {
+                    console.error(error);
+                }
             );
     }
 

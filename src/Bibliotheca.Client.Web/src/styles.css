@@ -295,3 +295,7 @@ input.form-control.search-component-input {
     height: 24px;
     box-shadow: none;
 }
+
+.error-page>.headline {
+    line-height: 0.4;
+}

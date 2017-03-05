@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule, XHRBackend, RequestOptions } from '@angular/http';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 import { JwtHelper } from 'angular2-jwt';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
@@ -31,10 +31,13 @@ import { TreeViewComponent } from './components/tree-view/tree-view.component';
 import { DocumentationPage } from './pages/documentation/documentation.page';
 import { HomePage } from './pages/home/home.page';
 import { LoginPage } from './pages/login/login.page';
-import { SearchPage } from './pages/search-page/search.page'
+import { SearchPage } from './pages/search-page/search.page';
+import { Error400Page } from './pages/error400/error400.page'
+import { Error404Page } from './pages/error404/error404.page'
+import { Error500Page } from './pages/error500/error500.page'
 
-export function httpClientServiceFactory(backend: XHRBackend, options: RequestOptions, authorization: AuthorizationService, appConfig: AppConfigService) {
-  return new HttpClientService(backend, options, authorization, appConfig);
+export function httpClientServiceFactory(backend: XHRBackend, options: RequestOptions, authorization: AuthorizationService, appConfig: AppConfigService, router: Router) {
+  return new HttpClientService(backend, options, authorization, appConfig, router);
 }
 
 export function appInitializationFactory(config: AppConfigService) {
@@ -56,7 +59,10 @@ export function appInitializationFactory(config: AppConfigService) {
     DocumentationPage,
     HomePage,
     LoginPage,
-    SearchPage
+    SearchPage,
+    Error400Page,
+    Error404Page,
+    Error500Page
   ],
   imports: [
     BrowserModule,
@@ -71,6 +77,9 @@ export function appInitializationFactory(config: AppConfigService) {
         { path: 'search', component: SearchPage, canActivate: [AuthorizationGuardService] },
         { path: 'documentation', component: DocumentationPage, canActivate: [AuthorizationGuardService] },
         { path: 'login', component: LoginPage },
+        { path: 'error400', component: Error400Page },
+        { path: 'error404', component: Error404Page },
+        { path: 'error500', component: Error500Page },
         { path: '**', redirectTo: 'home', canActivate: [AuthorizationGuardService] }
     ]) 
   ],
@@ -86,7 +95,7 @@ export function appInitializationFactory(config: AppConfigService) {
     {
       provide: HttpClientService,
       useFactory: httpClientServiceFactory,
-      deps: [XHRBackend, RequestOptions, AuthorizationService, AppConfigService]
+      deps: [XHRBackend, RequestOptions, AuthorizationService, AppConfigService, Router]
     },
     { 
       provide: APP_INITIALIZER, 
