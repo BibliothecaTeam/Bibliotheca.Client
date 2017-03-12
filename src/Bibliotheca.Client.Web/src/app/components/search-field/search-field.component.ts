@@ -13,7 +13,6 @@ export class SearchFieldComponent {
     private scope: string;
 
     constructor(private router: Router, private route: ActivatedRoute) {
-        this.searchKeywords = "";
         this.scope = "All projects";
     }
 
@@ -21,16 +20,15 @@ export class SearchFieldComponent {
         event.preventDefault();
 
         if(this.project) {
-            this.router.navigate(['/documentation'], { queryParams: { 
-                'query': this.searchKeywords, 'project': this.project, 'branch': this.branch } });
+            this.router.navigate(['/documentation', this.project, this.branch, 'search', this.searchKeywords]);
         }
         else {
-            this.router.navigate(['/search'], { queryParams: { 'query': this.searchKeywords } });
+            this.router.navigate(['/search', this.searchKeywords]);
         }
     }
 
     ngOnInit() {
-        this.route.queryParams
+        this.route.params
             .switchMap((params: Params) => {
 
                 this.searchKeywords = params["query"];
@@ -48,6 +46,8 @@ export class SearchFieldComponent {
 
             })
             .subscribe(data => {
+
+                this.searchKeywords = data["query"];
 
                 if(data["project"]) {
                     this.project = data["project"];

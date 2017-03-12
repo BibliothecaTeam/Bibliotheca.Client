@@ -74,8 +74,9 @@ export function appInitializationFactory(config: AppConfigService) {
     RouterModule.forRoot([
     { path: '', redirectTo: 'home', pathMatch: 'full', canActivate: [AuthorizationGuardService] },
         { path: 'home', component: HomePage, canActivate: [AuthorizationGuardService] },
-        { path: 'search', component: SearchPage, canActivate: [AuthorizationGuardService] },
-        { path: 'documentation', component: DocumentationPage, canActivate: [AuthorizationGuardService] },
+        { path: 'search/:query', component: SearchPage, canActivate: [AuthorizationGuardService] },
+        { path: 'documentation/:project/:branch/:file', component: DocumentationPage, canActivate: [AuthorizationGuardService] },
+        { path: 'documentation/:project/:branch/:file/:query', component: DocumentationPage, canActivate: [AuthorizationGuardService] },
         { path: 'login', component: LoginPage },
         { path: 'error400', component: Error400Page },
         { path: 'error404', component: Error404Page },

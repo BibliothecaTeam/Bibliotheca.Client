@@ -23,7 +23,7 @@ export class SearchPage {
     }
 
     ngOnInit() {
-        this.route.queryParams
+        this.route.params
             .switchMap((params: Params) => {
 
                 if(params["project"]) {
