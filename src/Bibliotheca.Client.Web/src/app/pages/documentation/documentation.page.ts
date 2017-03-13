@@ -208,17 +208,17 @@ export class DocumentationPage {
 
     goToPreviousArticle() {
         window.scrollTo(0,0);
-        this.router.navigate(['/documentation', this.projectId, this.branchName, this.previousArticle.url]);
+        this.router.navigate(['/docs', this.projectId, this.branchName, this.previousArticle.url]);
     }
 
     goToNextArticle() {
         window.scrollTo(0,0);
-        this.router.navigate(['/documentation', this.projectId, this.branchName, this.nextArticle.url]);
+        this.router.navigate(['/docs', this.projectId, this.branchName, this.nextArticle.url]);
     }
 
     public goToDocument(file: string) {
         window.scrollTo(0,0);
-        this.router.navigate(['/documentation', this.projectId, this.branchName, file]);
+        this.router.navigate(['/docs', this.projectId, this.branchName, file]);
     }
 
     prepareShortcutsToArticles() {
@@ -285,7 +285,7 @@ export class DocumentationPage {
             }
 
             window.scrollTo(0,0);
-            this.router.navigate(['/documentation', this.projectId, value, docsDir + 'index.md']);
+            this.router.navigate(['/docs', this.projectId, value, docsDir + 'index.md']);
         }
 
         return false;

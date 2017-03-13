@@ -20,7 +20,7 @@ export class SearchFieldComponent {
         event.preventDefault();
 
         if(this.project) {
-            this.router.navigate(['/documentation', this.project, this.branch, 'search', this.searchKeywords]);
+            this.router.navigate(['/docs', this.project, this.branch, 'search', this.searchKeywords]);
         }
         else {
             this.router.navigate(['/search', this.searchKeywords]);

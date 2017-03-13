@@ -38,7 +38,7 @@ export class ProjectsComponent {
 
         this.httpClient.get('/api/projects/' + id + '/branches/' + defaultBranch).subscribe(result => {
             var branch = result.json();
-            this.router.navigate(['/documentation', id, defaultBranch, branch.docsDir + '/index.md']);
+            this.router.navigate(['/docs', id, defaultBranch, branch.docsDir + '/index.md']);
         });
     }
 }

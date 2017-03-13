@@ -5,7 +5,7 @@ import { Toc } from '../../entities/toc';
     selector: '[tree-view]',
     template: `
             <li *ngFor="let item of items">
-                <a *ngIf="item.url"  [routerLink]="['/documentation', projectId, branchName, item.url]" routerLinkActive="active"> {{ item.name }}</a>
+                <a *ngIf="item.url"  [routerLink]="['/docs', projectId, branchName, item.url]" routerLinkActive="active"> {{ item.name }}</a>
                 <a *ngIf="!item.url" href="#"> {{ item.name }}
                     <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>

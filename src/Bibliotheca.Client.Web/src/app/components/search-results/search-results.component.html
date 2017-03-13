@@ -5,7 +5,7 @@
 
         <div class="search-result" *ngFor="let result of results.results">
             <div class="search-header">
-                <div class="search-title pull-left"><a [routerLink]="['/documentation', result.document.projectId, result.document.branchName, result.document.url]" routerLinkActive="active">{{ result.document.title }}</a></div>
+                <div class="search-title pull-left"><a [routerLink]="['/docs', result.document.projectId, result.document.branchName, result.document.url]" routerLinkActive="active">{{ result.document.title }}</a></div>
                 <div class="search-project pull-right">{{ result.document.projectName }} ({{ result.document.branchName }})</div>
                 <div class="clearfix"></div>
             </div>
