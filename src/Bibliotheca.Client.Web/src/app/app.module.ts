@@ -11,11 +11,11 @@ import { MultiselectDropdownModule  } from 'angular-2-dropdown-multiselect/src/m
 
 import { AppComponent } from './app.component';
 
-import { AppConfigService } from './services/app-config.service'
-import { AuthorizationService } from './services/authorization.service'
-import { AuthorizationGuardService } from './services/authorization-guard.service'
-import { HeaderService } from './services/header.service'
-import { HtmlCompileService } from './services/html-compile.service'
+import { AppConfigService } from './services/app-config.service';
+import { AuthorizationService } from './services/authorization.service';
+import { AuthorizationGuardService } from './services/authorization-guard.service';
+import { HeaderService } from './services/header.service';
+import { HtmlCompileService } from './services/html-compile.service';
 import { HttpClientService } from './services/http-client.service';
 
 import { BranchesComponent } from './components/branches/branches.component';
@@ -23,7 +23,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { HtmlCompileAttributeComponent } from './components/html-compile-attribute/html-compile-attribute.component';
 import { NoResultsComponent } from './components/no-results/no-results.component';
-import { ProjectsComponent } from './components/projects/projects.component';
+import { ProjectsBlocksComponent } from './components/projects-blocks/projects-blocks.component';
 import { SearchFieldComponent } from './components/search-field/search-field.component';
 import { SearchResultsComponent } from './components/search-results/search-results.component';
 import { TreeViewComponent } from './components/tree-view/tree-view.component';
@@ -34,7 +34,11 @@ import { LoginPage } from './pages/login/login.page';
 import { SearchPage } from './pages/search/search.page';
 import { Error400Page } from './pages/error400/error400.page'
 import { Error404Page } from './pages/error404/error404.page'
-import { Error500Page } from './pages/error500/error500.page'
+import { Error500Page } from './pages/error500/error500.page';
+import { UsersPage } from './pages/users/users.page';
+import { UserInfoPage } from './pages/user-info/user-info.page';
+import { ProjectsPage } from './pages/projects/projects.page';
+import { ProjectInfoPage } from './pages/project-info/project-info.page';
 
 export function httpClientServiceFactory(backend: XHRBackend, options: RequestOptions, authorization: AuthorizationService, appConfig: AppConfigService, router: Router) {
   return new HttpClientService(backend, options, authorization, appConfig, router);
@@ -52,7 +56,7 @@ export function appInitializationFactory(config: AppConfigService) {
     HeaderComponent,
     HtmlCompileAttributeComponent,
     NoResultsComponent,
-    ProjectsComponent,
+    ProjectsBlocksComponent,
     SearchFieldComponent,
     SearchResultsComponent,
     TreeViewComponent,
@@ -62,7 +66,11 @@ export function appInitializationFactory(config: AppConfigService) {
     SearchPage,
     Error400Page,
     Error404Page,
-    Error500Page
+    Error500Page,
+    UsersPage,
+    UserInfoPage,
+    ProjectsPage,
+    ProjectInfoPage
   ],
   imports: [
     BrowserModule,
@@ -77,6 +85,11 @@ export function appInitializationFactory(config: AppConfigService) {
         { path: 'search/:query', component: SearchPage, canActivate: [AuthorizationGuardService] },
         { path: 'docs/:project/:branch/:file', component: DocumentationPage, canActivate: [AuthorizationGuardService] },
         { path: 'docs/:project/:branch/:file/:query', component: DocumentationPage, canActivate: [AuthorizationGuardService] },
+        { path: 'users', component: UsersPage, canActivate: [AuthorizationGuardService] },
+        { path: 'user-info', component: UserInfoPage, canActivate: [AuthorizationGuardService] },
+        { path: 'projects', component: ProjectsPage, canActivate: [AuthorizationGuardService] },
+        { path: 'project-info', component: ProjectInfoPage, canActivate: [AuthorizationGuardService] },
+        { path: 'project-info/:id', component: ProjectInfoPage, canActivate: [AuthorizationGuardService] },        
         { path: 'login', component: LoginPage },
         { path: 'error400', component: Error400Page },
         { path: 'error404', component: Error404Page },

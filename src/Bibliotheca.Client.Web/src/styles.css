@@ -41,10 +41,6 @@ img {
     cursor: pointer;
 }
 
-.box .box-footer {
-    height: 41px;
-}
-
 .box.box-default .box-body {
     height: 100px; 
     overflow: overlay;
@@ -298,4 +294,9 @@ input.form-control.search-component-input {
 
 .error-page>.headline {
     line-height: 0.4;
+}
+
+.table-icon {
+    line-height: 32px;
+    font-size: 22px;
 }

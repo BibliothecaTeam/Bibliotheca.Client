@@ -20,8 +20,19 @@
             <span class="icon-bar"></span>
         </a>
         <span class="header-title">{{ header.title }}</span>
+
         <div class="collapse navbar-collapse pull-right search-field" id="navbar-collapse">
             <app-search-field></app-search-field>
+        </div>
+
+        <div *ngIf="hasAccessToSettings" class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <li class="dropdown messages-menu">
+                    <a [routerLink]="['/projects']" routerLinkActive="active">
+                        <i class="fa fa-cogs"></i>
+                    </a>
+                </li>
+            </ul>
         </div>
     </nav>
 </header>

@@ -7,10 +7,10 @@ import { HttpClientService } from '../../services/http-client.service';
 import { ToasterService } from 'angular2-toaster';
 
 @Component({
-    selector: 'app-projects',
-    templateUrl: './projects.component.html'
+    selector: 'app-projects-blocks',
+    templateUrl: './projects-blocks.component.html'
 })
-export class ProjectsComponent {
+export class ProjectsBlocksComponent {
     
     @Input()
     public projects: Project[];

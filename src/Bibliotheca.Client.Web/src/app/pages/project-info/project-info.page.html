@@ -1,0 +1,213 @@
+<!-- Header -->
+<app-header></app-header>
+
+<!-- Left sidebar -->
+<aside class="main-sidebar">
+  <section class="sidebar" style="height: auto;">
+
+    <ul class="sidebar-menu">
+      <li class="header">SETTINGS</li>
+      <li class="active">
+        <a [routerLink]="['/projects']" routerLinkActive="active">
+          <i class="fa fa-files-o"></i> <span>Projects</span>
+          <span class="pull-right-container"></span>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/users']" routerLinkActive="active">
+          <i class="fa fa-users"></i> <span>Users</span>
+          <span class="pull-right-container"></span>
+        </a>
+      </li>
+    </ul>
+
+  </section>
+</aside>
+
+<!-- Content Wrapper -->
+<div class="content-wrapper" style="min-height: 1126px;">
+
+  <!-- Main content -->
+  <section class="content">
+
+    <!-- Content -->
+
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">Project data</h3>
+      </div>
+      <!-- /.box-header -->
+      <!-- form start -->
+      <form class="form-horizontal" (ngSubmit)="onSave()">
+        <div class="box-body">
+
+          <div class="row">
+            <div class="col-md-6">
+
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Id</label>
+                <div class="col-sm-9">
+                  <input *ngIf="!isEditMode" type="text" class="form-control" [(ngModel)]="project.id" name="id" />
+                  <input *ngIf="isEditMode" type="text" class="form-control" [(ngModel)]="project.id" name="id" disabled />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" [(ngModel)]="project.name" name="name" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputPassword3" class="col-sm-3 control-label">Description</label>
+                <div class="col-sm-9">
+                  <textarea class="form-control" [(ngModel)]="project.description" name="description"></textarea>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputPassword3" class="col-sm-3 control-label">Default branch</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" [(ngModel)]="project.defaultBranch" name="defaultBranch" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputPassword3" class="col-sm-3 control-label">Group</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" [(ngModel)]="project.group" name="group" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputPassword3" class="col-sm-3 control-label">Project site</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" [(ngModel)]="project.projectSite" name="projectSite" />
+                </div>
+              </div>
+
+              <h4>Visible branches</h4>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let branch of project.visibleBranches; let i = index">
+                    <td>{{ branch }}</td>
+                    <td><a (click)="deleteVisibleBranch(i)" class="pointer-cursor text-red pull-right">Delete</a></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input #branchname type="text" class="form-control input-sm" />
+                    </td>
+                    <td>
+                      <a class="btn btn-success btn-xs btn-flat pull-right" (click)="addVisibleBranch(branchname)">Add tag</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h4>Tags</h4>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let tag of project.tags; let i = index">
+                    <td>{{ tag }}</td>
+                    <td>
+                      <a (click)="deleteTag(i)" class="pointer-cursor text-red pull-right">Delete</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input #tagName type="text" class="form-control input-sm" />
+                    </td>
+                    <td>
+                      <a class="btn btn-success btn-xs btn-flat pull-right" (click)="addTag(tagName)">Add tag</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h4>Contact people</h4>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let contact of project.contactPeople; let i = index">
+                    <td>{{ contact.name }}</td>
+                    <td>{{ contact.email }}</td>
+                    <td>
+                      <a (click)="deletePeople(i)" class="pointer-cursor text-red pull-right">Delete</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input #contactName type="text" class="form-control input-sm" /></td>
+                    <td><input #contactEmail type="text" class="form-control input-sm" /></td>
+                    <td>
+                      <a class="btn btn-success btn-xs btn-flat pull-right" (click)="addPeople(contactName, contactEmail)">Add tag</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h4>Links to sources</h4>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Link</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let link of project.editLinks; let i = index">
+                    <td>{{ link.branchName }}</td>
+                    <td>{{ link.link }}</td>
+                    <td>
+                      <a (click)="deleteLink(i)" class="pointer-cursor text-red pull-right">Delete</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input #linkName type="text" class="form-control input-sm" /></td>
+                    <td><input #linkValue type="text" class="form-control input-sm" /></td>
+                    <td>
+                      <a class="btn btn-success btn-xs btn-flat pull-right" (click)="addLink(linkName, linkValue)">Add tag</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+
+            </div>
+          </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+          <a [routerLink]="['/projects']" type="submit" class="btn btn-default btn-flat">Cancel</a>
+          <button type="submit" class="btn btn-primary btn-flat">Save</button>
+        </div>
+        <!-- /.box-footer -->
+      </form>
+    </div>
+
+    <!-- End Content -->
+
+  </section>
+</div>
+
+<!-- Footer -->
+<app-footer></app-footer>

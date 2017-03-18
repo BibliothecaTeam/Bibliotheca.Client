@@ -1,0 +1,82 @@
+<!-- Header -->
+<app-header></app-header>
+
+<!-- Left sidebar -->
+<aside class="main-sidebar">
+  <section class="sidebar" style="height: auto;">
+
+    <ul class="sidebar-menu">
+      <li class="header">SETTINGS</li>
+      <li class="active">
+        <a [routerLink]="['/projects']" routerLinkActive="active">
+          <i class="fa fa-files-o"></i> <span>Projects</span>
+          <span class="pull-right-container"></span>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/users']" routerLinkActive="active">
+          <i class="fa fa-users"></i> <span>Users</span>
+          <span class="pull-right-container"></span>
+        </a>
+      </li>
+    </ul>
+
+  </section>
+</aside>
+
+<!-- Content Wrapper -->
+<div class="content-wrapper" style="min-height: 1126px;">
+
+  <!-- Main content -->
+  <section class="content">
+
+    <!-- Content -->
+
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">List of projects</h3>
+      </div>
+
+      <div class="box-body table-responsive no-padding">
+        <table class="table table-hover">
+          <tbody><tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Tags</th>
+            <th>Default branch</th>
+            <th>Group</th>
+            <th>Actions</th>
+          </tr>
+          <tr *ngFor="let project of projects; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ project.name }}</td>
+            <td>
+              <span *ngFor="let tag of project.tags"><span class="label label-primary"> {{ tag }} </span>&nbsp;&nbsp;</span>
+            </td>
+            <td>{{ project.defaultBranch }}</td>
+            <td>{{ project.group }}</td>
+            <td>
+              <a [routerLink]="['/project-info', project.id]" class="btn btn-default btn-sm btn-flat">Edit</a>
+              <a *ngIf="!project.deletionMode" (click)="tryDeleteProject(project)" class="btn btn-warning btn-sm btn-flat">Delete</a>
+              <span *ngIf="project.deletionMode">
+                <a (click)="cancelDeleteProject(project)" class="btn btn-default btn-sm btn-flat">Cancel</a>
+                <a (click)="confirmDeleteProject(i)" class="btn btn-danger btn-sm btn-flat">I'm sure</a>
+              </span>
+            </td>
+          </tr>
+        </tbody></table>
+      </div>
+      
+      <div class="box-footer">
+        <a [routerLink]="['/project-info']" class="btn btn-primary btn-flat">Add project</a>
+      </div>
+      
+    </div>
+
+    <!-- End Content -->
+
+  </section>
+</div>
+
+<!-- Footer -->
+<app-footer></app-footer>
