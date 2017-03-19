@@ -14,10 +14,10 @@ export class ProjectsPage implements OnInit {
     private projects: Project[];
     private allProjects: Number;
 
-    constructor(private httpClient: HttpClientService, private header: HeaderService, private http: HttpClientService, private toaster: ToasterService,) { 
+    constructor(private header: HeaderService, private http: HttpClientService, private toaster: ToasterService) { 
         header.title = "Projects";
 
-        httpClient.get('/api/projects').subscribe(result => {
+        http.get('/api/projects').subscribe(result => {
             var json = result.json();
             this.projects = json.results;
             this.allProjects = json.allResults;

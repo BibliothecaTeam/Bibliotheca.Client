@@ -7,6 +7,12 @@
 
     <ul class="sidebar-menu">
       <li class="header">SETTINGS</li>
+      <li>
+        <a [routerLink]="['/account']" routerLinkActive="active">
+          <i class="fa fa-user"></i> <span>My account</span>
+          <span class="pull-right-container"></span>
+        </a>
+      </li>
       <li class="active">
         <a [routerLink]="['/projects']" routerLinkActive="active">
           <i class="fa fa-files-o"></i> <span>Projects</span>

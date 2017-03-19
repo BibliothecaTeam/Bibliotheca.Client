@@ -27,9 +27,19 @@
 
         <div *ngIf="hasAccessToSettings" class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-                <li class="dropdown messages-menu">
+                <li>
+                    <a [routerLink]="['/account']" routerLinkActive="active">
+                        <i class="fa fa-user"></i>
+                    </a>
+                </li>
+                <li>
                     <a [routerLink]="['/projects']" routerLinkActive="active">
-                        <i class="fa fa-cogs"></i>
+                        <i class="fa fa-files-o"></i>
+                    </a>
+                </li>
+                <li>
+                    <a [routerLink]="['/users']" routerLinkActive="active">
+                        <i class="fa fa-users"></i>
                     </a>
                 </li>
             </ul>

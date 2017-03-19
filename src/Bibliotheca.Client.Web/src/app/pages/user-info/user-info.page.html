@@ -8,6 +8,12 @@
     <ul class="sidebar-menu">
       <li class="header">SETTINGS</li>
       <li>
+        <a [routerLink]="['/account']" routerLinkActive="active">
+          <i class="fa fa-user"></i> <span>My account</span>
+          <span class="pull-right-container"></span>
+        </a>
+      </li>
+      <li>
         <a [routerLink]="['/projects']" routerLinkActive="active">
           <i class="fa fa-files-o"></i> <span>Projects</span>
           <span class="pull-right-container"></span>
@@ -38,7 +44,7 @@
       </div>
       <!-- /.box-header -->
       <!-- form start -->
-      <form class="form-horizontal">
+      <form class="form-horizontal" (ngSubmit)="onSave()">
         <div class="box-body">
 
           <div class="row">
@@ -47,23 +53,52 @@
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
                 <div class="col-sm-10">
-                  <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                  <input *ngIf="!isEditMode" type="email" class="form-control" [(ngModel)]="user.id" name="id" />
+                  <input *ngIf="isEditMode" type="email" class="form-control" [(ngModel)]="user.id" name="id" disabled />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                  <input type="email" class="form-control" [(ngModel)]="user.name" name="name" />
                 </div>
               </div>
 
               <div class="form-group">
                 <label for="inputPassword3" class="col-sm-2 control-label">Role</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputPassword3" placeholder="Role">
+                  <select class="form-control" id="role" [(ngModel)]="user.role" name="role" required>
+                    <option *ngFor="let role of roles" [value]="role">{{role}}</option>
+                  </select>
                 </div>
               </div>
 
-              <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">Projects</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputPassword3" placeholder="Projects">
-                </div>
-              </div>
+              <h4>Projects</h4>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Project Id</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let project of user.projects; let i = index">
+                    <td>{{ project }}</td>
+                    <td>
+                      <a (click)="deleteProject(i)" class="pointer-cursor text-red pull-right">Delete</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input #projectName type="text" class="form-control input-sm" />
+                    </td>
+                    <td>
+                      <a class="btn btn-success btn-xs btn-flat pull-right" (click)="addProject(projectName)">Add project</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
 
             </div>
           </div>

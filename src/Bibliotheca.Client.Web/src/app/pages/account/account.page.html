@@ -1,0 +1,146 @@
+<!-- Header -->
+<app-header></app-header>
+
+<!-- Left sidebar -->
+<aside class="main-sidebar">
+  <section class="sidebar" style="height: auto;">
+
+    <ul class="sidebar-menu">
+      <li class="header">SETTINGS</li>
+      <li class="active">
+        <a [routerLink]="['/account']" routerLinkActive="active">
+          <i class="fa fa-user"></i> <span>My account</span>
+          <span class="pull-right-container"></span>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/projects']" routerLinkActive="active">
+          <i class="fa fa-files-o"></i> <span>Projects</span>
+          <span class="pull-right-container"></span>
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/users']" routerLinkActive="active">
+          <i class="fa fa-users"></i> <span>Users</span>
+          <span class="pull-right-container"></span>
+        </a>
+      </li>
+    </ul>
+
+  </section>
+</aside>
+
+<!-- Content Wrapper -->
+<div class="content-wrapper" style="min-height: 1126px;">
+
+  <!-- Main content -->
+  <section class="content">
+
+    <!-- Content -->
+    <form class="form-horizontal" (ngSubmit)="onSave()">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Personal information</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+
+        <div class="box-body">
+
+          <div class="row">
+            <div class="col-md-6">
+
+              <div class="form-group">
+                <label for="id" class="col-sm-3 control-label">Email</label>
+                <div class="col-sm-9">
+                  <input type="email" class="form-control" [ngModel]="user.id" name="id" disabled />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" [ngModel]="user.name" name="name" disabled />
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- /.box-body -->
+      </div>
+
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Projects</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+
+          <div class="row">
+            <div class="col-md-6">
+
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Project Id</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let project of user.projects; let i = index">
+                    <td>{{ project }}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+        <!-- /.box-body -->
+      </div>
+
+      <div class="box box-danger">
+        <div class="box-header with-border">
+          <h3 class="box-title">Permissions</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+
+          <div class="row">
+            <div class="col-md-6">
+
+              <div class="form-group">
+                <label for="role" class="col-sm-3 control-label">Role</label>
+                <div class="col-sm-9">
+                  <select class="form-control" id="role" [ngModel]="user.role" name="role" disabled>
+                    <option *ngFor="let role of roles" [value]="role">{{role}}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="role" class="col-sm-3 control-label">Access token</label>
+                <div class="col-sm-9">
+                  <div class="input-group">
+                    <input type="text" class="form-control" [ngModel]="user.accessToken" name="accessToken" disabled />
+                    <span class="input-group-btn">
+                      <button (click)="regenerate()" type="button" class="btn btn-info btn-flat">Regenerate</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- /.box-body -->
+
+      </div>
+    </form>
+    <!-- End Content -->
+
+  </section>
+</div>
+
+<!-- Footer -->
+<app-footer></app-footer>

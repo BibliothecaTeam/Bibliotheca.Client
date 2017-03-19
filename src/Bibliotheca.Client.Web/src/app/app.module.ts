@@ -39,6 +39,7 @@ import { UsersPage } from './pages/users/users.page';
 import { UserInfoPage } from './pages/user-info/user-info.page';
 import { ProjectsPage } from './pages/projects/projects.page';
 import { ProjectInfoPage } from './pages/project-info/project-info.page';
+import { AccountPage } from './pages/account/account.page';
 
 export function httpClientServiceFactory(backend: XHRBackend, options: RequestOptions, authorization: AuthorizationService, appConfig: AppConfigService, router: Router) {
   return new HttpClientService(backend, options, authorization, appConfig, router);
@@ -70,7 +71,8 @@ export function appInitializationFactory(config: AppConfigService) {
     UsersPage,
     UserInfoPage,
     ProjectsPage,
-    ProjectInfoPage
+    ProjectInfoPage,
+    AccountPage
   ],
   imports: [
     BrowserModule,
@@ -87,9 +89,11 @@ export function appInitializationFactory(config: AppConfigService) {
         { path: 'docs/:project/:branch/:file/:query', component: DocumentationPage, canActivate: [AuthorizationGuardService] },
         { path: 'users', component: UsersPage, canActivate: [AuthorizationGuardService] },
         { path: 'user-info', component: UserInfoPage, canActivate: [AuthorizationGuardService] },
+        { path: 'user-info/:id', component: UserInfoPage, canActivate: [AuthorizationGuardService] },
         { path: 'projects', component: ProjectsPage, canActivate: [AuthorizationGuardService] },
         { path: 'project-info', component: ProjectInfoPage, canActivate: [AuthorizationGuardService] },
         { path: 'project-info/:id', component: ProjectInfoPage, canActivate: [AuthorizationGuardService] },        
+        { path: 'account', component: AccountPage, canActivate: [AuthorizationGuardService] },
         { path: 'login', component: LoginPage },
         { path: 'error400', component: Error400Page },
         { path: 'error404', component: Error404Page },
