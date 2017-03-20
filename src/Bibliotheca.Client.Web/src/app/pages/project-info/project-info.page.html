@@ -30,25 +30,35 @@
   </section>
 </aside>
 
-<!-- Content Wrapper -->
+<!-- Start: Content wrapper -->
 <div class="content-wrapper" style="min-height: 1126px;">
 
-  <!-- Main content -->
+  <!-- Start: Content -->
   <section class="content">
 
-    <!-- Content -->
+    <form class="form-horizontal" (ngSubmit)="onSave()">
 
-    <div class="box box-info">
-      <div class="box-header with-border">
-        <h3 class="box-title">Project data</h3>
-      </div>
-      <!-- /.box-header -->
-      <!-- form start -->
-      <form class="form-horizontal" (ngSubmit)="onSave()">
+      <!-- Start: actions -->
+      <div class="box box-solid">
         <div class="box-body">
+          <div class="pull-right">
+            <a [routerLink]="['/projects']" type="submit" class="btn btn-default btn-flat">Cancel</a>
+            <button type="submit" class="btn btn-primary btn-flat">Save</button>
+          </div>
+        </div>
+      </div>
+      <!-- End: actions -->
 
-          <div class="row">
-            <div class="col-md-6">
+      <!-- Start: row -->
+      <div class="row">
+
+        <!-- Start: Main data -->
+        <div class="col-md-6">
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Project data</h3>
+            </div>
+            <div class="box-body">
 
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-3 control-label">Id</label>
@@ -92,61 +102,100 @@
                   <input type="text" class="form-control" [(ngModel)]="project.projectSite" name="projectSite" />
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+        <!-- End: Main data -->
 
-              <h4>Visible branches</h4>
+        <!-- Start: Tables -->
+        <div class="col-md-6">
+
+          <!-- Start: Visible branches -->
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Visible branches</h3>
+            </div>
+            <div class="box-body no-padding">
+
               <table class="table table-striped">
                 <thead>
                   <tr>
+                    <th style="width: 20px">#</th>
                     <th>Name</th>
                     <th></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let branch of project.visibleBranches; let i = index">
+                    <td>{{ i + 1 }}</td>
                     <td>{{ branch }}</td>
                     <td><a (click)="deleteVisibleBranch(i)" class="pointer-cursor text-red pull-right">Delete</a></td>
                   </tr>
-                  <tr>
-                    <td>
-                      <input #branchname type="text" class="form-control input-sm" />
-                    </td>
-                    <td>
-                      <a class="btn btn-success btn-xs btn-flat pull-right" (click)="addVisibleBranch(branchname)">Add tag</a>
-                    </td>
-                  </tr>
                 </tbody>
               </table>
+            </div>
+            <div class="box-footer">
+              <div class="row">
+                <div class="col-md-10">
+                  <input #branchname type="text" class="form-control input-sm" placeholder="Branch" />
+                </div>
+                <div class="col-md-2">
+                  <a class="btn btn-success btn-xs btn-flat pull-right" (click)="addVisibleBranch(branchname)">Add branch</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End: Visible branches -->
 
-              <h4>Tags</h4>
+          <!-- Start: Tags -->
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Tags</h3>
+            </div>
+            <div class="box-body no-padding">
+
               <table class="table table-striped">
                 <thead>
                   <tr>
+                    <th style="width: 20px">#</th>
                     <th>Name</th>
                     <th></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let tag of project.tags; let i = index">
+                    <td>{{ i + 1 }}</td>
                     <td>{{ tag }}</td>
                     <td>
                       <a (click)="deleteTag(i)" class="pointer-cursor text-red pull-right">Delete</a>
                     </td>
                   </tr>
-                  <tr>
-                    <td>
-                      <input #tagName type="text" class="form-control input-sm" />
-                    </td>
-                    <td>
-                      <a class="btn btn-success btn-xs btn-flat pull-right" (click)="addTag(tagName)">Add tag</a>
-                    </td>
-                  </tr>
                 </tbody>
               </table>
+            </div>
+            <div class="box-footer">
+              <div class="row">
+                <div class="col-md-10">
+                  <input #tagName type="text" class="form-control input-sm" placeholder="Tag" />
+                </div>
+                <div class="col-md-2">
+                  <a class="btn btn-success btn-xs btn-flat pull-right" (click)="addTag(tagName)">Add tag</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End: Tags -->
 
-              <h4>Contact people</h4>
+          <!-- Start: Contact people -->
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Contact people</h3>
+            </div>
+            <div class="box-body no-padding">
               <table class="table table-striped">
                 <thead>
                   <tr>
+                    <th>#</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th></th>
@@ -154,66 +203,87 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let contact of project.contactPeople; let i = index">
+                    <td>{{ i + 1 }}</td>
                     <td>{{ contact.name }}</td>
                     <td>{{ contact.email }}</td>
                     <td>
                       <a (click)="deletePeople(i)" class="pointer-cursor text-red pull-right">Delete</a>
                     </td>
                   </tr>
-                  <tr>
-                    <td><input #contactName type="text" class="form-control input-sm" /></td>
-                    <td><input #contactEmail type="text" class="form-control input-sm" /></td>
-                    <td>
-                      <a class="btn btn-success btn-xs btn-flat pull-right" (click)="addPeople(contactName, contactEmail)">Add tag</a>
-                    </td>
-                  </tr>
                 </tbody>
               </table>
+            </div>
+            <div class="box-footer">
+              <div class="row">
+                <div class="col-md-5">
+                  <input #contactName type="text" class="form-control input-sm" placeholder="Name" />
+                </div>
+                <div class="col-md-5">
+                  <input #contactEmail type="email" class="form-control input-sm" placeholder="Email" />
+                </div>
+                <div class="col-md-2">
+                  <a class="btn btn-success btn-xs btn-flat pull-right" (click)="addPeople(contactName, contactEmail)">Add person</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End: Contact people -->
 
-              <h4>Links to sources</h4>
+          <!-- Start: Link to sources -->
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Links to sources</h3>
+            </div>
+            <div class="box-body no-padding">
               <table class="table table-striped">
                 <thead>
                   <tr>
-                    <th>Name</th>
+                    <th>#</th>
+                    <th>Branch</th>
                     <th>Link</th>
                     <th></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let link of project.editLinks; let i = index">
+                    <td>{{ i + 1 }}</td>
                     <td>{{ link.branchName }}</td>
                     <td>{{ link.link }}</td>
                     <td>
                       <a (click)="deleteLink(i)" class="pointer-cursor text-red pull-right">Delete</a>
                     </td>
                   </tr>
-                  <tr>
-                    <td><input #linkName type="text" class="form-control input-sm" /></td>
-                    <td><input #linkValue type="text" class="form-control input-sm" /></td>
-                    <td>
-                      <a class="btn btn-success btn-xs btn-flat pull-right" (click)="addLink(linkName, linkValue)">Add tag</a>
-                    </td>
-                  </tr>
                 </tbody>
               </table>
-
-
+            </div>
+            <div class="box-footer">
+              <div class="row">
+                <div class="col-md-5">
+                  <input #linkName type="text" class="form-control input-sm" placeholder="Branch" />
+                </div>
+                <div class="col-md-5">
+                  <input #linkValue type="text" class="form-control input-sm" placeholder="Link" />
+                </div>
+                <div class="col-md-2">
+                  <a class="btn btn-success btn-xs btn-flat pull-right" (click)="addLink(linkName, linkValue)">Add link</a>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer">
-          <a [routerLink]="['/projects']" type="submit" class="btn btn-default btn-flat">Cancel</a>
-          <button type="submit" class="btn btn-primary btn-flat">Save</button>
-        </div>
-        <!-- /.box-footer -->
-      </form>
-    </div>
+          <!-- End: Link to sources -->
 
-    <!-- End Content -->
+        </div>
+        <!-- End: Tables -->
+
+      </div>
+      <!-- End: row -->
+
+    </form>
 
   </section>
+  <!-- End: Content -->
 </div>
+<!-- End: Content wrapper -->
 
 <!-- Footer -->
 <app-footer></app-footer>
