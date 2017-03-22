@@ -17,6 +17,7 @@ import { AuthorizationGuardService } from './services/authorization-guard.servic
 import { HeaderService } from './services/header.service';
 import { HtmlCompileService } from './services/html-compile.service';
 import { HttpClientService } from './services/http-client.service';
+import { PermissionService } from './services/permission.service';
 
 import { BranchesComponent } from './components/branches/branches.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -109,6 +110,7 @@ export function appInitializationFactory(config: AppConfigService) {
     HtmlCompileService,
     HttpClientService,
     HighlightJsService,
+    PermissionService,
     JwtHelper,
     {
       provide: HttpClientService,
