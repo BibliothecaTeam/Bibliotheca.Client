@@ -25,8 +25,8 @@ export class PermissionService {
             else {
                 this.downloadUser().subscribe(user => {
                     let hasAccess = this.hasUserAccessToProject(user, projectId);
-                observer.next(hasAccess);
-                observer.complete();
+                    observer.next(hasAccess);
+                    observer.complete();
                 });
             }
         });
@@ -36,11 +36,20 @@ export class PermissionService {
 
         return new Observable(observer => {
 
-
+            if(this.user) {
+                let role = this.convertRoleToEnum(this.user.role);
+                observer.next(role);
+                observer.complete();
+            }
+            else {
+                this.downloadUser().subscribe(user => {
+                    let role = this.convertRoleToEnum(user.role);
+                    observer.next(role);
+                    observer.complete();
+                });
+            }
 
         });
-
-
     }
 
     private hasUserAccessToProject(user: User, projectId: string) : boolean {

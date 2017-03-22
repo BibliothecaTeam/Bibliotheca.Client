@@ -25,19 +25,19 @@
             <app-search-field></app-search-field>
         </div>
 
-        <div *ngIf="hasAccessToSettings" class="navbar-custom-menu">
+        <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-                <li>
+                <li *ngIf="hasAccessToAccount">
                     <a [routerLink]="['/account']" routerLinkActive="active">
                         <i class="fa fa-user"></i>
                     </a>
                 </li>
-                <li>
+                <li *ngIf="hasAccessToProjects">
                     <a [routerLink]="['/projects']" routerLinkActive="active">
                         <i class="fa fa-files-o"></i>
                     </a>
                 </li>
-                <li>
+                <li *ngIf="hasAccessToUsers">
                     <a [routerLink]="['/users']" routerLinkActive="active">
                         <i class="fa fa-users"></i>
                     </a>
