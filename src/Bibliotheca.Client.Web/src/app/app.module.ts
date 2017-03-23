@@ -28,6 +28,7 @@ import { ProjectsBlocksComponent } from './components/projects-blocks/projects-b
 import { SearchFieldComponent } from './components/search-field/search-field.component';
 import { SearchResultsComponent } from './components/search-results/search-results.component';
 import { TreeViewComponent } from './components/tree-view/tree-view.component';
+import { SettingsMenuComponent } from './components/settings-menu/settings-menu.component';
 
 import { DocumentationPage } from './pages/documentation/documentation.page';
 import { HomePage } from './pages/home/home.page';
@@ -36,6 +37,7 @@ import { SearchPage } from './pages/search/search.page';
 import { Error400Page } from './pages/error400/error400.page'
 import { Error404Page } from './pages/error404/error404.page'
 import { Error500Page } from './pages/error500/error500.page';
+import { ForbiddenPage } from './pages/forbidden/forbidden.page';
 import { UsersPage } from './pages/users/users.page';
 import { UserInfoPage } from './pages/user-info/user-info.page';
 import { ProjectsPage } from './pages/projects/projects.page';
@@ -62,6 +64,7 @@ export function appInitializationFactory(config: AppConfigService) {
     SearchFieldComponent,
     SearchResultsComponent,
     TreeViewComponent,
+    SettingsMenuComponent,
     DocumentationPage,
     HomePage,
     LoginPage,
@@ -73,7 +76,8 @@ export function appInitializationFactory(config: AppConfigService) {
     UserInfoPage,
     ProjectsPage,
     ProjectInfoPage,
-    AccountPage
+    AccountPage,
+    ForbiddenPage
   ],
   imports: [
     BrowserModule,
@@ -99,6 +103,7 @@ export function appInitializationFactory(config: AppConfigService) {
         { path: 'error400', component: Error400Page },
         { path: 'error404', component: Error404Page },
         { path: 'error500', component: Error500Page },
+        { path: 'forbidden', component: ForbiddenPage },
         { path: '**', redirectTo: 'home', canActivate: [AuthorizationGuardService] }
     ]) 
   ],

@@ -1,0 +1,27 @@
+<aside class="main-sidebar">
+  <section class="sidebar" style="height: auto;">
+    
+    <ul class="sidebar-menu">
+      <li class="header">SETTINGS</li>
+      <li *ngIf="hasAccessToAccount" class="{{ isActive('account') }}">
+        <a [routerLink]="['/account']" routerLinkActive="active">
+          <i class="fa fa-user"></i> <span>My account</span>
+          <span class="pull-right-container"></span>
+        </a>
+      </li>
+      <li *ngIf="hasAccessToProjects" class="{{ isActive('projects') }}">
+        <a [routerLink]="['/projects']" routerLinkActive="active">
+          <i class="fa fa-files-o"></i> <span>Projects</span>
+          <span class="pull-right-container"></span>
+        </a>
+      </li>
+      <li *ngIf="hasAccessToUsers" class="{{ isActive('users') }}">
+        <a [routerLink]="['/users']" routerLinkActive="active">
+          <i class="fa fa-users"></i> <span>Users</span>
+          <span class="pull-right-container"></span>
+        </a>
+      </li>
+    </ul>
+
+  </section>
+</aside>

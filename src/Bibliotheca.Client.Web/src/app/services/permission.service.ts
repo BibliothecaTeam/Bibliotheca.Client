@@ -53,6 +53,12 @@ export class PermissionService {
     }
 
     private hasUserAccessToProject(user: User, projectId: string) : boolean {
+
+        let role = this.convertRoleToEnum(user.role);
+        if(role == Role.Administrator) {
+            return true;
+        }
+
         if(this.user.projects.indexOf(projectId) > -1) {
             return true;
         }
