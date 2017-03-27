@@ -24,6 +24,10 @@ img {
     border-radius: none;
 }
 
+.box .box-footer.branch-footer {
+    height: 41px;
+}
+
 .box .box-header {
     color: #4a5c69;
 }

@@ -59,7 +59,7 @@ export class PermissionService {
             return true;
         }
 
-        if(this.user.projects.indexOf(projectId) > -1) {
+        if(this.user.projects && this.user.projects.indexOf(projectId) > -1) {
             return true;
         }
         
@@ -90,11 +90,18 @@ export class PermissionService {
                 var uniqueName = decoded["unique_name"];
                 
                 var userId = uniqueName.toLowerCase();
-                this.http.get('/api/users/' + userId).subscribe(result => {
-                    this.user = result.json();
-                    observer.next(this.user);
-                    observer.complete();
-                });
+                this.http.get('/api/users/' + userId).subscribe(
+                    result => {
+                        this.user = result.json();
+                        observer.next(this.user);
+                        observer.complete();
+                    },
+                    error => {
+                        this.user = new User();
+                        this.user.id = userId;
+                        this.user.role = "Unknown";
+                    }
+                );
             }
             else {
                 this.user = new User();

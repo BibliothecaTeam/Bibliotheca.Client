@@ -56,7 +56,7 @@ export class AccountPage implements OnInit {
         
         this.user.accessToken = this.newGuid();
 
-        this.http.put("/api/users/" + this.user.id, this.user).subscribe(result => {
+        this.http.put("/api/users/" + this.user.id + "/refreshToken", { accessToken: this.user.accessToken }).subscribe(result => {
             if (result.status == 200) {
                 this.toaster.pop('success', 'Success', 'User was saved successfully.');
             } else {
