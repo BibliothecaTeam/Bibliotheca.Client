@@ -7,10 +7,12 @@ export class AuthorizationService {
 
     private tenant: string = null;
     private clientId: string = null;
+    private redirectUri: string = null;
 
     constructor(private jwtHeper: JwtHelper, private appConfig: AppConfigService) {
         this.tenant = appConfig.oauthTenant;
         this.clientId = appConfig.oauthClientid;
+        this.redirectUri = appConfig.webUrl;
     }
 
     public userIsSignedIn() {
@@ -48,7 +50,7 @@ export class AuthorizationService {
                 + "&state="
                 + encodeURIComponent(nonce)
                 + "&redirect_uri="
-                + encodeURIComponent(window.location.origin + '/login')
+                + encodeURIComponent(this.redirectUri + '/login')
                 + "&nonce="
                 + encodeURIComponent(nonce);
 

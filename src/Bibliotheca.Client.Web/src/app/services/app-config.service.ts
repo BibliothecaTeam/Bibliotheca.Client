@@ -40,6 +40,10 @@ export class AppConfigService {
         return environment.oauth_clientid;
     }
 
+    get webUrl(): string {
+        return environment.web_url;
+    }
+
     public load() {
         setSiteTitle(this.siteTitle);
         setCustomStyleUrl(this.siteCustomStyleUrl);
