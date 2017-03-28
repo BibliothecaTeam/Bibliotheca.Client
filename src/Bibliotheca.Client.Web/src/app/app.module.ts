@@ -35,6 +35,7 @@ import { HomePage } from './pages/home/home.page';
 import { LoginPage } from './pages/login/login.page';
 import { SearchPage } from './pages/search/search.page';
 import { Error400Page } from './pages/error400/error400.page'
+import { Error403Page } from './pages/error403/error403.page'
 import { Error404Page } from './pages/error404/error404.page'
 import { Error500Page } from './pages/error500/error500.page';
 import { ForbiddenPage } from './pages/forbidden/forbidden.page';
@@ -70,6 +71,7 @@ export function appInitializationFactory(config: AppConfigService) {
     LoginPage,
     SearchPage,
     Error400Page,
+    Error403Page,
     Error404Page,
     Error500Page,
     UsersPage,
@@ -101,6 +103,7 @@ export function appInitializationFactory(config: AppConfigService) {
         { path: 'account', component: AccountPage, canActivate: [AuthorizationGuardService] },
         { path: 'login', component: LoginPage },
         { path: 'error400', component: Error400Page },
+        { path: 'error403', component: Error403Page },
         { path: 'error404', component: Error404Page },
         { path: 'error500', component: Error500Page },
         { path: 'forbidden', component: ForbiddenPage },

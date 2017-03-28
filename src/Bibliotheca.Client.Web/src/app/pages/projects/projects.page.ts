@@ -64,4 +64,8 @@ export class ProjectsPage implements OnInit {
     private hasAccessToDelete(projectId: string) : Observable<boolean> {
         return this.permissionService.hasAccessToProject(projectId);
     }
+
+    private hasAccessToEdit(projectId: string) : Observable<boolean> {
+        return this.permissionService.hasAccessToProject(projectId);
+    }
 }

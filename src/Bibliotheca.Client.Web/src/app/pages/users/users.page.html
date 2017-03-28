@@ -36,11 +36,11 @@
               <span *ngIf="user.role === 'Administrator'" class="label label-danger">Administrator</span>
             </td>
             <td>
-              <a [routerLink]="['/user-info', user.id]" class="btn btn-default btn-sm btn-flat">Edit</a>
-              <a *ngIf="!user.deletionMode" (click)="tryDeleteUser(user)" class="btn btn-warning btn-sm btn-flat">Delete</a>
+              <a [routerLink]="['/user-info', user.id]" class="btn btn-default btn-xs btn-flat">Edit</a>
+              <a *ngIf="!user.deletionMode" (click)="tryDeleteUser(user)" class="btn btn-warning btn-xs btn-flat">Delete</a>
               <span *ngIf="user.deletionMode">
-                <a (click)="cancelDeleteUser(user)" class="btn btn-default btn-sm btn-flat">Cancel</a>
-                <a (click)="confirmDeleteUser(i)" class="btn btn-danger btn-sm btn-flat">I'm sure</a>
+                <a (click)="cancelDeleteUser(user)" class="btn btn-default btn-xs btn-flat">Cancel</a>
+                <a (click)="confirmDeleteUser(i)" class="btn btn-danger btn-xs btn-flat">I'm sure</a>
               </span>
             </td>
           </tr>

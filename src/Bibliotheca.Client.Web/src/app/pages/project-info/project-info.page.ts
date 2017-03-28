@@ -9,6 +9,7 @@ import { Project } from '../../entities/project';
 import { ContactPerson } from '../../entities/contact-person';
 import { EditLink } from '../../entities/edit-link';
 import { ToasterService } from 'angular2-toaster';
+import { PermissionService } from '../../services/permission.service';
 
 @Component({
     selector: 'app-project-info',
@@ -33,7 +34,8 @@ export class ProjectInfoPage implements OnInit {
         private route: ActivatedRoute,
         private http: HttpClientService,
         private toaster: ToasterService,
-        private router: Router) {
+        private router: Router,
+        private permissionService: PermissionService) {
         
         header.title = "Project";
         this.project = new Project();
@@ -207,6 +209,10 @@ export class ProjectInfoPage implements OnInit {
 
     deleteLink(index: number) {
         this.project.editLinks.splice(index, 1);
+    }
+
+    hasAccessToEdit() : Observable<boolean> {
+        return this.permissionService.hasAccessToProject(this.project.id);
     }
 
     onSave() {

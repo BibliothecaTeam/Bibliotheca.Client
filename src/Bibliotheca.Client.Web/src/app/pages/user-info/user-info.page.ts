@@ -7,6 +7,8 @@ import 'rxjs/add/operator/switchMap';
 import { HttpClientService } from '../../services/http-client.service';
 import { ToasterService } from 'angular2-toaster';
 import { User } from '../../entities/user';
+import { Role } from '../../entities/role';
+import { PermissionService } from '../../services/permission.service';
 
 @Component({
     selector: 'app-user-info',
@@ -19,13 +21,15 @@ export class UserInfoPage implements OnInit {
     private isEditMode: Boolean;
     private projectNameRequired: Boolean;
     private projectNameExists: Boolean;
+    private canEditUser: Boolean = false;
 
     constructor(
         private header: HeaderService,
         private route: ActivatedRoute,
         private http: HttpClientService,
         private toaster: ToasterService,
-        private router: Router) {
+        private router: Router,
+        private permissionService: PermissionService) {
         
         header.title = "User";
         this.user = new User();
@@ -42,6 +46,14 @@ export class UserInfoPage implements OnInit {
 
         this.route.params
             .switchMap((params: Params) => {
+
+                this.canEditUser = false;
+                this.permissionService.getUserRole().subscribe(role => {
+                    if(role == Role.Administrator) {
+                        this.canEditUser = true;
+                    }
+                });
+
                 if (params["id"]) {
                     return this.http.get("/api/users/" + params["id"]).map((res: Response) => res.json());
                 }
