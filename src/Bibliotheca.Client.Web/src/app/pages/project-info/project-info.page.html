@@ -37,7 +37,20 @@
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-3 control-label">Id</label>
                 <div class="col-sm-9">
-                  <input *ngIf="!isEditMode" type="text" class="form-control" [(ngModel)]="project.id" name="id" />
+                  <div *ngIf="!isEditMode">
+                    <input type="text" class="form-control" [(ngModel)]="project.id" name="id" minlength="3" maxlength="30" required #id="ngModel" />
+                    <div *ngIf="id.errors && (id.dirty || id.touched)">
+                        <div [hidden]="!id.errors.required" class="ng-error">
+                          Project id is required.
+                        </div>
+                        <div [hidden]="!id.errors.minlength" class="ng-error">
+                          Project id must be at least 3 characters long.
+                        </div>
+                        <div [hidden]="!id.errors.maxlength" class="ng-error">
+                          Project id cannot be more than 30 characters long.
+                        </div>
+                    </div>
+                  </div>
                   <input *ngIf="isEditMode" type="text" class="form-control" [(ngModel)]="project.id" name="id" disabled />
                 </div>
               </div>
@@ -45,28 +58,48 @@
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-3 control-label">Name</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" [(ngModel)]="project.name" name="name" />
+                  <input type="text" class="form-control" [(ngModel)]="project.name" name="name" required #name="ngModel"  />
+                  <div *ngIf="name.errors && (name.dirty || name.touched)">
+                      <div [hidden]="!name.errors.required" class="ng-error">
+                        Project name is required.
+                      </div>
+                  </div>
                 </div>
               </div>
 
               <div class="form-group">
                 <label for="inputPassword3" class="col-sm-3 control-label">Description</label>
                 <div class="col-sm-9">
-                  <textarea class="form-control" [(ngModel)]="project.description" name="description"></textarea>
+                  <textarea class="form-control" [(ngModel)]="project.description" name="description" required #description="ngModel"></textarea>
+                  <div *ngIf="description.errors && (description.dirty || description.touched)">
+                      <div [hidden]="!description.errors.required" class="ng-error">
+                        Description is required.
+                      </div>
+                  </div>
                 </div>
               </div>
 
               <div class="form-group">
                 <label for="inputPassword3" class="col-sm-3 control-label">Default branch</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" [(ngModel)]="project.defaultBranch" name="defaultBranch" />
+                  <input type="text" class="form-control" [(ngModel)]="project.defaultBranch" name="defaultBranch" required #defaultBranch="ngModel" />
+                  <div *ngIf="defaultBranch.errors && (defaultBranch.dirty || defaultBranch.touched)">
+                      <div [hidden]="!defaultBranch.errors.required" class="ng-error">
+                        Default branch is required.
+                      </div>
+                  </div>
                 </div>
               </div>
 
               <div class="form-group">
                 <label for="inputPassword3" class="col-sm-3 control-label">Group</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" [(ngModel)]="project.group" name="group" />
+                  <input type="text" class="form-control" [(ngModel)]="project.group" name="group" required #group="ngModel" />
+                  <div *ngIf="group.errors && (group.dirty || group.touched)">
+                      <div [hidden]="!group.errors.required" class="ng-error">
+                        Group is required.
+                      </div>
+                  </div>
                 </div>
               </div>
 
@@ -111,7 +144,15 @@
             <div class="box-footer">
               <div class="row">
                 <div class="col-md-10">
-                  <input #branchname type="text" class="form-control input-sm" placeholder="Branch" />
+                  <input (keyup)="changeVisibleBranchName($event)" #branchname type="text" [ngClass]="{'form-control': true, 'input-sm': true, 'ng-invalid': visibleBranchNameRequired || visibleBranchNameExists, 'ng-touched': visibleBranchNameRequired || visibleBranchNameExists }" placeholder="Branch" />
+                  <div>
+                      <div [hidden]="!visibleBranchNameRequired" class="ng-error">
+                        Branch name is required.
+                      </div>
+                      <div [hidden]="!visibleBranchNameExists" class="ng-error">
+                        Branch name exists.
+                      </div>
+                  </div>
                 </div>
                 <div class="col-md-2">
                   <a class="btn btn-success btn-xs btn-flat pull-right" (click)="addVisibleBranch(branchname)">Add branch</a>
@@ -150,7 +191,15 @@
             <div class="box-footer">
               <div class="row">
                 <div class="col-md-10">
-                  <input #tagName type="text" class="form-control input-sm" placeholder="Tag" />
+                  <input (keyup)="changeTagName($event)" #tagName type="text" [ngClass]="{'form-control': true, 'input-sm': true, 'ng-invalid': tagNameRequired || tagNameExists, 'ng-touched': tagNameRequired || tagNameExists }" placeholder="Tag" />
+                  <div>
+                      <div [hidden]="!tagNameRequired" class="ng-error">
+                        Tag name is required.
+                      </div>
+                      <div [hidden]="!tagNameExists" class="ng-error">
+                        Tag name exists.
+                      </div>
+                  </div>
                 </div>
                 <div class="col-md-2">
                   <a class="btn btn-success btn-xs btn-flat pull-right" (click)="addTag(tagName)">Add tag</a>
@@ -190,10 +239,20 @@
             <div class="box-footer">
               <div class="row">
                 <div class="col-md-5">
-                  <input #contactName type="text" class="form-control input-sm" placeholder="Name" />
+                  <input (keyup)="changeContactName($event)" #contactName type="text" [ngClass]="{'form-control': true, 'input-sm': true, 'ng-invalid': contactNameRequred, 'ng-touched': contactNameRequred }" placeholder="Name" />
+                  <div>
+                      <div [hidden]="!contactNameRequred" class="ng-error">
+                        Contact name is required.
+                      </div>
+                  </div>
                 </div>
                 <div class="col-md-5">
-                  <input #contactEmail type="email" class="form-control input-sm" placeholder="Email" />
+                  <input (keyup)="changeContactEmail($event)" #contactEmail type="email" [ngClass]="{'form-control': true, 'input-sm': true, 'ng-invalid': contactEmailRequired, 'ng-touched': contactEmailRequired }" placeholder="Email" />
+                  <div>
+                      <div [hidden]="!contactEmailRequired" class="ng-error">
+                        Contact email is required.
+                      </div>
+                  </div>
                 </div>
                 <div class="col-md-2">
                   <a class="btn btn-success btn-xs btn-flat pull-right" (click)="addPeople(contactName, contactEmail)">Add person</a>
@@ -233,10 +292,20 @@
             <div class="box-footer">
               <div class="row">
                 <div class="col-md-5">
-                  <input #linkName type="text" class="form-control input-sm" placeholder="Branch" />
+                  <input (keyup)="changeLinkName($event)" #linkName type="text" [ngClass]="{'form-control': true, 'input-sm': true, 'ng-invalid': linkNameRequired, 'ng-touched': linkNameRequired }" placeholder="Branch" />
+                  <div>
+                      <div [hidden]="!linkNameRequired" class="ng-error">
+                        Branch name is required.
+                      </div>
+                  </div>
                 </div>
                 <div class="col-md-5">
-                  <input #linkValue type="text" class="form-control input-sm" placeholder="Link" />
+                  <input (keyup)="changeLinkValue($event)" #linkValue type="text" [ngClass]="{'form-control': true, 'input-sm': true, 'ng-invalid': linkValueRequired, 'ng-touched': linkValueRequired }" placeholder="Link" />
+                  <div>
+                      <div [hidden]="!linkValueRequired" class="ng-error">
+                        Branch url is required.
+                      </div>
+                  </div>
                 </div>
                 <div class="col-md-2">
                   <a class="btn btn-success btn-xs btn-flat pull-right" (click)="addLink(linkName, linkValue)">Add link</a>
