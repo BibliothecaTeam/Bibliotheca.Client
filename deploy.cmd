@@ -113,6 +113,7 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   echo    site_custom_style_url: "%SiteCustomStyleUrl%",
   echo    site_custom_style_name: "%SiteCustomStyleName%",
   echo    api_url: "%ApiUrl%",
+  echo    web_url: "%WebUrl%",
   echo    footer_name: "%FooterName%",
   echo    footer_url: "%FooterUrl%",
   echo    oauth_tenant: "%OAuthTenant%",
