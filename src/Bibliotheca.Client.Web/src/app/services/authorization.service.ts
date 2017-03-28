@@ -50,7 +50,7 @@ export class AuthorizationService {
                 + "&state="
                 + encodeURIComponent(nonce)
                 + "&redirect_uri="
-                + encodeURIComponent(this.redirectUri + '/login')
+                + encodeURIComponent(that.redirectUri + '/login')
                 + "&nonce="
                 + encodeURIComponent(nonce);
 
