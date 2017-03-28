@@ -17,6 +17,8 @@ export class UserInfoPage implements OnInit {
     private user: User;
     private roles: string[];
     private isEditMode: Boolean;
+    private projectNameRequired: Boolean;
+    private projectNameExists: Boolean;
 
     constructor(
         private header: HeaderService,
@@ -27,6 +29,7 @@ export class UserInfoPage implements OnInit {
         
         header.title = "User";
         this.user = new User();
+        this.user.role = "User";
         this.isEditMode = false;
 
         this.roles = [];
@@ -62,8 +65,26 @@ export class UserInfoPage implements OnInit {
             this.user.projects = [];
         }
 
+        if(name.value == "") {
+            this.projectNameRequired = true;
+            return;
+        }
+
+        if(this.user.projects.indexOf(name.value) >= 0) {
+            this.projectNameExists = true;
+            return;
+        }
+
         this.user.projects.push(name.value);
+
+        this.projectNameRequired = false;
+        this.projectNameExists = false;
         name.value = null;
+    }
+
+    changeProjectName(event: any) {
+        this.projectNameRequired = false;
+        this.projectNameExists = false;
     }
 
     deleteProject(index: number) {

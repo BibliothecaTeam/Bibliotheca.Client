@@ -304,3 +304,11 @@ input.form-control.search-component-input {
     line-height: 32px;
     font-size: 22px;
 }
+
+input.ng-invalid.ng-touched {
+    border: 1px solid #dd4b39;
+}
+
+.ng-error {
+    color: #dd4b39;
+}
