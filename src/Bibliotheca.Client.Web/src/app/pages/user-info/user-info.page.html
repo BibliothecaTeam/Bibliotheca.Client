@@ -93,6 +93,9 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <tr *ngIf="!user.projects || user.projects.length == 0">
+                    <td colspan="3"><div class="no-results-found">No projects were found.</div></td>
+                  </tr>
                   <tr *ngFor="let project of user.projects; let i = index">
                     <td>{{ i + 1}}</td>
                     <td>{{ project }}</td>

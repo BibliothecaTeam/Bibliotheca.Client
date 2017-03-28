@@ -133,6 +133,9 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <tr *ngIf="!project.visibleBranches || project.visibleBranches.length == 0">
+                    <td colspan="3"><div class="no-results-found">No branches were found.</div></td>
+                  </tr>
                   <tr *ngFor="let branch of project.visibleBranches; let i = index">
                     <td>{{ i + 1 }}</td>
                     <td>{{ branch }}</td>
@@ -178,6 +181,9 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <tr *ngIf="!project.tags || project.tags.length == 0">
+                    <td colspan="3"><div class="no-results-found">No tags were found.</div></td>
+                  </tr>
                   <tr *ngFor="let tag of project.tags; let i = index">
                     <td>{{ i + 1 }}</td>
                     <td>{{ tag }}</td>
@@ -225,6 +231,9 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <tr *ngIf="!project.contactPeople || project.contactPeople.length == 0">
+                    <td colspan="4"><div class="no-results-found">No contact people were found.</div></td>
+                  </tr>
                   <tr *ngFor="let contact of project.contactPeople; let i = index">
                     <td>{{ i + 1 }}</td>
                     <td>{{ contact.name }}</td>
@@ -278,6 +287,9 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <tr *ngIf="!project.editLinks || project.editLinks.length == 0">
+                    <td colspan="4"><div class="no-results-found">No links were found.</div></td>
+                  </tr>
                   <tr *ngFor="let link of project.editLinks; let i = index">
                     <td>{{ i + 1 }}</td>
                     <td>{{ link.branchName }}</td>
