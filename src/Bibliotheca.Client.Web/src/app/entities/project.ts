@@ -12,4 +12,5 @@ export class Project {
     projectSite: string;
     contactPeople: ContactPerson[];
     editLinks: EditLink[];
+    accessToken: string;
 }

@@ -107,6 +107,7 @@ export class UserInfoPage implements OnInit {
         if (this.isEditMode) {
             this.http.put("/api/users/" + this.user.id, this.user).subscribe(result => {
                 if (result.status == 200) {
+                    this.permissionService.clearUser();
                     this.toaster.pop('success', 'Success', 'User was saved successfully.');
                     this.router.navigate(['/users']);
                 } else {
@@ -118,6 +119,7 @@ export class UserInfoPage implements OnInit {
             this.user.id = this.user.id.toLowerCase();
             this.http.post("/api/users", this.user).subscribe(result => {
                 if (result.status == 201) {
+                    this.permissionService.clearUser();
                     this.toaster.pop('success', 'Success', 'User was created successfully.');
                     this.router.navigate(['/users']);
                 } else {

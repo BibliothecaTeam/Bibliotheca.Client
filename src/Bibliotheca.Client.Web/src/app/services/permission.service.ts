@@ -13,6 +13,10 @@ export class PermissionService {
     constructor(private http: HttpClientService, private jwtHeper: JwtHelper) {
     }
 
+    public clearUser() {
+        this.user = null;
+    }
+
     public hasAccessToProject(projectId: string) : Observable<boolean> {
 
         return new Observable(observer => {

@@ -111,6 +111,31 @@
               </div>
             </div>
           </div>
+
+          <!-- Start: Permissions -->
+          <div class="box box-danger">
+            <div class="box-header with-border">
+              <h3 class="box-title">Access</h3>
+            </div>
+            <div class="box-body">
+
+              <div class="form-group">
+                <label for="role" class="col-sm-3 control-label">Project token</label>
+                <div class="col-sm-9">
+                  <div class="input-group">
+                    <input type="text" class="form-control" [ngModel]="project.accessToken" name="accessToken" disabled />
+                    <span class="input-group-btn">
+                      <button (click)="regenerate()" type="button" class="btn btn-info btn-flat"><i class="fa fa-refresh"></i></button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+          <!-- End: Permissions -->
+
         </div>
         <!-- End: Main data -->
 

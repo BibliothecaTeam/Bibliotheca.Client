@@ -47,19 +47,25 @@ export class ProjectInfoPage implements OnInit {
         this.route.params
             .switchMap((params: Params) => {
                 if (params["id"]) {
-                    return this.http.get("/api/projects/" + params["id"]).map((res: Response) => res.json());
+
+                    return Observable.forkJoin(
+                        this.http.get("/api/projects/" + params["id"]).map((res: Response) => res.json()),
+                        this.http.get("/api/projects/" + params["id"] + "/accessToken").map((res: Response) => res.json())
+                    );
                 }
                 else {
+                    this.project.accessToken = this.newGuid();
                     return Observable.of(null);
                 }
             })
             .subscribe(data => {
-                if (data) {
-                    this.project = data;
+                if (Array.isArray(data)) {
+                    this.project = data[0];
+                    this.project.accessToken = data[1].accessToken;
                     this.isEditMode = true;
                 }
             },
-              err => console.error(err)
+                err => console.error(err)
             );
 
     }
@@ -212,7 +218,26 @@ export class ProjectInfoPage implements OnInit {
     }
 
     hasAccessToEdit() : Observable<boolean> {
+
+        if(!this.isEditMode) {
+            return new Observable(observer => {
+                observer.next(true);
+                observer.complete();
+            });
+        }
+
         return this.permissionService.hasAccessToProject(this.project.id);
+    }
+
+    regenerate() {
+        this.project.accessToken = this.newGuid();
+    }
+
+    newGuid() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+            return v.toString(16);
+        });
     }
 
     onSave() {
@@ -229,6 +254,7 @@ export class ProjectInfoPage implements OnInit {
         else {
             this.http.post("/api/projects", this.project).subscribe(result => {
                 if (result.status == 201) {
+                    this.permissionService.clearUser();
                     this.toaster.pop('success', 'Success', 'Project was created successfully.');
                     this.router.navigate(['/projects']);
                 } else {
