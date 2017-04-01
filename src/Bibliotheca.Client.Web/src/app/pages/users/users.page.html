@@ -28,7 +28,7 @@
           </tr>
           <tr *ngFor="let user of users; let i = index">
             <td>{{ i + 1 }}</td>
-            <td>{{ user.name }}</td>
+            <td><a [routerLink]="['/user-info', user.id]">{{ user.name }}</a></td>
             <td>{{ user.id }}</td>
             <td>
               <span *ngIf="user.role === 'User'" class="label label-success">User</span>

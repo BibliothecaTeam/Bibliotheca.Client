@@ -217,8 +217,50 @@ export class DocumentationPage {
     }
 
     public goToDocument(file: string) {
-        window.scrollTo(0,0);
-        this.router.navigate(['/docs', this.projectId, this.branchName, file]);
+        var fileExtension = this.getExtension(file);
+        if(fileExtension === "md") {
+            window.scrollTo(0,0);
+            this.router.navigate(['/docs', this.projectId, this.branchName, file]);
+        }
+        else {
+            this.downloadFile(file);
+        }
+    }
+
+    private downloadFile(file: string) {
+        this.getFileFromBackend(file).subscribe(
+            res => this.extractData(res.contentType, res.data),
+            (error:any) => Observable.throw(error || 'Server error')
+        );
+    }
+
+    private getFileFromBackend(file: string): Observable<any>{
+        return this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/content/' + file, { responseType: 2})
+            .map(
+                res => { 
+                    return { contentType: res.headers["Content-Type"], data: res.text()}
+                }
+            )
+            .catch(
+                (error:any) => Observable.throw(error || 'Server error')
+            );
+    }
+
+    private extractData(contentType: string, data: string) {
+        let myBlob: Blob = new Blob([data], { type: contentType });
+        var fileURL = URL.createObjectURL(myBlob);
+        window.open(fileURL);
+    }
+
+    private getExtension(path: string) {
+        var basename = path.split(/[\\/]/).pop();
+        var position = basename.lastIndexOf(".");
+
+        if (basename === "" || position < 1) {
+            return "";
+        }
+
+        return basename.slice(position + 1);
     }
 
     prepareShortcutsToArticles() {
