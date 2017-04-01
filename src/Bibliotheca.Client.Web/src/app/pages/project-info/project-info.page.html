@@ -35,7 +35,7 @@
             <div class="box-body">
 
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-3 control-label">Id</label>
+                <label for="id" class="col-sm-3 control-label">Id</label>
                 <div class="col-sm-9">
                   <div *ngIf="!isEditMode">
                     <input type="text" class="form-control" [(ngModel)]="project.id" name="id" minlength="3" maxlength="30" required #id="ngModel" />
@@ -56,7 +56,7 @@
               </div>
 
               <div class="form-group">
-                <label for="inputEmail3" class="col-sm-3 control-label">Name</label>
+                <label for="name" class="col-sm-3 control-label">Name</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control" [(ngModel)]="project.name" name="name" required #name="ngModel"  />
                   <div *ngIf="name.errors && (name.dirty || name.touched)">
@@ -68,7 +68,7 @@
               </div>
 
               <div class="form-group">
-                <label for="inputPassword3" class="col-sm-3 control-label">Description</label>
+                <label for="description" class="col-sm-3 control-label">Description</label>
                 <div class="col-sm-9">
                   <textarea class="form-control" [(ngModel)]="project.description" name="description" required #description="ngModel"></textarea>
                   <div *ngIf="description.errors && (description.dirty || description.touched)">
@@ -80,7 +80,7 @@
               </div>
 
               <div class="form-group">
-                <label for="inputPassword3" class="col-sm-3 control-label">Default branch</label>
+                <label for="defaultBranch" class="col-sm-3 control-label">Default branch</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control" [(ngModel)]="project.defaultBranch" name="defaultBranch" required #defaultBranch="ngModel" />
                   <div *ngIf="defaultBranch.errors && (defaultBranch.dirty || defaultBranch.touched)">
@@ -92,7 +92,7 @@
               </div>
 
               <div class="form-group">
-                <label for="inputPassword3" class="col-sm-3 control-label">Group</label>
+                <label for="group" class="col-sm-3 control-label">Group</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control" [(ngModel)]="project.group" name="group" required #group="ngModel" />
                   <div *ngIf="group.errors && (group.dirty || group.touched)">
@@ -104,141 +104,22 @@
               </div>
 
               <div class="form-group">
-                <label for="inputPassword3" class="col-sm-3 control-label">Project site</label>
+                <label for="projectSite" class="col-sm-3 control-label">Project site</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control" [(ngModel)]="project.projectSite" name="projectSite" />
                 </div>
               </div>
-            </div>
-          </div>
-
-          <!-- Start: Permissions -->
-          <div class="box box-danger">
-            <div class="box-header with-border">
-              <h3 class="box-title">Access</h3>
-            </div>
-            <div class="box-body">
 
               <div class="form-group">
-                <label for="role" class="col-sm-3 control-label">Project token</label>
+                <label for="isAccessLimited" class="col-sm-3 control-label">Limited access</label>
                 <div class="col-sm-9">
-                  <div class="input-group">
-                    <input type="text" class="form-control" [ngModel]="project.accessToken" name="accessToken" disabled />
-                    <span class="input-group-btn">
-                      <button (click)="regenerate()" type="button" class="btn btn-info btn-flat"><i class="fa fa-refresh"></i></button>
-                    </span>
-                  </div>
+                  <ui-switch color="#3c8dbc" [(ngModel)]="project.isAccessLimited" name="isAccessLimited"></ui-switch> 
+                  <div><small>Limit access to owner and contact people.</small></div>
                 </div>
               </div>
 
             </div>
-
           </div>
-          <!-- End: Permissions -->
-
-        </div>
-        <!-- End: Main data -->
-
-        <!-- Start: Tables -->
-        <div class="col-md-6">
-
-          <!-- Start: Visible branches -->
-          <div class="box box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title">Visible branches</h3>
-            </div>
-            <div class="box-body no-padding">
-
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th style="width: 20px">#</th>
-                    <th>Name</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngIf="!project.visibleBranches || project.visibleBranches.length == 0">
-                    <td colspan="3"><div class="no-results-found">No branches were found.</div></td>
-                  </tr>
-                  <tr *ngFor="let branch of project.visibleBranches; let i = index">
-                    <td>{{ i + 1 }}</td>
-                    <td>{{ branch }}</td>
-                    <td><a (click)="deleteVisibleBranch(i)" class="pointer-cursor text-red pull-right">Delete</a></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="box-footer">
-              <div class="row">
-                <div class="col-md-10">
-                  <input (keyup)="changeVisibleBranchName($event)" #branchname type="text" [ngClass]="{'form-control': true, 'input-sm': true, 'ng-invalid': visibleBranchNameRequired || visibleBranchNameExists, 'ng-touched': visibleBranchNameRequired || visibleBranchNameExists }" placeholder="Branch" />
-                  <div>
-                      <div [hidden]="!visibleBranchNameRequired" class="ng-error">
-                        Branch name is required.
-                      </div>
-                      <div [hidden]="!visibleBranchNameExists" class="ng-error">
-                        Branch name exists.
-                      </div>
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <a class="btn btn-success btn-xs btn-flat pull-right" (click)="addVisibleBranch(branchname)">Add branch</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End: Visible branches -->
-
-          <!-- Start: Tags -->
-          <div class="box box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title">Tags</h3>
-            </div>
-            <div class="box-body no-padding">
-
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th style="width: 20px">#</th>
-                    <th>Name</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngIf="!project.tags || project.tags.length == 0">
-                    <td colspan="3"><div class="no-results-found">No tags were found.</div></td>
-                  </tr>
-                  <tr *ngFor="let tag of project.tags; let i = index">
-                    <td>{{ i + 1 }}</td>
-                    <td>{{ tag }}</td>
-                    <td>
-                      <a (click)="deleteTag(i)" class="pointer-cursor text-red pull-right">Delete</a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="box-footer">
-              <div class="row">
-                <div class="col-md-10">
-                  <input (keyup)="changeTagName($event)" #tagName type="text" [ngClass]="{'form-control': true, 'input-sm': true, 'ng-invalid': tagNameRequired || tagNameExists, 'ng-touched': tagNameRequired || tagNameExists }" placeholder="Tag" />
-                  <div>
-                      <div [hidden]="!tagNameRequired" class="ng-error">
-                        Tag name is required.
-                      </div>
-                      <div [hidden]="!tagNameExists" class="ng-error">
-                        Tag name exists.
-                      </div>
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <a class="btn btn-success btn-xs btn-flat pull-right" (click)="addTag(tagName)">Add tag</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End: Tags -->
 
           <!-- Start: Contact people -->
           <div class="box box-info">
@@ -296,6 +177,134 @@
           </div>
           <!-- End: Contact people -->
 
+        </div>
+        <!-- End: Main data -->
+
+        <!-- Start: Tables -->
+        <div class="col-md-6">
+
+          <!-- Start: Permissions -->
+          <div class="box box-danger">
+            <div class="box-header with-border">
+              <h3 class="box-title">Access</h3>
+            </div>
+            <div class="box-body">
+
+              <div class="form-group">
+                <label for="role" class="col-sm-3 control-label">Project token</label>
+                <div class="col-sm-9">
+                  <div class="input-group">
+                    <input type="text" class="form-control" [ngModel]="project.accessToken" name="accessToken" disabled />
+                    <span class="input-group-btn">
+                      <button (click)="regenerate()" type="button" class="btn btn-info btn-flat"><i class="fa fa-refresh"></i></button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+          <!-- End: Permissions -->
+
+          <!-- Start: Tags -->
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Tags</h3>
+            </div>
+            <div class="box-body no-padding">
+
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th style="width: 20px">#</th>
+                    <th>Name</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="!project.tags || project.tags.length == 0">
+                    <td colspan="3"><div class="no-results-found">No tags were found.</div></td>
+                  </tr>
+                  <tr *ngFor="let tag of project.tags; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ tag }}</td>
+                    <td>
+                      <a (click)="deleteTag(i)" class="pointer-cursor text-red pull-right">Delete</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="box-footer">
+              <div class="row">
+                <div class="col-md-10">
+                  <input (keyup)="changeTagName($event)" #tagName type="text" [ngClass]="{'form-control': true, 'input-sm': true, 'ng-invalid': tagNameRequired || tagNameExists, 'ng-touched': tagNameRequired || tagNameExists }" placeholder="Tag" />
+                  <div>
+                      <div [hidden]="!tagNameRequired" class="ng-error">
+                        Tag name is required.
+                      </div>
+                      <div [hidden]="!tagNameExists" class="ng-error">
+                        Tag name exists.
+                      </div>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <a class="btn btn-success btn-xs btn-flat pull-right" (click)="addTag(tagName)">Add tag</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End: Tags -->
+
+         <!-- Start: Visible branches -->
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Visible branches</h3>
+            </div>
+            <div class="box-body no-padding">
+
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th style="width: 20px">#</th>
+                    <th>Name</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="!project.visibleBranches || project.visibleBranches.length == 0">
+                    <td colspan="3"><div class="no-results-found">No branches were found.</div></td>
+                  </tr>
+                  <tr *ngFor="let branch of project.visibleBranches; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ branch }}</td>
+                    <td><a (click)="deleteVisibleBranch(i)" class="pointer-cursor text-red pull-right">Delete</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="box-footer">
+              <div class="row">
+                <div class="col-md-10">
+                  <input (keyup)="changeVisibleBranchName($event)" #branchname type="text" [ngClass]="{'form-control': true, 'input-sm': true, 'ng-invalid': visibleBranchNameRequired || visibleBranchNameExists, 'ng-touched': visibleBranchNameRequired || visibleBranchNameExists }" placeholder="Branch" />
+                  <div>
+                      <div [hidden]="!visibleBranchNameRequired" class="ng-error">
+                        Branch name is required.
+                      </div>
+                      <div [hidden]="!visibleBranchNameExists" class="ng-error">
+                        Branch name exists.
+                      </div>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <a class="btn btn-success btn-xs btn-flat pull-right" (click)="addVisibleBranch(branchname)">Add branch</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End: Visible branches -->
+
           <!-- Start: Link to sources -->
           <div class="box box-info">
             <div class="box-header with-border">
@@ -318,7 +327,7 @@
                   <tr *ngFor="let link of project.editLinks; let i = index">
                     <td>{{ i + 1 }}</td>
                     <td>{{ link.branchName }}</td>
-                    <td>{{ link.link }}</td>
+                    <td><div class="long-text-wrapper">{{ link.link }}</div></td>
                     <td>
                       <a (click)="deleteLink(i)" class="pointer-cursor text-red pull-right">Delete</a>
                     </td>

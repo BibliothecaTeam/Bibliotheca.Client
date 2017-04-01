@@ -316,3 +316,8 @@ textarea.ng-invalid.ng-touched {
 .ng-error {
     color: #dd4b39;
 }
+
+.long-text-wrapper {
+    word-break: break-all;
+    table-layout: fixed;
+}

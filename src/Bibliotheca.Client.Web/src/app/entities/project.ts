@@ -13,4 +13,5 @@ export class Project {
     contactPeople: ContactPerson[];
     editLinks: EditLink[];
     accessToken: string;
+    isAccessLimited: Boolean;
 }

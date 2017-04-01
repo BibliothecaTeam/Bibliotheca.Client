@@ -8,6 +8,7 @@ import { JwtHelper } from 'angular2-jwt';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { HighlightJsModule, HighlightJsService } from 'angular2-highlight-js';
 import { MultiselectDropdownModule  } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
+import { UiSwitchModule } from 'angular2-ui-switch/src'
 
 import { AppComponent } from './app.component';
 
@@ -88,6 +89,7 @@ export function appInitializationFactory(config: AppConfigService) {
     ToasterModule,
     HighlightJsModule,
     MultiselectDropdownModule,
+    UiSwitchModule,
     RouterModule.forRoot([
     { path: '', redirectTo: 'home', pathMatch: 'full', canActivate: [AuthorizationGuardService] },
         { path: 'home', component: HomePage, canActivate: [AuthorizationGuardService] },
