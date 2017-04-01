@@ -10,6 +10,7 @@ import { Project } from '../../entities/project';
 import { EditLink } from '../../entities/edit-link';
 import { HttpClientService } from '../../services/http-client.service';
 import { HeaderService } from '../../services/header.service';
+import { AppConfigService } from '../../services/app-config.service';
 
 @Component({
     selector: 'app-documentation',
@@ -35,7 +36,13 @@ export class DocumentationPage {
     private breadcrumbs: Toc[];
     private searchResults: SearchResults;
 
-    constructor(private route: ActivatedRoute, private http: HttpClientService, private header: HeaderService, private router: Router) {
+    constructor(
+        private route: ActivatedRoute, 
+        private http: HttpClientService, 
+        private header: HeaderService, 
+        private router: Router,
+        private appConfig: AppConfigService) 
+    {
         this.ref = this;
     }
 
@@ -223,33 +230,9 @@ export class DocumentationPage {
             this.router.navigate(['/docs', this.projectId, this.branchName, file]);
         }
         else {
-            this.downloadFile(file);
+            var url = this.appConfig.apiUrl + '/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/content/' + file + "?access_token=" + localStorage["adal.idtoken"];
+            window.location.assign(url);
         }
-    }
-
-    private downloadFile(file: string) {
-        this.getFileFromBackend(file).subscribe(
-            res => this.extractData(res.contentType, res.data),
-            (error:any) => Observable.throw(error || 'Server error')
-        );
-    }
-
-    private getFileFromBackend(file: string): Observable<any>{
-        return this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/content/' + file, { responseType: 2})
-            .map(
-                res => { 
-                    return { contentType: res.headers["Content-Type"], data: res.text()}
-                }
-            )
-            .catch(
-                (error:any) => Observable.throw(error || 'Server error')
-            );
-    }
-
-    private extractData(contentType: string, data: string) {
-        let myBlob: Blob = new Blob([data], { type: contentType });
-        var fileURL = URL.createObjectURL(myBlob);
-        window.open(fileURL);
     }
 
     private getExtension(path: string) {
