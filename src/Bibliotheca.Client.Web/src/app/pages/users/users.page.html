@@ -22,15 +22,15 @@
           <tbody><tr>
             <th>#</th>
             <th>User</th>
-            <th>Email</th>
-            <th>Role</th>
+            <th class="hidden-xs hidden-sm hidden-md">Email</th>
+            <th class="hidden-xs hidden-sm hidden-md">Role</th>
             <th>Actions</th>
           </tr>
           <tr *ngFor="let user of users; let i = index">
             <td>{{ i + 1 }}</td>
             <td>{{ user.name }}</td>
-            <td>{{ user.id }}</td>
-            <td>
+            <td class="hidden-xs hidden-sm hidden-md">{{ user.id }}</td>
+            <td class="hidden-xs hidden-sm hidden-md">
               <span *ngIf="user.role === 'User'" class="label label-success">User</span>
               <span *ngIf="user.role === 'Writer'" class="label label-primary">Writer</span>
               <span *ngIf="user.role === 'Administrator'" class="label label-danger">Administrator</span>

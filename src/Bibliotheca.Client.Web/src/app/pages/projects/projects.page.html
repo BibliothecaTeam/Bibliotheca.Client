@@ -22,9 +22,9 @@
           <tbody><tr>
             <th>#</th>
             <th>Name</th>
-            <th>Tags</th>
-            <th>Default branch</th>
-            <th>Group</th>
+            <th class="hidden-xs hidden-sm hidden-md">Tags</th>
+            <th class="hidden-xs hidden-sm hidden-md">Default branch</th>
+            <th class="hidden-xs hidden-sm hidden-md">Group</th>
             <th>Actions</th>
           </tr>
           <tr *ngFor="let project of projects; let i = index">
@@ -32,11 +32,11 @@
             <td>
               {{ project.name }}
             </td>
-            <td>
+            <td class="hidden-xs hidden-sm hidden-md">
               <span *ngFor="let tag of project.tags"><span class="label label-primary"> {{ tag }} </span>&nbsp;&nbsp;</span>
             </td>
-            <td>{{ project.defaultBranch }}</td>
-            <td>{{ project.group }}</td>
+            <td class="hidden-xs hidden-sm hidden-md">{{ project.defaultBranch }}</td>
+            <td class="hidden-xs hidden-sm hidden-md">{{ project.group }}</td>
             <td>
               <a *ngIf="hasAccessToEdit(project.id) | async" [routerLink]="['/project-info', project.id]" class="btn btn-default btn-xs btn-flat">Edit</a>
               <span *ngIf="hasAccessToDelete(project.id) | async">
