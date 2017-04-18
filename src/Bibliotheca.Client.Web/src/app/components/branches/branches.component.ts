@@ -11,7 +11,7 @@ import { HttpClientService } from '../../services/http-client.service';
 export class BranchesComponent {
     
     @Input()
-    public projectId: string;
+    public project: Project;
 
     public branches: Branch[];
 
@@ -20,8 +20,21 @@ export class BranchesComponent {
     }
 
     ngOnInit() {
-        this.httpClient.get('/api/projects/' + this.projectId + '/branches').subscribe(result => {
-            this.branches = result.json();
+        this.httpClient.get('/api/projects/' + this.project.id + '/branches').subscribe(result => {
+
+            var branches:Branch[] = result.json();
+            this.branches = [];
+
+            for(var item of branches) {
+                if(this.isOnVisibleBranches(item.name)) {
+                    this.branches.push(item);
+                }
+            }
+
         });
+    }
+
+    private isOnVisibleBranches(branchName: string) : boolean {
+        return this.project.visibleBranches.indexOf(branchName) >= 0;
     }
 }
