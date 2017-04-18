@@ -21,7 +21,7 @@
     "@angular/platform-browser-dynamic": "^4.0.1",
     "@angular/router": "^4.0.1",
     "admin-lte": "^2.3.11",
-    "angular-2-dropdown-multiselect": "^1.0.6",
+    "angular-2-dropdown-multiselect": "^1.0.8",
     "angular2-highlight-js": "^4.0.0",
     "angular2-jwt": "^0.2.0",
     "angular2-toaster": "^3.0.1",

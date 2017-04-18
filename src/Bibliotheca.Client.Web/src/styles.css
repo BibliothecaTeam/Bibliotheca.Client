@@ -321,3 +321,7 @@ textarea.ng-invalid.ng-touched {
     word-break: break-all;
     table-layout: fixed;
 }
+
+.dropdown-item.search {
+    margin: 5px;
+}
