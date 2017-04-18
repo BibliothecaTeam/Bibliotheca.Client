@@ -33,7 +33,7 @@
               {{ project.name }}
             </td>
             <td class="hidden-xs hidden-sm hidden-md">
-              <span *ngFor="let tag of project.tags"><span class="label label-primary"> {{ tag }} </span>&nbsp;&nbsp;</span>
+              <small *ngFor="let tag of project.tags" class="label bg-gray document-tag"> {{ tag }} </small>
             </td>
             <td class="hidden-xs hidden-sm hidden-md">{{ project.defaultBranch }}</td>
             <td class="hidden-xs hidden-sm">{{ project.group }}</td>
