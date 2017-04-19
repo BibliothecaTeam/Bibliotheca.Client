@@ -224,10 +224,15 @@ export class DocumentationPage {
     }
 
     public goToDocument(file: string) {
-        var fileExtension = this.getExtension(file);
-        if(fileExtension === "md") {
-            window.scrollTo(0,0);
-            this.router.navigate(['/docs', this.projectId, this.branchName, file]);
+        if(this.isMarkdownFile(file)) {
+            if(this.isSameFileAsOpened(file)) {
+                var elementId = this.getPathFragment(file);
+                document.getElementById(elementId).scrollIntoView(); 
+            }
+            else {
+                window.scrollTo(0,0);
+                this.router.navigate(['/docs', this.projectId, this.branchName, file]);
+            }
         }
         else {
             var url = this.appConfig.apiUrl + '/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/content/' + file + "?access_token=" + localStorage["adal.idtoken"];
@@ -235,15 +240,56 @@ export class DocumentationPage {
         }
     }
 
-    private getExtension(path: string) {
-        var basename = path.split(/[\\/]/).pop();
-        var position = basename.lastIndexOf(".");
+    private isMarkdownFile(file: string) : boolean {
+        var fileExtension = this.getExtension(file);
+        return fileExtension === "md";
+    }
 
-        if (basename === "" || position < 1) {
-            return "";
+    private isSameFileAsOpened(file: string) : boolean {
+        var pathWithoutFragment = this.getPathWithoutFragment(file);
+        return this.fileUri === pathWithoutFragment;
+    }
+
+    private getPathWithoutFragment(url: string) : string {
+        var index = url.indexOf("#");
+        if (index !== -1) {
+            url = url.substring(0, index);
         }
 
-        return basename.slice(position + 1);
+        return url;
+    }
+
+    private getPathFragment(url: string) : string {
+        var index = url.indexOf("#");
+        if (index !== -1) {
+            url = url.substring(index + 1, url.length);
+        }
+
+        return url;
+    }
+
+    private getExtension(url: string) : string {
+        if (url === null) {
+            return "";
+        }
+        
+        var index = url.lastIndexOf("/");
+        if (index !== -1) {
+            url = url.substring(index + 1);
+        }
+
+        index = url.indexOf("?");
+        if (index !== -1) {
+            url = url.substring(0, index);
+        }
+
+        index = url.indexOf("#");
+        if (index !== -1) {
+            url = url.substring(0, index);
+        }
+
+        index = url.lastIndexOf(".");
+        return index !== -1 ? url.substring(index + 1) : "";
     }
 
     prepareShortcutsToArticles() {
