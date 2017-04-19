@@ -2,5 +2,5 @@
     <i class="fa fa-refresh fa-spin"></i>
 </div>
 <span *ngFor="let branch of branches; let i = index">
-    <span class="branch-separator" *ngIf="i > 0"> | </span><a [routerLink]="['/docs', projectId, branch.name, branch.docsDir + '/index.md']" routerLinkActive="active">{{ branch.name }}</a> 
+    <span class="branch-separator" *ngIf="i > 0"> | </span><a [routerLink]="['/docs', project.id, branch.name, branch.docsDir + '/index.md']" routerLinkActive="active">{{ branch.name }}</a> 
 </span>
