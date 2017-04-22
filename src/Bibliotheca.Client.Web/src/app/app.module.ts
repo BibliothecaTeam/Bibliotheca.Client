@@ -94,6 +94,8 @@ export function appInitializationFactory(config: AppConfigService) {
     { path: '', redirectTo: 'home', pathMatch: 'full', canActivate: [AuthorizationGuardService] },
         { path: 'home', component: HomePage, canActivate: [AuthorizationGuardService] },
         { path: 'search/:query', component: SearchPage, canActivate: [AuthorizationGuardService] },
+        { path: 'docs/:project', component: DocumentationPage, canActivate: [AuthorizationGuardService] },
+        { path: 'docs/:project/:branch', component: DocumentationPage, canActivate: [AuthorizationGuardService] },
         { path: 'docs/:project/:branch/:file', component: DocumentationPage, canActivate: [AuthorizationGuardService] },
         { path: 'docs/:project/:branch/:file/:query', component: DocumentationPage, canActivate: [AuthorizationGuardService] },
         { path: 'users', component: UsersPage, canActivate: [AuthorizationGuardService] },

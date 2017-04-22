@@ -12,6 +12,15 @@ import { HttpClientService } from '../../services/http-client.service';
 import { HeaderService } from '../../services/header.service';
 import { AppConfigService } from '../../services/app-config.service';
 
+enum PageContext {
+    QueryEmpty = 1,
+    QueryWithContext = 2,
+    DocumentEmpty = 3,
+    DocumentWithContext = 4,
+    FileAndBranchNotSpecify = 5,
+    FileNotSpecify = 6
+}
+
 @Component({
     selector: 'app-documentation',
     templateUrl: './documentation.page.html'
@@ -58,6 +67,8 @@ export class DocumentationPage {
 
                         return Observable.forkJoin(
 
+                            Observable.of({ requestType: PageContext.QueryEmpty }),
+
                             this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/toc').map((res: Response) => res.json()),
 
                             this.http.get('/api/projects/' + this.projectId).map((res: Response) => res.json()),
@@ -69,65 +80,122 @@ export class DocumentationPage {
                         );
                     }
                     else {
-                        return this.http.get("/api/search/projects/" + params["project"] + "/branches/" + 
-                            params["branch"] + "?query=" + params["query"]).map((res: Response) => res.json());
+
+                        return Observable.forkJoin(
+                            
+                            Observable.of({ requestType: PageContext.QueryWithContext }),
+
+                            this.http.get("/api/search/projects/" + params["project"] + "/branches/" + 
+                                params["branch"] + "?query=" + params["query"]).map((res: Response) => res.json())
+                        );
                     }
                 }
                 else 
                 {
-                    this.fileUri = params['file'].replace(/\//g, ":");
-                    window.scrollTo(0,0);
-
-                    if (this.projectId != params['project'] || this.branchName != params['branch']) {
+                    if(!params['file'] && !params['branch']) {
                         this.projectId = params['project'];
-                        this.branchName = params['branch'];
 
                         return Observable.forkJoin(
 
-                            this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/toc').map((res: Response) => res.json()),
+                            Observable.of({ requestType: PageContext.FileAndBranchNotSpecify }),
 
                             this.http.get('/api/projects/' + this.projectId).map((res: Response) => res.json()),
 
-                            this.http.get('/api/projects/' + this.projectId + '/branches').map((res: Response) => res.json()),
+                            this.http.get('/api/projects/' + this.projectId + '/branches').map((res: Response) => res.json())
+                        );
+                    }
+                    else if(!params['file']) {
+                        this.projectId = params['project'];
+                        this.branchName = params['branch'];
+                        
+                        return Observable.forkJoin(
 
-                            this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/content/' + this.fileUri).map((res: Response) => res.text() as any)
+                            Observable.of({ requestType: PageContext.FileNotSpecify }),
+
+                            this.http.get('/api/projects/' + this.projectId + '/branches').map((res: Response) => res.json())
                         );
                     }
                     else {
-                        return this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/content/' + this.fileUri).map((res: Response) => res.text() as any);
+
+                        window.scrollTo(0,0);
+                        this.fileUri = params['file'].replace(/\//g, ":");
+
+                        if (this.projectId != params['project'] || this.branchName != params['branch']) {
+                            this.projectId = params['project'];
+                            this.branchName = params['branch'];
+
+                            return Observable.forkJoin(
+
+                                Observable.of({ requestType: PageContext.DocumentEmpty }),
+
+                                this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/toc').map((res: Response) => res.json()),
+
+                                this.http.get('/api/projects/' + this.projectId).map((res: Response) => res.json()),
+
+                                this.http.get('/api/projects/' + this.projectId + '/branches').map((res: Response) => res.json()),
+
+                                this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/content/' + this.fileUri).map((res: Response) => res.text() as any)
+                            );
+                        }
+                        else {
+                            return Observable.forkJoin(
+                                
+                                Observable.of({ requestType: PageContext.DocumentWithContext }),
+
+                                this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/content/' + this.fileUri).map((res: Response) => res.text() as any)
+                            );
+                        }
+
                     }
                 }
             })
             .subscribe(data => {
-                if (Array.isArray(data)) {
-                    this.searchResults = null;
-                    this.toc = data[0];
-                    this.project = data[1];
-                    this.branches = data[2];
+                this.searchResults = null;
+                this.document = null;
+
+                var requestType = data[0].requestType;
+                if(requestType == PageContext.QueryEmpty) {
+                    
+                    this.toc = data[1];
+                    this.project = data[2];
+                    this.branches = data[3];
 
                     this.header.title = this.project.name;
 
                     this.flatToc = [];
                     this.changeTocToDictionary(this.toc, null);
-
-                    if(this.isSearchResultPage(data[3])) {
-                        this.document = null;
-                        this.prepareSearchResultPage(data[3]);
-                    }
-                    else {
-                        this.prepareDocumentPage(data[3]);
-                    }
+                    this.prepareSearchResultPage(data[4]);
                 }
-                else {
-                    if(this.isSearchResultPage(data)) {
-                        this.document = null;
-                        this.prepareSearchResultPage(data);
-                    }
-                    else {
-                        this.searchResults = null;
-                        this.prepareDocumentPage(data);
-                    }
- 
+                else if(requestType == PageContext.DocumentEmpty) {
+                    this.searchResults = null;
+                    this.toc = data[1];
+                    this.project = data[2];
+                    this.branches = data[3];
+
+                    this.header.title = this.project.name;
+
+                    this.flatToc = [];
+                    this.changeTocToDictionary(this.toc, null);
+                    this.prepareDocumentPage(data[4]);
+                }
+                else if(requestType == PageContext.QueryWithContext) {
+                    this.prepareSearchResultPage(data[1]);
+                }
+                else if(requestType == PageContext.DocumentWithContext) {
+                    this.prepareDocumentPage(data[1]);
+                }
+                else if(requestType == PageContext.FileAndBranchNotSpecify) {
+                    var project:Project = data[1];
+                    var branches:Branch[] = data[2];
+
+                    let fileUri = this.getDefaultFileUri(branches, project.defaultBranch);
+                    this.router.navigate(['/docs', project.id, project.defaultBranch, fileUri]);
+                }
+                else if(requestType == PageContext.FileNotSpecify) {
+                    var branches:Branch[] = data[1];
+
+                    let fileUri = this.getDefaultFileUri(branches, this.branchName);
+                    this.router.navigate(['/docs', this.projectId, this.branchName, fileUri]);
                 }
             },
                 error => {
@@ -136,8 +204,16 @@ export class DocumentationPage {
             );
     }
 
-    isSearchResultPage(response: any) : boolean {
-        return response.numberOfResults || response.numberOfResults == 0;
+    private getDefaultFileUri(branches: Branch[], branchName:String) : string {
+        var fileUri:string;
+        for(let branch of branches) {
+            if(branch.name == branchName) {
+                fileUri = branch.docsDir + ":index.md";
+                break;
+            }
+        }
+
+        return fileUri;
     }
 
     prepareSearchResultPage(searchResults: SearchResults) {
