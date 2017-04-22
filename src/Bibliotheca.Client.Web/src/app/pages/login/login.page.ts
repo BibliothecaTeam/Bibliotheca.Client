@@ -25,7 +25,14 @@ export class LoginPage {
             this.authorization.initImplicitFlow();
         }
         else {
-            this.router.navigate(['/home']);
+            var returnUrl = localStorage.getItem("returnUrl");
+            if(returnUrl) {
+                localStorage.removeItem("returnUrl");
+                window.location.replace(returnUrl);
+            }
+            else {
+                this.router.navigate(['/home']);
+            }
         }
     }
 }

@@ -38,6 +38,7 @@ export class AuthorizationService {
     public initImplicitFlow() {
         try
         {
+            this.saveReturnUrl();
             var url = this.createLoginUrl();
             window.location.replace(url);
         }
@@ -64,6 +65,10 @@ export class AuthorizationService {
 
         return url;
     };
+
+    private saveReturnUrl() {
+        localStorage.setItem("returnUrl", document.location.toString());
+    }
 
     private saveNonce(nonce: string) {
         localStorage.setItem("adal.nonce.idtoken", nonce);
