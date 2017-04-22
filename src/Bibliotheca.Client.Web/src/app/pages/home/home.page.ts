@@ -128,4 +128,10 @@ export class HomePage {
 
         return "";
     }
+
+    getGroupLetters(group: string) : string {
+        var matches = group.match(/\b(\w)/g);
+        var acronym = matches.join('');
+        return acronym.substring(0, 2).toUpperCase();  
+    }
 }
