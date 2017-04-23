@@ -325,3 +325,8 @@ textarea.ng-invalid.ng-touched {
 .dropdown-item.search {
     margin: 5px;
 }
+
+.table-responsive {
+    border: 0px;
+    margin-bottom: 0px;
+}
