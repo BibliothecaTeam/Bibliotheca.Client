@@ -13,8 +13,12 @@ export class ServicesPage implements OnInit {
 
     constructor(private header: HeaderService, private http: HttpClientService) { 
         header.title = "Services";
+        this.refreshServicesState();
+    }
 
-        http.get('/api/services').subscribe(result => {
+    protected refreshServicesState() {
+        this.services = null;
+        this.http.get('/api/services').subscribe(result => {
             this.services = result.json();
         });
     }
