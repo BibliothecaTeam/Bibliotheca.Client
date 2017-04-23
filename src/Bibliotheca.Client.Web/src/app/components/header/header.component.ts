@@ -15,9 +15,10 @@ export class HeaderComponent {
     @Output() 
     private openHomeEvent: EventEmitter<any> = new EventEmitter();
 
-    private hasAccessToAccount: boolean = false;
-    private hasAccessToProjects: boolean = false;
-    private hasAccessToUsers: boolean = false;
+    protected hasAccessToAccount: boolean = false;
+    protected hasAccessToProjects: boolean = false;
+    protected hasAccessToUsers: boolean = false;
+    protected hasAccessToServices: boolean = false;
 
     constructor(private header: HeaderService, private router: Router, private permissionService: PermissionService) {
         
@@ -30,6 +31,7 @@ export class HeaderComponent {
 
             if(role == Role.Administrator) {
                 this.hasAccessToUsers = true;
+                this.hasAccessToServices = true;
             }
 
         });

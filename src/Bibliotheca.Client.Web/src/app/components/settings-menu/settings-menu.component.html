@@ -21,6 +21,12 @@
           <span class="pull-right-container"></span>
         </a>
       </li>
+      <li *ngIf="hasAccessToServices" class="{{ isActive('services') }}">
+        <a [routerLink]="['/services']" routerLinkActive="active">
+          <i class="fa fa-gears"></i> <span>Services</span>
+          <span class="pull-right-container"></span>
+        </a>
+      </li>
     </ul>
 
   </section>

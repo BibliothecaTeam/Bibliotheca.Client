@@ -14,9 +14,10 @@ export class SettingsMenuComponent {
     @Input()
     public active: string;
 
-    private hasAccessToAccount: boolean = false;
-    private hasAccessToProjects: boolean = false;
-    private hasAccessToUsers: boolean = false;
+    protected hasAccessToAccount: boolean = false;
+    protected hasAccessToProjects: boolean = false;
+    protected hasAccessToUsers: boolean = false;
+    protected hasAccessToServices: boolean = false;
 
     constructor(private permissionService: PermissionService) {
 
@@ -29,10 +30,10 @@ export class SettingsMenuComponent {
 
             if(role == Role.Administrator) {
                 this.hasAccessToUsers = true;
+                this.hasAccessToServices = true;
             }
 
         });
-
     }
 
     private isActive(menuId: string) : string {
@@ -40,7 +41,6 @@ export class SettingsMenuComponent {
             return "active";
         }
 
-        return "aaaaa";
+        return "";
     }
-
 }

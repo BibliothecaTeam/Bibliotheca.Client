@@ -42,6 +42,11 @@
                         <i class="fa fa-users"></i>
                     </a>
                 </li>
+                <li *ngIf="hasAccessToServices">
+                    <a [routerLink]="['/services']" routerLinkActive="active">
+                        <i class="fa fa-gears"></i>
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>

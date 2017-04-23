@@ -1,0 +1,50 @@
+<!-- Header -->
+<app-header></app-header>
+
+<!-- Left sidebar -->
+<app-settings-menu active="services"></app-settings-menu>
+
+<!-- Content Wrapper -->
+<div class="content-wrapper" style="min-height: 1126px;">
+
+  <!-- Main content -->
+  <section class="content">
+
+    <!-- Content -->
+
+    <div *ngFor="let service of services" class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">{{ service.name }}</h3>
+      </div>
+
+      <div class="box-body table-responsive no-padding">
+        <table class="table table-hover">
+          <tbody><tr>
+            <th style="width: 30px">#</th>
+            <th>Id</th>
+            <th style="width: 500px" class="hidden-xs hidden-sm hidden-md">Address</th>
+            <th style="width: 80px" class="hidden-xs hidden-sm hidden-md">Port</th>
+            <th style="width: 80px">Status</th>
+          </tr>
+          <tr *ngFor="let instance of service.instances; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ instance.id }}</td>
+            <td class="hidden-xs hidden-sm hidden-md">{{ instance.address }}</td>
+            <td class="hidden-xs hidden-sm">{{ instance.port }}</td>
+            <td>
+                <span *ngIf="instance.healthStatus === 'passing'" class="label label-success">{{ instance.healthStatus }}</span>
+                <span *ngIf="instance.healthStatus !== 'passing'" class="label label-danger">{{ instance.healthStatus }}</span>
+            </td>
+          </tr>
+        </tbody></table>
+      </div>
+            
+    </div>
+
+    <!-- End Content -->
+
+  </section>
+</div>
+
+<!-- Footer -->
+<app-footer></app-footer>

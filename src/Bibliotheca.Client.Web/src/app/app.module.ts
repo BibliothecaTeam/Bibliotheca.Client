@@ -45,6 +45,7 @@ import { UserInfoPage } from './pages/user-info/user-info.page';
 import { ProjectsPage } from './pages/projects/projects.page';
 import { ProjectInfoPage } from './pages/project-info/project-info.page';
 import { AccountPage } from './pages/account/account.page';
+import { ServicesPage } from './pages/services/services.page';
 
 export function httpClientServiceFactory(backend: XHRBackend, options: RequestOptions, authorization: AuthorizationService, appConfig: AppConfigService, router: Router) {
   return new HttpClientService(backend, options, authorization, appConfig, router);
@@ -80,7 +81,8 @@ export function appInitializationFactory(config: AppConfigService) {
     ProjectsPage,
     ProjectInfoPage,
     AccountPage,
-    ForbiddenPage
+    ForbiddenPage,
+    ServicesPage
   ],
   imports: [
     BrowserModule,
@@ -99,6 +101,7 @@ export function appInitializationFactory(config: AppConfigService) {
         { path: 'docs/:project/:branch/:file', component: DocumentationPage, canActivate: [AuthorizationGuardService] },
         { path: 'docs/:project/:branch/:file/:query', component: DocumentationPage, canActivate: [AuthorizationGuardService] },
         { path: 'users', component: UsersPage, canActivate: [AuthorizationGuardService] },
+        { path: 'services', component: ServicesPage, canActivate: [AuthorizationGuardService] },
         { path: 'user-info', component: UserInfoPage, canActivate: [AuthorizationGuardService] },
         { path: 'user-info/:id', component: UserInfoPage, canActivate: [AuthorizationGuardService] },
         { path: 'projects', component: ProjectsPage, canActivate: [AuthorizationGuardService] },
