@@ -8,7 +8,7 @@ import { Branch } from '../../entities/branch';
 import { SearchResults } from '../../entities/search-results';
 import { Project } from '../../entities/project';
 import { EditLink } from '../../entities/edit-link';
-import { HttpClientService } from '../../services/http-client.service';
+import { GatewayClientService } from '../../services/gateway-client.service';
 import { HeaderService } from '../../services/header.service';
 import { AppConfigService } from '../../services/app-config.service';
 
@@ -47,7 +47,7 @@ export class DocumentationPage {
 
     constructor(
         private route: ActivatedRoute, 
-        private http: HttpClientService, 
+        private gatewayClient: GatewayClientService, 
         private header: HeaderService, 
         private router: Router,
         private appConfig: AppConfigService) 
@@ -66,27 +66,22 @@ export class DocumentationPage {
                         this.branchName = params['branch'];
 
                         return Observable.forkJoin(
-
                             Observable.of({ requestType: PageContext.QueryEmpty }),
 
-                            this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/toc').map((res: Response) => res.json()),
-
-                            this.http.get('/api/projects/' + this.projectId).map((res: Response) => res.json()),
-
-                            this.http.get('/api/projects/' + this.projectId + '/branches').map((res: Response) => res.json()),
-
-                            this.http.get("/api/search/projects/" + params["project"] + "/branches/" + 
-                                params["branch"] + "?query=" + params["query"]).map((res: Response) => res.json())
+                            this.gatewayClient.getTableOfContents(this.projectId, this.branchName).map((res: Response) => res.json()),
+                            this.gatewayClient.getProject(this.projectId).map((res: Response) => res.json()),
+                            this.gatewayClient.getBranches(this.projectId).map((res: Response) => res.json()),
+                            this.gatewayClient.searchInBranch(params["project"], params["branch"], params["query"])
+                                .map((res: Response) => res.json())
                         );
                     }
                     else {
 
                         return Observable.forkJoin(
-                            
                             Observable.of({ requestType: PageContext.QueryWithContext }),
 
-                            this.http.get("/api/search/projects/" + params["project"] + "/branches/" + 
-                                params["branch"] + "?query=" + params["query"]).map((res: Response) => res.json())
+                            this.gatewayClient.searchInBranch(params["project"], params["branch"], params["query"])
+                                .map((res: Response) => res.json())
                         );
                     }
                 }
@@ -96,12 +91,10 @@ export class DocumentationPage {
                         this.projectId = params['project'];
 
                         return Observable.forkJoin(
-
                             Observable.of({ requestType: PageContext.FileAndBranchNotSpecify }),
 
-                            this.http.get('/api/projects/' + this.projectId).map((res: Response) => res.json()),
-
-                            this.http.get('/api/projects/' + this.projectId + '/branches').map((res: Response) => res.json())
+                            this.gatewayClient.getProject(this.projectId).map((res: Response) => res.json()),
+                            this.gatewayClient.getBranches(this.projectId).map((res: Response) => res.json())
                         );
                     }
                     else if(!params['file']) {
@@ -109,10 +102,9 @@ export class DocumentationPage {
                         this.branchName = params['branch'];
                         
                         return Observable.forkJoin(
-
                             Observable.of({ requestType: PageContext.FileNotSpecify }),
 
-                            this.http.get('/api/projects/' + this.projectId + '/branches').map((res: Response) => res.json())
+                            this.gatewayClient.getBranches(this.projectId).map((res: Response) => res.json())
                         );
                     }
                     else {
@@ -128,13 +120,10 @@ export class DocumentationPage {
 
                                 Observable.of({ requestType: PageContext.DocumentEmpty }),
 
-                                this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/toc').map((res: Response) => res.json()),
-
-                                this.http.get('/api/projects/' + this.projectId).map((res: Response) => res.json()),
-
-                                this.http.get('/api/projects/' + this.projectId + '/branches').map((res: Response) => res.json()),
-
-                                this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/content/' + this.fileUri).map((res: Response) => res.text() as any)
+                                this.gatewayClient.getTableOfContents(this.projectId, this.branchName).map((res: Response) => res.json()),
+                                this.gatewayClient.getProject(this.projectId).map((res: Response) => res.json()),
+                                this.gatewayClient.getBranches(this.projectId).map((res: Response) => res.json()),
+                                this.gatewayClient.getDocumentContent(this.projectId, this.branchName, this.fileUri).map((res: Response) => res.text() as any)
                             );
                         }
                         else {
@@ -142,7 +131,7 @@ export class DocumentationPage {
                                 
                                 Observable.of({ requestType: PageContext.DocumentWithContext }),
 
-                                this.http.get('/api/projects/' + this.projectId + '/branches/' + this.branchName + '/documents/content/' + this.fileUri).map((res: Response) => res.text() as any)
+                                this.gatewayClient.getDocumentContent(this.projectId, this.branchName, this.fileUri).map((res: Response) => res.text() as any)
                             );
                         }
 
@@ -476,7 +465,8 @@ export class DocumentationPage {
                 var folderPath = this.getFolderPath(this.fileUri);
                 var fullPath = this.getFullPath(folderPath, match[2]);
 
-                document = document.replace(match[0], "src=\"" + this.http.serverAddress + "/api/projects/" + this.projectId + "/branches/" + this.branchName + "/documents/content/" + fullPath + "?access_token=" + localStorage["adal.idtoken"] + "\"");
+                var pathToImage = this.gatewayClient.getPathToImage(this.projectId, this.branchName, fullPath);
+                document = document.replace(match[0], pathToImage);
             }
             var match = regex.exec(document);
         }

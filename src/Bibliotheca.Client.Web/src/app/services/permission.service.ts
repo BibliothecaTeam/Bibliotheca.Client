@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { HttpClientService } from './http-client.service';
+import { GatewayClientService } from './gateway-client.service';
 import { JwtHelper } from 'angular2-jwt';
 import { Role } from '../entities/role';
 import { User } from '../entities/user';
@@ -10,7 +10,7 @@ export class PermissionService {
     
     private user : User;
 
-    constructor(private http: HttpClientService, private jwtHeper: JwtHelper) {
+    constructor(private gatewayClient: GatewayClientService, private jwtHeper: JwtHelper) {
     }
 
     public clearUser() {
@@ -94,7 +94,7 @@ export class PermissionService {
                 var uniqueName = decoded["unique_name"];
                 
                 var userId = uniqueName.toLowerCase();
-                this.http.get('/api/users/' + userId).subscribe(
+                this.gatewayClient.getUser(userId).subscribe(
                     result => {
                         this.user = result.json();
                         observer.next(this.user);

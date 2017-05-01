@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Project } from '../../entities/project';
 import { Branch } from '../../entities/branch';
-import { HttpClientService } from '../../services/http-client.service';
+import { GatewayClientService } from '../../services/gateway-client.service';
 import { HeaderService } from '../../services/header.service';
 import { IMultiSelectOption, IMultiSelectSettings,IMultiSelectTexts  } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
 
@@ -43,23 +43,23 @@ export class HomePage {
         defaultTitle: 'Choose tags',
     };
 
-    constructor(private httpClient: HttpClientService, private header: HeaderService) {
+    constructor(private gatewayClient: GatewayClientService, private header: HeaderService) {
 
         header.title = "Projects";
 
-        httpClient.get('/api/groups').subscribe(result => {
+        this.gatewayClient.getGroups().subscribe(result => {
             var groups: string[] = result.json();
             groups.unshift("All projects");
             this.groups = groups;
         });
 
-        httpClient.get('/api/projects').subscribe(result => {
+        this.gatewayClient.getProjects().subscribe(result => {
             var json = result.json();
             this.projects = json.results;
             this.allProjects = json.allResults;
         });
 
-        httpClient.get('/api/tags').subscribe(result => {
+        this.gatewayClient.getTags().subscribe(result => {
             this.tagsArray = result.json();
             this.tagsArray.forEach(element => {
                 this.tags.push({ id: element, name: element });
@@ -74,31 +74,11 @@ export class HomePage {
     }
 
     filterProject() {
-
-        var groupfilter = "";
-        if(this.selectedGroup != "") {
-            groupfilter = "?groups=" + this.selectedGroup;
-        }
-
-        var tagsFilter = "";
-        if(this.selectedTags.length > 0) {
-            var separator = "&";
-            if(groupfilter == "") {
-                separator = "?";
-            }
-
-            for(let selectedtag of this.selectedTags) {
-                tagsFilter +=  separator + "tags=" + selectedtag;
-                separator = "&";
-            }
-        }
-
-        this.httpClient.get('/api/projects' + groupfilter + tagsFilter).subscribe(result => {
+        this.gatewayClient.getFilteredProjects(this.selectedGroup, this.selectedTags).subscribe(result => {
             var json = result.json();
             this.projects = json.results;
             this.allProjects = json.allResults;
         });
-
     }
 
     showGroup(group: string) {

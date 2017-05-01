@@ -3,7 +3,7 @@ import { Http, Response } from '@angular/http';
 import { Project } from '../../entities/project';
 import { Branch } from '../../entities/branch';
 import { Router } from '@angular/router';
-import { HttpClientService } from '../../services/http-client.service';
+import { GatewayClientService } from '../../services/gateway-client.service';
 import { ToasterService } from 'angular2-toaster';
 
 @Component({
@@ -18,7 +18,7 @@ export class ProjectsBlocksComponent {
     @Input()
     public style: string;
 
-    constructor(private httpClient: HttpClientService, private router: Router, private toaster: ToasterService) {
+    constructor(private gatewayClient: GatewayClientService, private router: Router, private toaster: ToasterService) {
     }
 
     openDocumentation(id: string) {
@@ -36,7 +36,7 @@ export class ProjectsBlocksComponent {
             return;
         }
 
-        this.httpClient.get('/api/projects/' + id + '/branches/' + defaultBranch).subscribe(result => {
+        this.gatewayClient.getBranch(id, defaultBranch).subscribe(result => {
             var branch = result.json();
             this.router.navigate(['/docs', id, defaultBranch, branch.docsDir + '/index.md']);
         });

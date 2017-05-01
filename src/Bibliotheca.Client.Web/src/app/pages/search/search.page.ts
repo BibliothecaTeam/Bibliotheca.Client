@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { HeaderService } from '../../services/header.service';
-import { HttpClientService } from '../../services/http-client.service';
+import { GatewayClientService } from '../../services/gateway-client.service';
 import { SearchResults } from '../../entities/search-results';
 import { Project } from '../../entities/project';
 import { Observable } from 'rxjs/Rx';
@@ -18,7 +18,7 @@ export class SearchPage {
     private searchResults: SearchResults;
     private projects: Project[];
 
-    constructor(private header:HeaderService, private route: ActivatedRoute, private http: HttpClientService) {
+    constructor(private header:HeaderService, private route: ActivatedRoute, private gatewayClient: GatewayClientService) {
         header.title = "Searching";
     }
 
@@ -28,15 +28,14 @@ export class SearchPage {
 
                 if(params["project"]) {
                     return Observable.forkJoin(
-                        this.http.get("/api/search/projects/" + params["project"] + "/branches/" + 
-                            params["branch"] + "?query=" + params["query"]).map((res: Response) => res.json()),
-                        this.http.get("/api/projects?query=" + params["query"]).map((res: Response) => res.json())
+                        this.gatewayClient.searchInBranch(params["project"], params["branch"], params["query"]).map((res: Response) => res.json()),
+                        this.gatewayClient.getProjectsWithKeywords(params["query"]).map((res: Response) => res.json())
                     );
                 }
                 else {
                     return Observable.forkJoin(
-                        this.http.get("/api/search?query=" + params["query"]).map((res: Response) => res.json()),
-                        this.http.get("/api/projects?query=" + params["query"]).map((res: Response) => res.json())
+                        this.gatewayClient.search(params["query"]).map((res: Response) => res.json()),
+                        this.gatewayClient.getProjectsWithKeywords(params["query"]).map((res: Response) => res.json())
                     );
                 }
 

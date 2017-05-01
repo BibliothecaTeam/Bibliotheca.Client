@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderService } from '../../services/header.service';
-import { HttpClientService } from '../../services/http-client.service';
+import { GatewayClientService } from '../../services/gateway-client.service';
 import { Service } from '../../entities/service';
 
 @Component({
@@ -11,14 +11,14 @@ export class ServicesPage implements OnInit {
 
     protected services: Service[];
 
-    constructor(private header: HeaderService, private http: HttpClientService) { 
+    constructor(private header: HeaderService, private gatewayClient: GatewayClientService) { 
         header.title = "Services";
         this.refreshServicesState();
     }
 
     protected refreshServicesState() {
         this.services = null;
-        this.http.get('/api/services').subscribe(result => {
+        this.gatewayClient.getServices().subscribe(result => {
             this.services = result.json();
         });
     }

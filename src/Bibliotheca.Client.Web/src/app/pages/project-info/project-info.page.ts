@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HeaderService } from '../../services/header.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Http, Response } from '@angular/http';
-import { HttpClientService } from '../../services/http-client.service';
+import { GatewayClientService } from '../../services/gateway-client.service';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/switchMap';
 import { Project } from '../../entities/project';
@@ -32,7 +32,7 @@ export class ProjectInfoPage implements OnInit {
     constructor(
         private header: HeaderService,
         private route: ActivatedRoute,
-        private http: HttpClientService,
+        private gatewayClient: GatewayClientService,
         private toaster: ToasterService,
         private router: Router,
         private permissionService: PermissionService) {
@@ -49,8 +49,8 @@ export class ProjectInfoPage implements OnInit {
                 if (params["id"]) {
 
                     return Observable.forkJoin(
-                        this.http.get("/api/projects/" + params["id"]).map((res: Response) => res.json()),
-                        this.http.get("/api/projects/" + params["id"] + "/accessToken").map((res: Response) => res.json())
+                        this.gatewayClient.getProject(params["id"]).map((res: Response) => res.json()),
+                        this.gatewayClient.getProjectAccessToken(params["id"]).map((res: Response) => res.json())
                     );
                 }
                 else {
@@ -242,7 +242,7 @@ export class ProjectInfoPage implements OnInit {
 
     onSave() {
         if (this.isEditMode) {
-            this.http.put("/api/projects/" + this.project.id, this.project).subscribe(result => {
+            this.gatewayClient.updateProject(this.project.id, this.project).subscribe(result => {
                 if (result.status == 200) {
                     this.toaster.pop('success', 'Success', 'Project was saved successfully.');
                     this.router.navigate(['/projects']);
@@ -252,7 +252,7 @@ export class ProjectInfoPage implements OnInit {
             });
         }
         else {
-            this.http.post("/api/projects", this.project).subscribe(result => {
+            this.gatewayClient.createProject(this.project).subscribe(result => {
                 if (result.status == 201) {
                     this.permissionService.clearUser();
                     this.toaster.pop('success', 'Success', 'Project was created successfully.');

@@ -4,7 +4,7 @@ import { HeaderService } from '../../services/header.service';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/switchMap';
-import { HttpClientService } from '../../services/http-client.service';
+import { GatewayClientService } from '../../services/gateway-client.service';
 import { ToasterService } from 'angular2-toaster';
 import { User } from '../../entities/user';
 import { Role } from '../../entities/role';
@@ -26,7 +26,7 @@ export class UserInfoPage implements OnInit {
     constructor(
         private header: HeaderService,
         private route: ActivatedRoute,
-        private http: HttpClientService,
+        private gatewayClient: GatewayClientService,
         private toaster: ToasterService,
         private router: Router,
         private permissionService: PermissionService) {
@@ -55,7 +55,7 @@ export class UserInfoPage implements OnInit {
                 });
 
                 if (params["id"]) {
-                    return this.http.get("/api/users/" + params["id"]).map((res: Response) => res.json());
+                    return this.gatewayClient.getUser(params["id"]).map((res: Response) => res.json());
                 }
                 else {
                     return Observable.of(null);
@@ -105,7 +105,7 @@ export class UserInfoPage implements OnInit {
 
     onSave() {
         if (this.isEditMode) {
-            this.http.put("/api/users/" + this.user.id, this.user).subscribe(result => {
+            this.gatewayClient.updateUser(this.user.id, this.user).subscribe(result => {
                 if (result.status == 200) {
                     this.permissionService.clearUser();
                     this.toaster.pop('success', 'Success', 'User was saved successfully.');
@@ -117,7 +117,7 @@ export class UserInfoPage implements OnInit {
         }
         else {
             this.user.id = this.user.id.toLowerCase();
-            this.http.post("/api/users", this.user).subscribe(result => {
+            this.gatewayClient.createUser(this.user).subscribe(result => {
                 if (result.status == 201) {
                     this.permissionService.clearUser();
                     this.toaster.pop('success', 'Success', 'User was created successfully.');

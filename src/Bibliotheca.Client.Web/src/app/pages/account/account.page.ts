@@ -4,7 +4,7 @@ import { HeaderService } from '../../services/header.service';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/switchMap';
-import { HttpClientService } from '../../services/http-client.service';
+import { GatewayClientService } from '../../services/gateway-client.service';
 import { ToasterService } from 'angular2-toaster';
 import { User } from '../../entities/user';
 import { JwtHelper } from 'angular2-jwt';
@@ -22,7 +22,7 @@ export class AccountPage implements OnInit {
     constructor(
         private header: HeaderService,
         private route: ActivatedRoute,
-        private http: HttpClientService,
+        private gatewayClient: GatewayClientService,
         private toaster: ToasterService,
         private router: Router,
         private jwtHeper: JwtHelper) {
@@ -43,7 +43,7 @@ export class AccountPage implements OnInit {
             var uniqueName = decoded["unique_name"];
             
             var userId = uniqueName.toLowerCase();
-            http.get('/api/users/' + userId).subscribe(result => {
+            this.gatewayClient.getUser(userId).subscribe(result => {
                 this.user = result.json();
             });
         }
@@ -55,8 +55,7 @@ export class AccountPage implements OnInit {
     regenerate() {
         
         this.user.accessToken = this.newGuid();
-
-        this.http.put("/api/users/" + this.user.id + "/refreshToken", { accessToken: this.user.accessToken }).subscribe(result => {
+        this.gatewayClient.refreshUserToken(this.user.id, this.user.accessToken).subscribe(result => {
             if (result.status == 200) {
                 this.toaster.pop('success', 'Success', 'User was saved successfully.');
             } else {

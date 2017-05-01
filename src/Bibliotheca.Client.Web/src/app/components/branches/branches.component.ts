@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Project } from '../../entities/project';
 import { Branch } from '../../entities/branch';
-import { HttpClientService } from '../../services/http-client.service';
+import { GatewayClientService } from '../../services/gateway-client.service';
 
 @Component({
     selector: 'app-branches',
@@ -15,13 +15,11 @@ export class BranchesComponent {
 
     public branches: Branch[];
 
-    constructor(private httpClient: HttpClientService) {
-        this.httpClient = httpClient;
+    constructor(private gatewayClient: GatewayClientService) {
     }
 
     ngOnInit() {
-        this.httpClient.get('/api/projects/' + this.project.id + '/branches').subscribe(result => {
-
+        this.gatewayClient.getBranches(this.project.id).subscribe(result => {
             var branches:Branch[] = result.json();
             this.branches = [];
 
@@ -30,7 +28,6 @@ export class BranchesComponent {
                     this.branches.push(item);
                 }
             }
-
         });
     }
 

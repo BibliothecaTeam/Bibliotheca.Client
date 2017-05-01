@@ -65,7 +65,7 @@ export class HttpClientService extends Http {
         };
     }
 
-    createAuthorizationHeader(headers: Headers) {
+    private createAuthorizationHeader(headers: Headers) {
         var token = localStorage.getItem("adal.idtoken");
         if(token != null)
         {

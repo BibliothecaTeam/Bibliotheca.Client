@@ -19,6 +19,7 @@ import { HeaderService } from './services/header.service';
 import { HtmlCompileService } from './services/html-compile.service';
 import { HttpClientService } from './services/http-client.service';
 import { PermissionService } from './services/permission.service';
+import { GatewayClientService } from './services/gateway-client.service';
 
 import { BranchesComponent } from './components/branches/branches.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -126,6 +127,7 @@ export function appInitializationFactory(config: AppConfigService) {
     HttpClientService,
     HighlightJsService,
     PermissionService,
+    GatewayClientService,
     JwtHelper,
     {
       provide: HttpClientService,

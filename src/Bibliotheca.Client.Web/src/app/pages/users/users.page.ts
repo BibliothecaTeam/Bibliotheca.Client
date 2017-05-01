@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderService } from '../../services/header.service';
-import { HttpClientService } from '../../services/http-client.service';
+import { GatewayClientService } from '../../services/gateway-client.service';
 import { ToasterService } from 'angular2-toaster';
 import { User } from '../../entities/user';
 
@@ -12,10 +12,10 @@ export class UsersPage implements OnInit {
 
   private users: User[];
 
-  constructor(private header: HeaderService, private http: HttpClientService, private toaster: ToasterService) { 
+  constructor(private header: HeaderService, private gatewayClient: GatewayClientService, private toaster: ToasterService) { 
       header.title = "Users";
 
-      http.get('/api/users').subscribe(result => {
+      this.gatewayClient.getUsers().subscribe(result => {
           this.users = result.json();
       });
   }
@@ -35,7 +35,7 @@ export class UsersPage implements OnInit {
     confirmDeleteUser(index: number) {
         var user = this.users[index];
 
-        this.http.delete("/api/users/" + user.id).subscribe(result => {
+        this.gatewayClient.deleteUser(user.id).subscribe(result => {
             if(result.status == 200) {
                 this.toaster.pop('success', 'Success', 'User was deleted successfully.');
                 this.users.splice(index, 1);
