@@ -1,7 +1,9 @@
+import { HealthStatus } from "./health-status";
+
 export class Instance {
     id: string;
     address: string;
     port: number;
-    healthStatus: string;
+    healthStatus: HealthStatus;
     healthOuptput: string;
 }

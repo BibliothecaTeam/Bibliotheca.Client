@@ -44,8 +44,8 @@
                 <td class="hidden-xs hidden-sm hidden-md">{{ instance.address }}</td>
                 <td class="hidden-xs hidden-sm hidden-md">{{ instance.port }}</td>
                 <td>
-                    <span *ngIf="instance.healthStatus === 'passing'" class="label label-success">{{ instance.healthStatus }}</span>
-                    <span *ngIf="instance.healthStatus !== 'passing'" class="label label-danger">{{ instance.healthStatus }}</span>
+                    <span *ngIf="isPassing(instance.healthStatus)" class="label label-success">passing</span>
+                    <span *ngIf="!isPassing(instance.healthStatus)" class="label label-danger">critical</span>
                 </td>
               </tr>
             </tbody>
