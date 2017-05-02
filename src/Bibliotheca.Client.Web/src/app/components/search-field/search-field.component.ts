@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import { GatewayClientService } from "../../services/gateway-client.service";
+import { HeaderService } from "../../services/header.service";
 
 @Component({
     selector: 'app-search-field',
@@ -14,13 +15,13 @@ export class SearchFieldComponent {
     protected scope: string;
     protected searchIsEnabled: boolean;
 
-    constructor(private router: Router, private route: ActivatedRoute, private gatewayClient: GatewayClientService) {
+    constructor(private router: Router, private route: ActivatedRoute, private headerService: HeaderService) {
         this.scope = "All projects";
 
         this.searchIsEnabled = false;
-        this.gatewayClient.searchIsEnabled().subscribe(result => {
-            var json = result.json();
-            this.searchIsEnabled = json.isAlive;
+
+        this.headerService.isSearchEnabled().subscribe(isEnabled => {
+            this.searchIsEnabled = isEnabled;
         });
     }
 
