@@ -1,19 +1,27 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
+import { GatewayClientService } from "../../services/gateway-client.service";
 
 @Component({
     selector: 'app-search-field',
     templateUrl: './search-field.component.html'
 })
 export class SearchFieldComponent {
-    private searchKeywords: string;
-    private project: string;
-    private branch: string;
-    private scope: string;
+    protected searchKeywords: string;
+    protected project: string;
+    protected branch: string;
+    protected scope: string;
+    protected searchIsEnabled: boolean;
 
-    constructor(private router: Router, private route: ActivatedRoute) {
+    constructor(private router: Router, private route: ActivatedRoute, private gatewayClient: GatewayClientService) {
         this.scope = "All projects";
+
+        this.searchIsEnabled = false;
+        this.gatewayClient.searchIsEnabled().subscribe(result => {
+            var json = result.json();
+            this.searchIsEnabled = json.isAlive;
+        });
     }
 
     public onSearch(event: Event) {

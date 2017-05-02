@@ -1,4 +1,4 @@
-<form class="navbar-form navbar-left" role="search" (submit)="onSearch($event)">
+<form *ngIf="searchIsEnabled" class="navbar-form navbar-left" role="search" (submit)="onSearch($event)">
     <div class="search-component">
         <label class="form-control search-component-container">
         <div class="search-component-scope">{{ scope }}</div>

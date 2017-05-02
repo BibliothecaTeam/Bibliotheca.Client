@@ -104,6 +104,8 @@ export class PermissionService {
                         this.user = new User();
                         this.user.id = userId;
                         this.user.role = "Unknown";
+                        observer.next(this.user);
+                        observer.complete();
                     }
                 );
             }

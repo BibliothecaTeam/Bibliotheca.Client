@@ -121,6 +121,10 @@ export class GatewayClientService {
         return this.httpClient.get("/api/search?query=" + query);
     }
 
+    public searchIsEnabled() {
+        return this.httpClient.get("/api/search/isEnabled");
+    }
+
     public getPathToImage(projectId:string, branchName:string, fullPath:string) : string {
         return "src=\"" + this.httpClient.serverAddress + "/api/projects/" + projectId + "/branches/" + branchName + "/documents/content/" + fullPath + "?access_token=" + localStorage["adal.idtoken"] + "\"";
     }
