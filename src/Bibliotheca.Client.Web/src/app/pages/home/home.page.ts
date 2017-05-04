@@ -4,7 +4,7 @@ import { Project } from '../../entities/project';
 import { Branch } from '../../entities/branch';
 import { GatewayClientService } from '../../services/gateway-client.service';
 import { HeaderService } from '../../services/header.service';
-import { IMultiSelectOption, IMultiSelectSettings,IMultiSelectTexts  } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
+import { IMultiSelectOption, IMultiSelectSettings,IMultiSelectTexts  } from 'angular-2-dropdown-multiselect';
 
 @Component({
     selector: 'app-home',

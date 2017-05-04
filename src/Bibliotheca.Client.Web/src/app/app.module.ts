@@ -7,7 +7,7 @@ import { RouterModule, Router } from '@angular/router';
 import { JwtHelper } from 'angular2-jwt';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { HighlightJsModule, HighlightJsService } from 'angular2-highlight-js';
-import { MultiselectDropdownModule  } from 'angular-2-dropdown-multiselect/src/multiselect-dropdown';
+import { MultiselectDropdownModule  } from 'angular-2-dropdown-multiselect';
 import { UiSwitchModule } from 'angular2-ui-switch/src'
 
 import { AppComponent } from './app.component';
