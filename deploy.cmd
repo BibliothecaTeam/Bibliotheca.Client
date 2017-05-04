@@ -131,19 +131,19 @@ echo Copying web config
 call copy web.config dist\
 
 :: 7. Copy custom styles if exists
-IF EXISTS "%HOME%\site\assets\%SiteCustomStyleUrl%" (
+IF EXIST "%HOME%\site\assets\%SiteCustomStyleUrl%" (
   echo Copying custom css styles
   call copy "%HOME%\site\assets\%SiteCustomStyleUrl%" "%DEPLOYMENT_TARGET%\dist\%SiteCustomStyleUrl%"
 )
 
 :: 8. Copy custom logo if exists
-IF EXISTS "%HOME%\site\assets\logo-white.svg" (
+IF EXIST "%HOME%\site\assets\logo-white.svg" (
   echo Copying custom big logo
   call copy "%HOME%\site\assets\logo-white.svg" "%DEPLOYMENT_TARGET%\dist\assets\logo-white.svg"
 )
 
 :: 9. Copy custom small logo if exists
-IF EXISTS "%HOME%\site\assets\logo-small-white.svg" (
+IF EXIST "%HOME%\site\assets\logo-small-white.svg" (
   echo Copying custom small logo
   call copy "%HOME%\site\assets\logo-small-white.svg" "%DEPLOYMENT_TARGET%\dist\assets\logo-small-white.svg"
 )
