@@ -1,0 +1,169 @@
+/*
+ * Skin: Unit4
+ * ----------
+ */
+.skin-default .main-header .navbar {
+  background-color: #fff;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
+}
+.skin-default .main-header .navbar .nav > li > a {
+  color: #4a5c69;
+}
+.skin-default .main-header .navbar .nav > li > a:hover,
+.skin-default .main-header .navbar .nav > li > a:active,
+.skin-default .main-header .navbar .nav > li > a:focus,
+.skin-default .main-header .navbar .nav .open > a,
+.skin-default .main-header .navbar .nav .open > a:hover,
+.skin-default .main-header .navbar .nav .open > a:focus,
+.skin-default .main-header .navbar .nav > .active > a {
+  background: rgba(0, 0, 0, 0.1);
+  color: #4a5c69;
+}
+.skin-default .main-header .navbar .sidebar-toggle {
+  color: #4a5c69;
+}
+.skin-default .main-header .navbar .sidebar-toggle:hover {
+  color: #40505d;
+  background: rgba(0, 0, 0, 0.1);
+}
+.skin-default .main-header .navbar .sidebar-toggle:hover {
+  background-color: #fff;
+}
+@media (max-width: 767px) {
+  .skin-default .main-header .navbar .dropdown-menu li.divider {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  .skin-default .main-header .navbar .dropdown-menu li a {
+    color: #fff;
+  }
+  .skin-default .main-header .navbar .dropdown-menu li a:hover {
+    background: #367fa9;
+  }
+}
+.skin-default .main-header .logo {
+  background-color: #4a5c69;
+  color: #f5f5f6;
+  border-bottom: 0 solid transparent;
+  border-bottom: 1px solid #374752;
+}
+
+.skin-default .main-header li.user-header {
+  background-color: #3c8dbc;
+}
+.skin-default .header-title{
+    color: #4a5c69;
+}
+.skin-default .search-field .input-group-addon {
+    border: none;
+}
+
+.skin-default .search-field .input-group-addon i {
+    position: relative; 
+    left: 25px; 
+    z-index: 10;
+}
+
+.skin-default .search-field .navbar-form .input-group input {
+    padding-left: 20px; 
+    width: 400px; 
+    border-top:none; 
+    border-left: none; 
+    border-right: none;
+}
+.skin-default .content-header {
+  background: transparent;
+}
+.skin-default .wrapper,
+.skin-default .main-sidebar,
+.skin-default .left-side {
+  background-color: #4a5c69;
+}
+.skin-default .user-panel > .info,
+.skin-default .user-panel > .info > a {
+  color: #f5f5f6;
+}
+.skin-default .sidebar-menu > li.header {
+  color: #f5f5f6;
+  background: #4a5c69;
+}
+.skin-default .sidebar-menu > li > a {
+  border-left: 3px solid transparent;
+}
+.skin-default .sidebar-menu > li:hover > a,
+.skin-default .sidebar-menu > li.active > a {
+  color: #f5f5f6;
+  background: #40505d;
+  border-left-color: #afc836;
+}
+.skin-default .sidebar-menu > li > .treeview-menu {
+  margin: 0 1px;
+  background: #2c3b41;
+}
+.skin-default .sidebar a {
+  color: #f5f5f6;
+}
+.skin-default .sidebar a:hover {
+  text-decoration: none;
+}
+.skin-default .treeview-menu > li > a {
+  color: #8aa4af;
+}
+.skin-default .treeview-menu > li.active > a,
+.skin-default .treeview-menu > li > a:hover {
+  color: #ffffff;
+}
+.skin-default .sidebar-form {
+  border-radius: 3px;
+  border: 1px solid #374850;
+  margin: 10px 10px;
+}
+.skin-default .sidebar-form input[type="text"],
+.skin-default .sidebar-form .btn {
+  box-shadow: none;
+  background-color: #374850;
+  border: 1px solid transparent;
+  height: 35px;
+}
+.skin-default .sidebar-form input[type="text"] {
+  color: #666;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 2px;
+}
+.skin-default .sidebar-form input[type="text"]:focus,
+.skin-default .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
+  background-color: #fff;
+  color: #666;
+}
+.skin-default .sidebar-form input[type="text"]:focus + .input-group-btn .btn {
+  border-left-color: #fff;
+}
+.skin-default .sidebar-form .btn {
+  color: #999;
+  border-top-left-radius: 0;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 0;
+}
+.skin-default.layout-top-nav .main-header > .logo {
+  background-color: #3c8dbc;
+  color: #ffffff;
+  border-bottom: 0 solid transparent;
+}
+.skin-default.layout-top-nav .main-header > .logo:hover {
+  background-color: #3b8ab8;
+}
+
+.skin-default .box {
+    border: 1px solid #e6e6e6;
+    box-shadow: none;
+    border-radius: 0px;
+}
+.skin-default .box .box-body {
+    color: #7d7d7d;
+}
+
+.skin-default .box.box-default {
+  border-top-color: #afc836;
+}

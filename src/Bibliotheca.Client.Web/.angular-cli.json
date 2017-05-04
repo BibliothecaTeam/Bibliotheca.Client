@@ -26,7 +26,8 @@
         "../node_modules/admin-lte/plugins/pace/pace.min.css",
         "../node_modules/angular2-toaster/toaster.css",
         "../node_modules/highlightjs/styles/vs.css",
-        "styles.css"
+        "styles.css",
+        "skin-default.css"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
