@@ -130,6 +130,24 @@ call :ExecuteCmd node "%DEPLOYMENT_TARGET%\node_modules\@angular\cli\bin\ng" bui
 echo Copying web config
 call copy web.config dist\
 
+:: 7. Copy custom styles if exists
+IF EXISTS "%ARTIFACTS%\assets\%SiteCustomStyleUrl%" (
+  echo Copying custom css styles
+  call copy "%ARTIFACTS%\assets\%SiteCustomStyleUrl%" "%DEPLOYMENT_TARGET%\dist\%SiteCustomStyleUrl%"
+)
+
+:: 8. Copy custom logo if exists
+IF EXISTS "%ARTIFACTS%\assets\logo-white.svg" (
+  echo Copying custom big logo
+  call copy "%ARTIFACTS%\assets\logo-white.svg" "%DEPLOYMENT_TARGET%\dist\assets\logo-white.svg"
+)
+
+:: 9. Copy custom small logo if exists
+IF EXISTS "%ARTIFACTS%\assets\logo-small-white.svg" (
+  echo Copying custom small logo
+  call copy "%ARTIFACTS%\assets\logo-small-white.svg" "%DEPLOYMENT_TARGET%\dist\assets\logo-small-white.svg"
+)
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :: Post deployment stub
