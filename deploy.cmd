@@ -117,7 +117,9 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   echo    footer_name: "%FooterName%",
   echo    footer_url: "%FooterUrl%",
   echo    oauth_tenant: "%OAuthTenant%",
-  echo    oauth_clientid: "%OAuthClientId%"
+  echo    oauth_clientid: "%OAuthClientId%",
+  echo    version: "1.2.0",
+  echo    build: "%SCM_COMMIT_ID%"
   echo };
 ) > "%DEPLOYMENT_TARGET%"\src\environments\environment.prod.ts
 
