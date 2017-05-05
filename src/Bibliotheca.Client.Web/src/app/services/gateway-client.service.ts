@@ -15,11 +15,11 @@ export class GatewayClientService {
         return this.httpClient.get('/api/projects');
     }
 
-    public getProjectsWithKeywords(query:string) : Observable<Response> {
+    public getProjectsWithKeywords(query: string) : Observable<Response> {
         return this.httpClient.get("/api/projects?query=" + query);
     }
 
-    public getFilteredProjects(selectedGroup:string, selectedTags:string[]) : Observable<Response> {
+    public getFilteredProjects(selectedGroup: string, selectedTags: string[]) : Observable<Response> {
         var groupfilter = "";
         if(selectedGroup != "") {
             groupfilter = "?groups=" + selectedGroup;
@@ -41,67 +41,71 @@ export class GatewayClientService {
         return this.httpClient.get('/api/projects' + groupfilter + tagsFilter);
     }
 
-    public getProject(projectId:string) : Observable<Response> {
+    public getProject(projectId: string) : Observable<Response> {
         return this.httpClient.get('/api/projects/' + projectId);
     }
 
-    public getProjectAccessToken(projectId:string) : Observable<Response> {
+    public getProjectAccessToken(projectId: string) : Observable<Response> {
         return this.httpClient.get("/api/projects/" + projectId + "/accessToken");
     }
 
-    public createProject(project:Project) : Observable<Response> {
+    public createProject(project: Project) : Observable<Response> {
         return this.httpClient.post("/api/projects", project);
     }
 
-    public updateProject(projectId:string, project:Project) : Observable<Response> {
+    public updateProject(projectId: string, project: Project) : Observable<Response> {
         return this.httpClient.put("/api/projects/" + projectId, project);
     }
 
-    public deleteProject(projectId:string) : Observable<Response> {
+    public deleteProject(projectId: string) : Observable<Response> {
         return this.httpClient.delete("/api/projects/" + projectId);
     }
 
-    public getBranches(projectId:string) : Observable<Response> {
+    public getBranches(projectId: string) : Observable<Response> {
         return this.httpClient.get('/api/projects/' + projectId + '/branches');
     }
 
-    public getBranch(projectId:string, branchName:string) : Observable<Response> {
+    public getBranch(projectId: string, branchName: string) : Observable<Response> {
         return this.httpClient.get('/api/projects/' + projectId + '/branches/' + branchName);
+    }
+
+    public deleteBranch(projectId: string, branchName: string) : Observable<Response> {
+        return this.httpClient.delete("/api/projects/" + projectId + '/branches/' + branchName);
     }
 
     public getUsers() : Observable<Response> {
         return this.httpClient.get('/api/users');
     }
 
-    public getUser(userId:string) : Observable<Response> {
+    public getUser(userId: string) : Observable<Response> {
         return this.httpClient.get('/api/users/' + userId);
     }
 
-    public createUser(user:User) : Observable<Response> {
+    public createUser(user: User) : Observable<Response> {
         return this.httpClient.post("/api/users", user);
     }
 
-    public updateUser(userId:string, user:User) : Observable<Response> {
+    public updateUser(userId: string, user: User) : Observable<Response> {
         return this.httpClient.post("/api/users/" + userId, user);
     }
 
-    public deleteUser(userId:string) : Observable<Response> {
+    public deleteUser(userId: string) : Observable<Response> {
         return this.httpClient.delete("/api/users/" + userId);
     }
 
-    public refreshUserToken(userId:string, accessToken:string) : Observable<Response> {
+    public refreshUserToken(userId: string, accessToken: string) : Observable<Response> {
         return this.httpClient.put("/api/users/" + userId + "/refreshToken", { accessToken: accessToken });
     }
 
-    public getTableOfContents(projectId:string, branchName:string) : Observable<Response>{
+    public getTableOfContents(projectId: string, branchName: string) : Observable<Response>{
         return this.httpClient.get('/api/projects/' + projectId + '/branches/' + branchName + '/toc');
     }
 
-    public searchInBranch(projectId:string, branchName:string, query:string) : Observable<Response> {
+    public searchInBranch(projectId: string, branchName: string, query: string) : Observable<Response> {
         return this.httpClient.get("/api/search/projects/" + projectId + "/branches/" + branchName + "?query=" + query);
     }
 
-    public getDocumentContent(projectId:string, branchName:string, fileUri:string) : Observable<Response> {
+    public getDocumentContent(projectId: string, branchName: string, fileUri: string) : Observable<Response> {
         return this.httpClient.get('/api/projects/' + projectId + '/branches/' + branchName + '/documents/content/' + fileUri);
     }
 
@@ -117,15 +121,23 @@ export class GatewayClientService {
         return this.httpClient.get('/api/services');
     }
 
-    public search(query:string) {
+    public search(query: string) : Observable<Response>  {
         return this.httpClient.get("/api/search?query=" + query);
     }
 
-    public searchIsEnabled() {
+    public searchIsEnabled() : Observable<Response>  {
         return this.httpClient.get("/api/search/isEnabled");
     }
 
-    public getPathToImage(projectId:string, branchName:string, fullPath:string) : string {
+    public reindexBranch(projectId: string, branchName: string) : Observable<Response> {
+        return this.httpClient.post("/api/search/projects/" + projectId + "/branches/" + branchName + "/refresh", null);
+    }
+
+    public getReindexStatus(projectId: string, branchName: string) : Observable<Response> {
+        return this.httpClient.get("/api/search/projects/" + projectId + "/branches/" + branchName + "/status");
+    }
+
+    public getPathToImage(projectId: string, branchName: string, fullPath: string) : string {
         return "src=\"" + this.httpClient.serverAddress + "/api/projects/" + projectId + "/branches/" + branchName + "/documents/content/" + fullPath + "?access_token=" + localStorage["adal.idtoken"] + "\"";
     }
 }

@@ -14,11 +14,16 @@ import { Role } from '../../entities/role';
 })
 export class ProjectsPage implements OnInit {
 
-    private projects: Project[];
-    private allProjects: Number;
-    private hasAccessToAddNewProject: boolean = false;
+    protected projects: Project[];
+    protected allProjects: Number;
+    protected hasAccessToAddNewProject: boolean = false;
 
-    constructor(private header: HeaderService, private gatewayClient: GatewayClientService, private toaster: ToasterService, private permissionService: PermissionService) { 
+    constructor(
+        private header: HeaderService, 
+        private gatewayClient: GatewayClientService, 
+        private toaster: ToasterService, 
+        private permissionService: PermissionService) 
+    { 
         header.title = "Projects";
 
         this.gatewayClient.getProjects().subscribe(result => {
@@ -40,15 +45,15 @@ export class ProjectsPage implements OnInit {
         window.scrollTo(0,0);
     }
 
-    private tryDeleteProject(project: Project) {
+    protected tryDeleteProject(project: Project) {
         project["deletionMode"] = true;
     }
 
-    private cancelDeleteProject(project: Project) {
+    protected cancelDeleteProject(project: Project) {
         project["deletionMode"] = false;
     }
 
-    private confirmDeleteProject(index: number) {
+    protected confirmDeleteProject(index: number) {
         var project = this.projects[index];
 
         this.gatewayClient.deleteProject(project.id).subscribe(result => {
@@ -61,11 +66,11 @@ export class ProjectsPage implements OnInit {
         });
     }
 
-    private hasAccessToDelete(projectId: string) : Observable<boolean> {
+    protected hasAccessToDelete(projectId: string) : Observable<boolean> {
         return this.permissionService.hasAccessToProject(projectId);
     }
 
-    private hasAccessToEdit(projectId: string) : Observable<boolean> {
+    protected hasAccessToEdit(projectId: string) : Observable<boolean> {
         return this.permissionService.hasAccessToProject(projectId);
     }
 }

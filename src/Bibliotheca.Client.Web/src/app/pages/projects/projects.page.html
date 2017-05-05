@@ -30,7 +30,7 @@
           <tr *ngFor="let project of projects; let i = index">
             <td>{{ i + 1 }}</td>
             <td>
-              {{ project.name }}
+              {{ project.name }} <small *ngIf="hasAccessToEdit(project.id) | async">(<a [routerLink]="['/projects', project.id, 'branches']">branches</a>)</small>
             </td>
             <td class="hidden-xs hidden-sm hidden-md">
               <small *ngFor="let tag of project.tags" class="label bg-gray document-tag"> {{ tag }} </small>
@@ -52,7 +52,7 @@
       </div>
       
       <div *ngIf="hasAccessToAddNewProject" class="box-footer">
-        <a [routerLink]="['/project-info']" class="btn btn-primary btn-flat">Add project</a>
+        <a [routerLink]="['/project-info']" class="btn btn-primary btn-sm btn-flat">Add project</a>
       </div>
       
     </div>

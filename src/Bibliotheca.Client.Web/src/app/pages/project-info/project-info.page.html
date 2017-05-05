@@ -15,10 +15,8 @@
       <!-- Start: actions -->
       <div class="box box-solid">
         <div class="box-body">
-          <div class="pull-right">
-            <a [routerLink]="['/projects']" type="submit" class="btn btn-default btn-flat">Cancel</a>
-            <button *ngIf="hasAccessToEdit() | async" type="submit" class="btn btn-primary btn-flat">Save</button>
-          </div>
+          <a [routerLink]="['/projects']" type="submit" class="btn btn-default btn-sm btn-flat">Cancel</a>
+          <button *ngIf="hasAccessToEdit() | async" type="submit" class="btn btn-primary btn-sm btn-flat">Save</button>
         </div>
       </div>
       <!-- End: actions -->

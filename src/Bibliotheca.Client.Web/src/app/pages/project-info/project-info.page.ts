@@ -17,17 +17,17 @@ import { PermissionService } from '../../services/permission.service';
 })
 export class ProjectInfoPage implements OnInit {
 
-    private project: Project;
-    private isEditMode: Boolean;
+    protected project: Project;
+    protected isEditMode: Boolean;
 
-    private visibleBranchNameRequired: Boolean;
-    private visibleBranchNameExists: Boolean;
-    private tagNameRequired: Boolean;
-    private tagNameExists: Boolean;
-    private contactNameRequred: Boolean;
-    private contactEmailRequired: Boolean;
-    private linkNameRequired: Boolean;
-    private linkValueRequired: Boolean;
+    protected visibleBranchNameRequired: Boolean;
+    protected visibleBranchNameExists: Boolean;
+    protected tagNameRequired: Boolean;
+    protected tagNameExists: Boolean;
+    protected contactNameRequred: Boolean;
+    protected contactEmailRequired: Boolean;
+    protected linkNameRequired: Boolean;
+    protected linkValueRequired: Boolean;
 
     constructor(
         private header: HeaderService,
@@ -70,7 +70,7 @@ export class ProjectInfoPage implements OnInit {
 
     }
 
-    addTag(name: HTMLInputElement) {
+    protected addTag(name: HTMLInputElement) {
 
         if (!this.project.tags) {
             this.project.tags = [];
@@ -93,16 +93,16 @@ export class ProjectInfoPage implements OnInit {
         this.tagNameExists = false;
     }
 
-    changeTagName(event: any) {
+    protected changeTagName(event: any) {
         this.tagNameRequired = false;
         this.tagNameExists = false;
     }
 
-    deleteTag(index: number) {
+    protected deleteTag(index: number) {
         this.project.tags.splice(index, 1);
     }
 
-    addVisibleBranch(branch: HTMLInputElement) {
+    protected addVisibleBranch(branch: HTMLInputElement) {
 
         if (!this.project.visibleBranches) {
             this.project.visibleBranches = [];
@@ -125,16 +125,16 @@ export class ProjectInfoPage implements OnInit {
         this.visibleBranchNameExists = false;
     }
 
-    changeVisibleBranchName(event: any) {
+    protected changeVisibleBranchName(event: any) {
         this.visibleBranchNameRequired = false;
         this.visibleBranchNameExists = false;
     }
 
-    deleteVisibleBranch(index: number) {
+    protected deleteVisibleBranch(index: number) {
         this.project.visibleBranches.splice(index, 1);
     }
 
-    addPeople(contactName: HTMLInputElement, contactEmail: HTMLInputElement) {
+    protected addPeople(contactName: HTMLInputElement, contactEmail: HTMLInputElement) {
 
         if (!this.project.contactPeople) {
             this.project.contactPeople = [];
@@ -163,20 +163,19 @@ export class ProjectInfoPage implements OnInit {
         this.contactEmailRequired = false;
     }
 
-
-    changeContactName(event: any) {
+    protected changeContactName(event: any) {
         this.contactNameRequred = false;
     }
 
-    changeContactEmail(event: any) {
+    protected changeContactEmail(event: any) {
         this.contactEmailRequired = false;
     }
 
-    deletePeople(index: number) {
+    protected deletePeople(index: number) {
         this.project.contactPeople.splice(index, 1);
     }
 
-    addLink(linkName: HTMLInputElement, linkValue: HTMLInputElement) {
+    protected addLink(linkName: HTMLInputElement, linkValue: HTMLInputElement) {
 
         if (!this.project.editLinks) {
             this.project.editLinks = [];
@@ -205,19 +204,19 @@ export class ProjectInfoPage implements OnInit {
         this.linkValueRequired = false;
     }
 
-    changeLinkName(event: any) {
+    protected changeLinkName(event: any) {
         this.linkNameRequired = false;
     }
 
-    changeLinkValue(event: any) {
+    protected changeLinkValue(event: any) {
         this.linkValueRequired = false;
     }
 
-    deleteLink(index: number) {
+    protected deleteLink(index: number) {
         this.project.editLinks.splice(index, 1);
     }
 
-    hasAccessToEdit() : Observable<boolean> {
+    protected hasAccessToEdit() : Observable<boolean> {
 
         if(!this.isEditMode) {
             return new Observable(observer => {
@@ -229,18 +228,18 @@ export class ProjectInfoPage implements OnInit {
         return this.permissionService.hasAccessToProject(this.project.id);
     }
 
-    regenerate() {
+    protected regenerate() {
         this.project.accessToken = this.newGuid();
     }
 
-    newGuid() {
+    protected newGuid() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
             var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
             return v.toString(16);
         });
     }
 
-    onSave() {
+    protected onSave() {
         if (this.isEditMode) {
             this.gatewayClient.updateProject(this.project.id, this.project).subscribe(result => {
                 if (result.status == 200) {
