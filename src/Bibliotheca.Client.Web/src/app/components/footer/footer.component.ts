@@ -17,6 +17,6 @@ export class FooterComponent {
         this.siteUrl = appConfig.footerUrl;
         this.siteName = appConfig.footerName;
         this.version = appConfig.version;
-        this.build = appConfig.build;
+        this.build = appConfig.build.substr(0, 7);
     }
 }
