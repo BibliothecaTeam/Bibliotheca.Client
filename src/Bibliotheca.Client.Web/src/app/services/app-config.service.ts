@@ -44,6 +44,14 @@ export class AppConfigService {
         return environment.web_url;
     }
 
+    get version(): string {
+        return environment.version;
+    }
+
+    get build(): string {
+        return environment.build;
+    }
+
     public load() {
         setSiteTitle(this.siteTitle);
         setCustomStyleUrl(this.siteCustomStyleUrl);

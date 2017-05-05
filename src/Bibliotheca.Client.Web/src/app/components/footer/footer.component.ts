@@ -10,9 +10,13 @@ export class FooterComponent {
 
     protected siteUrl: string = null;
     protected siteName: string = null;
+    protected version: string = null;
+    protected build: string = null;
 
     constructor(private appConfig: AppConfigService) {
         this.siteUrl = appConfig.footerUrl;
         this.siteName = appConfig.footerName;
+        this.version = appConfig.version;
+        this.build = appConfig.build;
     }
 }
