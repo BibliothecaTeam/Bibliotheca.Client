@@ -28,22 +28,22 @@ enum PageContext {
 export class DocumentationPage {
     public ref: DocumentationPage;
 
-    private document: string;
-    private toc: Toc[];
-    private branches: Branch[];
-    private project: Project;
+    protected document: string;
+    protected toc: Toc[];
+    protected branches: Branch[];
+    protected project: Project;
 
-    private projectId: string;
-    private branchName: string;
-    private fileUri: string;
+    protected projectId: string;
+    protected branchName: string;
+    protected fileUri: string;
 
-    private editLink: string;
-    private previousArticle: Toc;
-    private nextArticle: Toc;
-    private flatToc: Toc[];
+    protected editLink: string;
+    protected previousArticle: Toc;
+    protected nextArticle: Toc;
+    protected flatToc: Toc[];
 
-    private breadcrumbs: Toc[];
-    private searchResults: SearchResults;
+    protected breadcrumbs: Toc[];
+    protected searchResults: SearchResults;
 
     constructor(
         private route: ActivatedRoute, 
@@ -205,7 +205,7 @@ export class DocumentationPage {
         return fileUri;
     }
 
-    prepareSearchResultPage(searchResults: SearchResults) {
+    private prepareSearchResultPage(searchResults: SearchResults) {
         this.breadcrumbs = [];
         var toc = new Toc();
         toc.name = "Search results";
@@ -214,14 +214,14 @@ export class DocumentationPage {
         this.searchResults = searchResults;
     }
 
-    prepareDocumentPage(document: string) {
+    private prepareDocumentPage(document: string) {
         this.prepareDocument(document);
         this.prepareEditLink();
         this.prepareShortcutsToArticles();
         this.prepareBreadcrumb();
     }
 
-    prepareDocument(document: string) {
+    private prepareDocument(document: string) {
         var parsedDocument = this.changeImageSource(document);
         parsedDocument = this.changeHrefToInternalPage(parsedDocument);
         parsedDocument = this.escapeCurlyBrackets(parsedDocument);
@@ -229,7 +229,7 @@ export class DocumentationPage {
         this.document = parsedDocument;
     }
 
-    prepareBreadcrumb() {
+    private prepareBreadcrumb() {
         this.breadcrumbs = [];
         var fileUriWithoutAnchor = this.fileUri.split("#")[0];
 
@@ -258,7 +258,7 @@ export class DocumentationPage {
         this.breadcrumbs = breadcrumbs.reverse();
     }
 
-    changeTocToDictionary(tocs: Toc[], parentIndex: number) {
+    private changeTocToDictionary(tocs: Toc[], parentIndex: number) {
         for(let item of tocs) {
             
             var newToc = new Toc();
@@ -278,12 +278,12 @@ export class DocumentationPage {
         }
     }
 
-    goToPreviousArticle() {
+    private goToPreviousArticle() {
         window.scrollTo(0,0);
         this.router.navigate(['/docs', this.projectId, this.branchName, this.previousArticle.url]);
     }
 
-    goToNextArticle() {
+    private goToNextArticle() {
         window.scrollTo(0,0);
         this.router.navigate(['/docs', this.projectId, this.branchName, this.nextArticle.url]);
     }
@@ -357,7 +357,7 @@ export class DocumentationPage {
         return index !== -1 ? url.substring(index + 1) : "";
     }
 
-    prepareShortcutsToArticles() {
+    private prepareShortcutsToArticles() {
 
         var currentTocIndex = 0;
         var fileUriWithoutAnchor = this.fileUri.split("#")[0];
@@ -397,7 +397,7 @@ export class DocumentationPage {
         }
     }
 
-    prepareEditLink() {
+    private prepareEditLink() {
         this.editLink = null;
 
         for(let link of this.project.editLinks) {
@@ -409,7 +409,7 @@ export class DocumentationPage {
         }
     }
 
-    navigateToBranch(value: string) {
+    private navigateToBranch(value: string) {
         if (value) {
             
             var docsDir = '';
@@ -427,17 +427,17 @@ export class DocumentationPage {
         return false;
     }
 
-    getEncodedUrl(url: String) {
+    private getEncodedUrl(url: String) {
         return url.replace(/\//g, ":");
     }
 
-    escapeCurlyBrackets(document: string) : string {
+    private escapeCurlyBrackets(document: string) : string {
         var escapedDocument = document.replace(/{/g, "&#123;");
         escapedDocument = escapedDocument.replace(/}/g, "&#125;");
         return escapedDocument;
     }
 
-    changeHrefToInternalPage(document: string) : string {
+    private changeHrefToInternalPage(document: string) : string {
         var regex = /(href=")(.*?)(")/igm;
         var match = regex.exec(document);
         while (match) {
@@ -455,7 +455,7 @@ export class DocumentationPage {
         return document;
     }
 
-    changeImageSource(document: string) : string {
+    private changeImageSource(document: string) : string {
         var regex = /(src=")(.*?)(")/igm;
         var match = regex.exec(document);
         while (match) {
@@ -474,11 +474,11 @@ export class DocumentationPage {
         return document;
     }
 
-    getFolderPath(uri: string) {
+    private getFolderPath(uri: string) {
         return uri.substring(0, uri.lastIndexOf(':'));
     }
 
-    getFullPath(prefixPath: string, suffixPath: string): string {
+    private getFullPath(prefixPath: string, suffixPath: string): string {
 
         var path = prefixPath + "/" + suffixPath;
         path = path.replace(/\\\\/g, "/");

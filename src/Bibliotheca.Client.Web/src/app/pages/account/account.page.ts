@@ -15,9 +15,9 @@ import { JwtHelper } from 'angular2-jwt';
 })
 export class AccountPage implements OnInit {
 
-    private user: User;
-    private roles: string[];
-    private isEditMode: Boolean;
+    protected user: User;
+    protected roles: string[];
+    protected isEditMode: Boolean;
 
     constructor(
         private header: HeaderService,
@@ -52,7 +52,7 @@ export class AccountPage implements OnInit {
     ngOnInit() {
     }
 
-    regenerate() {
+    protected regenerate() {
         
         this.user.accessToken = this.newGuid();
         this.gatewayClient.refreshUserToken(this.user.id, this.user.accessToken).subscribe(result => {
@@ -65,7 +65,7 @@ export class AccountPage implements OnInit {
 
     }
 
-    newGuid() {
+    protected newGuid() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
             var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
             return v.toString(16);

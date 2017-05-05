@@ -16,12 +16,12 @@ import { PermissionService } from '../../services/permission.service';
 })
 export class UserInfoPage implements OnInit {
 
-    private user: User;
-    private roles: string[];
-    private isEditMode: Boolean;
-    private projectNameRequired: Boolean;
-    private projectNameExists: Boolean;
-    private canEditUser: Boolean = false;
+    protected user: User;
+    protected roles: string[];
+    protected isEditMode: Boolean;
+    protected projectNameRequired: Boolean;
+    protected projectNameExists: Boolean;
+    protected canEditUser: Boolean = false;
 
     constructor(
         private header: HeaderService,
@@ -71,7 +71,7 @@ export class UserInfoPage implements OnInit {
             );
     }
 
-    addProject(name: HTMLInputElement) {
+    protected addProject(name: HTMLInputElement) {
 
         if (!this.user.projects) {
             this.user.projects = [];
@@ -94,16 +94,16 @@ export class UserInfoPage implements OnInit {
         name.value = null;
     }
 
-    changeProjectName(event: any) {
+    protected changeProjectName(event: any) {
         this.projectNameRequired = false;
         this.projectNameExists = false;
     }
 
-    deleteProject(index: number) {
+    protected deleteProject(index: number) {
         this.user.projects.splice(index, 1);
     }
 
-    onSave() {
+    protected onSave() {
         if (this.isEditMode) {
             this.gatewayClient.updateUser(this.user.id, this.user).subscribe(result => {
                 if (result.status == 200) {

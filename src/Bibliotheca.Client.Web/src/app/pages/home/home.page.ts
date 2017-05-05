@@ -11,17 +11,17 @@ import { IMultiSelectOption, IMultiSelectSettings,IMultiSelectTexts  } from 'ang
     templateUrl: './home.page.html'
 })
 export class HomePage { 
-    private groups: string[];
-    private projects: Project[];
-    private allProjects: Number;
+    protected groups: string[];
+    protected projects: Project[];
+    protected allProjects: Number;
 
-    private tagsArray: string[];
-    private tags: IMultiSelectOption[] = [];
+    protected tagsArray: string[];
+    protected tags: IMultiSelectOption[] = [];
 
-    private selectedTags: string[] = [];
-    private selectedGroup: string = "";
+    protected selectedTags: string[] = [];
+    protected selectedGroup: string = "";
 
-    private mySettings: IMultiSelectSettings = {
+    protected mySettings: IMultiSelectSettings = {
         pullRight: true,
         enableSearch: true,
         checkedStyle: 'checkboxes',
@@ -34,7 +34,7 @@ export class HomePage {
         maxHeight: '500px',
     };
 
-    private myTexts: IMultiSelectTexts = {
+    protected myTexts: IMultiSelectTexts = {
         checkAll: 'Check all',
         uncheckAll: 'Uncheck all',
         checked: 'checked',
@@ -67,13 +67,13 @@ export class HomePage {
         });
     }
 
-    openHomeEvent(event: any) {
+    protected openHomeEvent(event: any) {
         this.selectedTags = [];
         this.selectedGroup = "";
         this.filterProject();
     }
 
-    filterProject() {
+    protected filterProject() {
         this.gatewayClient.getFilteredProjects(this.selectedGroup, this.selectedTags).subscribe(result => {
             var json = result.json();
             this.projects = json.results;
@@ -81,7 +81,7 @@ export class HomePage {
         });
     }
 
-    showGroup(group: string) {
+    protected showGroup(group: string) {
         if(group != "All projects") {
             this.selectedGroup = group;
         }
@@ -92,12 +92,12 @@ export class HomePage {
         this.filterProject();
     }
 
-    onTagsChange(event:string[]) {
+    protected onTagsChange(event:string[]) {
         this.selectedTags = event;
         this.filterProject();
     }
 
-    getGroupStyle(group: string) {
+    protected getGroupStyle(group: string) {
         if(this.selectedGroup == group) {
             return "active";
         }
@@ -109,7 +109,7 @@ export class HomePage {
         return "";
     }
 
-    getGroupLetters(group: string) : string {
+    protected getGroupLetters(group: string) : string {
         var matches = group.match(/\b(\w)/g);
         var acronym = matches.join('');
         return acronym.substring(0, 2).toUpperCase();  

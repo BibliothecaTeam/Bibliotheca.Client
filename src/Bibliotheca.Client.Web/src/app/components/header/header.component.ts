@@ -20,7 +20,7 @@ export class HeaderComponent {
     protected hasAccessToUsers: boolean = false;
     protected hasAccessToServices: boolean = false;
 
-    constructor(private header: HeaderService, private router: Router, private permissionService: PermissionService) {
+    constructor(protected header: HeaderService, private router: Router, private permissionService: PermissionService) {
         
         permissionService.getUserRole().subscribe(role => {
 

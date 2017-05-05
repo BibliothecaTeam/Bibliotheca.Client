@@ -15,8 +15,8 @@ import 'rxjs/add/operator/switchMap';
 
 export class SearchPage { 
 
-    private searchResults: SearchResults;
-    private projects: Project[];
+    protected searchResults: SearchResults;
+    protected projects: Project[];
 
     constructor(private header:HeaderService, private route: ActivatedRoute, private gatewayClient: GatewayClientService) {
         header.title = "Searching";

@@ -11,106 +11,102 @@
   <section class="content">
 
     <!-- Content -->
-    <form class="form-horizontal" (ngSubmit)="onSave()">
+    <div class="row">
 
-      <div class="row">
+      <div class="col-md-6">
 
-        <div class="col-md-6">
-
-          <!-- Start: Personal information -->
-          <div class="box box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title">Personal information</h3>
-            </div>
-
-            <div class="box-body">
-
-              <div class="form-group">
-                <label for="id" class="col-sm-3 control-label">Email</label>
-                <div class="col-sm-9">
-                  <input type="email" class="form-control" [ngModel]="user.id" name="id" disabled />
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="name" class="col-sm-3 control-label">Name</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" [ngModel]="user.name" name="name" disabled />
-                </div>
-              </div>
-
-            </div>
+        <!-- Start: Personal information -->
+        <div class="box box-info">
+          <div class="box-header with-border">
+            <h3 class="box-title">Personal information</h3>
           </div>
-          <!-- End: Personal information -->
 
-          <!-- Start: Projects -->
-          <div class="box box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title">Projects</h3>
+          <div class="box-body">
+
+            <div class="form-group">
+              <label for="id" class="col-sm-3 control-label">Email</label>
+              <div class="col-sm-9">
+                <input type="email" class="form-control" [ngModel]="user.id" name="id" disabled />
+              </div>
             </div>
-            <div class="box-body no-padding">
 
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Project Id</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let project of user.projects; let i = index">
-                    <td>{{ i + 1 }}</td>
-                    <td>{{ project }}</td>
-                  </tr>
-                </tbody>
-              </table>
-
+            <div class="form-group">
+              <label for="name" class="col-sm-3 control-label">Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" [ngModel]="user.name" name="name" disabled />
+              </div>
             </div>
+
           </div>
-          <!-- End: Projects -->
-
         </div>
+        <!-- End: Personal information -->
 
-        <div class="col-md-6">
+        <!-- Start: Projects -->
+        <div class="box box-info">
+          <div class="box-header with-border">
+            <h3 class="box-title">Projects</h3>
+          </div>
+          <div class="box-body no-padding">
 
-          <!-- Start: Permissions -->
-          <div class="box box-danger">
-            <div class="box-header with-border">
-              <h3 class="box-title">Access</h3>
-            </div>
-            <div class="box-body">
-
-              <div class="form-group">
-                <label for="role" class="col-sm-3 control-label">Role</label>
-                <div class="col-sm-9">
-                  <select class="form-control" id="role" [ngModel]="user.role" name="role" disabled>
-                    <option *ngFor="let role of roles" [value]="role">{{role}}</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="role" class="col-sm-3 control-label">User token</label>
-                <div class="col-sm-9">
-                  <div class="input-group">
-                    <input type="text" class="form-control" [ngModel]="user.accessToken" name="accessToken" disabled />
-                    <span class="input-group-btn">
-                      <button (click)="regenerate()" type="button" class="btn btn-info btn-flat">Regenerate</button>
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-            </div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Project Id</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let project of user.projects; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ project }}</td>
+                </tr>
+              </tbody>
+            </table>
 
           </div>
-          <!-- End: Permissions -->
-
         </div>
+        <!-- End: Projects -->
 
       </div>
 
-    </form>
+      <div class="col-md-6">
+
+        <!-- Start: Permissions -->
+        <div class="box box-danger">
+          <div class="box-header with-border">
+            <h3 class="box-title">Access</h3>
+          </div>
+          <div class="box-body">
+
+            <div class="form-group">
+              <label for="role" class="col-sm-3 control-label">Role</label>
+              <div class="col-sm-9">
+                <select class="form-control" id="role" [ngModel]="user.role" name="role" disabled>
+                  <option *ngFor="let role of roles" [value]="role">{{role}}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="role" class="col-sm-3 control-label">User token</label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <input type="text" class="form-control" [ngModel]="user.accessToken" name="accessToken" disabled />
+                  <span class="input-group-btn">
+                    <button (click)="regenerate()" type="button" class="btn btn-info btn-flat">Regenerate</button>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        <!-- End: Permissions -->
+
+      </div>
+
+    </div>
     <!-- End Content -->
 
   </section>

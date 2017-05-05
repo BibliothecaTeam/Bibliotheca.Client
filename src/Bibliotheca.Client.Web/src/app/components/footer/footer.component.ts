@@ -8,8 +8,8 @@ import { AppConfigService } from '../../services/app-config.service'
 })
 export class FooterComponent {
 
-    private siteUrl: string = null;
-    private siteName: string = null;
+    protected siteUrl: string = null;
+    protected siteName: string = null;
 
     constructor(private appConfig: AppConfigService) {
         this.siteUrl = appConfig.footerUrl;

@@ -10,7 +10,7 @@ import { User } from '../../entities/user';
 })
 export class UsersPage implements OnInit {
 
-  private users: User[];
+  protected users: User[];
 
   constructor(private header: HeaderService, private gatewayClient: GatewayClientService, private toaster: ToasterService) { 
       header.title = "Users";
@@ -20,19 +20,19 @@ export class UsersPage implements OnInit {
       });
   }
 
-  ngOnInit() {
-    window.scrollTo(0,0);
-  }
+    ngOnInit() {
+        window.scrollTo(0,0);
+    }
 
-    tryDeleteUser(user: User) {
+    protected tryDeleteUser(user: User) {
         user["deletionMode"] = true;
     }
 
-    cancelDeleteUser(user: User) {
+    protected cancelDeleteUser(user: User) {
         user["deletionMode"] = false;
     }
 
-    confirmDeleteUser(index: number) {
+    protected confirmDeleteUser(index: number) {
         var user = this.users[index];
 
         this.gatewayClient.deleteUser(user.id).subscribe(result => {

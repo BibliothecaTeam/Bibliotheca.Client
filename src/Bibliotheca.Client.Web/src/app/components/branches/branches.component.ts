@@ -31,7 +31,7 @@ export class BranchesComponent {
         });
     }
 
-    private isOnVisibleBranches(branchName: string) : boolean {
+    protected isOnVisibleBranches(branchName: string) : boolean {
         return this.project.visibleBranches.indexOf(branchName) >= 0;
     }
 }
