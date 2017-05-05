@@ -40,7 +40,10 @@
             <tbody>
               <tr *ngFor="let instance of service.instances; let i = index">
                 <td>{{ i + 1 }}</td>
-                <td>{{ instance.id }}</td>
+                <td>
+                  <div>{{ instance.id }}</div>
+                  <div><small><i>{{ getOutput(instance) }}</i></small></div>
+                </td>
                 <td class="hidden-xs hidden-sm hidden-md">{{ instance.address }}</td>
                 <td class="hidden-xs hidden-sm hidden-md">{{ instance.port }}</td>
                 <td>

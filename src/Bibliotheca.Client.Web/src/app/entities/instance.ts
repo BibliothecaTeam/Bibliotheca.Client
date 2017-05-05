@@ -6,4 +6,6 @@ export class Instance {
     port: number;
     healthStatus: HealthStatus;
     healthOuptput: string;
+    tags: string[];
+    notes: string;
 }
