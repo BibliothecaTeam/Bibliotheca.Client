@@ -1,7 +1,7 @@
 import { HttpClientService } from './http-client.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Response } from '@angular/http';
+import { Response, ResponseContentType } from '@angular/http';
 import { Project } from '../entities/project'
 import { User } from '../entities/user'
 
@@ -135,6 +135,12 @@ export class GatewayClientService {
 
     public getReindexStatus(projectId: string, branchName: string) : Observable<Response> {
         return this.httpClient.get("/api/search/projects/" + projectId + "/branches/" + branchName + "/status");
+    }
+
+    public getPdfFile(projectId: string, branchName: string) : Observable<Response> {
+        return this.httpClient.get('/api/projects/' + projectId + '/branches/' + branchName + '/export/pdf', {
+            responseType: ResponseContentType.Blob
+        });
     }
 
     public getPathToImage(projectId: string, branchName: string, fullPath: string) : string {

@@ -34,7 +34,8 @@
         "../node_modules/bootstrap/dist/js/bootstrap.min.js",
         "../node_modules/admin-lte/dist/js/app.min.js",
         "../node_modules/admin-lte/plugins/pace/pace.min.js",
-        "../node_modules/highlightjs/highlight.pack.js"
+        "../node_modules/highlightjs/highlight.pack.js",
+        "../node_modules/file-saver/FileSaver.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

@@ -99,6 +99,10 @@
                             <dd *ngFor="let person of project.contactPeople"><a href="mailto:{{ person.email }}">{{ person.name }}</a></dd>
                             <dt *ngIf="project.projectSite">Project site</dt>
                             <dd *ngIf="project.projectSite"><a href="{{ project.projectSite }}" target="_blank">{{ project.projectSite }}</a></dd>
+                            <dt>Download</dt>
+                            <dd>
+                                <a class="pointer-cursor" (click)="downloadPdf()">PDF</a>
+                            </dd>
                         </dl>
                     </div>
                 </div>

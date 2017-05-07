@@ -21,6 +21,8 @@ enum PageContext {
     FileNotSpecify = 6
 }
 
+declare var saveAs: any;
+
 @Component({
     selector: 'app-documentation',
     templateUrl: './documentation.page.html'
@@ -508,5 +510,12 @@ export class DocumentationPage {
         pathParsed.reverse();
         path = pathParsed.join(":");
         return path;
+    }
+
+    protected downloadPdf() {
+        this.gatewayClient.getPdfFile(this.projectId, this.branchName).subscribe(response => {
+            var file = new Blob([response.blob()], {type: 'application/pdf'});
+            saveAs(file, this.project.id + '.pdf')
+        });
     }
 }
