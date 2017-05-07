@@ -11,6 +11,8 @@ import { EditLink } from '../../entities/edit-link';
 import { GatewayClientService } from '../../services/gateway-client.service';
 import { HeaderService } from '../../services/header.service';
 import { AppConfigService } from '../../services/app-config.service';
+import { PermissionService } from "../../services/permission.service";
+import { Role } from "../../entities/role";
 
 enum PageContext {
     QueryEmpty = 1,
@@ -46,15 +48,23 @@ export class DocumentationPage {
 
     protected breadcrumbs: Toc[];
     protected searchResults: SearchResults;
+    protected isDownloadPdfAccessible: boolean = false;
 
     constructor(
         private route: ActivatedRoute, 
         private gatewayClient: GatewayClientService, 
         private header: HeaderService, 
         private router: Router,
-        private appConfig: AppConfigService) 
+        private appConfig: AppConfigService,
+        private permissionService: PermissionService) 
     {
         this.ref = this;
+
+        this.permissionService.getUserRole().subscribe(role => {
+            if(role == Role.User || role == Role.Writer || role == Role.Administrator) {
+                this.isDownloadPdfAccessible = true;
+            }
+        });
     }
 
     ngOnInit() {
