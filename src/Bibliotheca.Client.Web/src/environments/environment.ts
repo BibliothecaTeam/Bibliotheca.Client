@@ -14,6 +14,6 @@ export const environment = {
   footer_url: "http://bibliotheca.com",
   oauth_tenant: "UNIT4.onmicrosoft.com",
   oauth_clientid: "6b2d04ca-b3c7-4e45-bf12-e72e7c0b7097",
-  version: "1.2.0",
+  version: "1.3.0",
   build: "05172124"
 };
