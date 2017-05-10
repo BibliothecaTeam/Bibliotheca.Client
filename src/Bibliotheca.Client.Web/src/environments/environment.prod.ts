@@ -3,7 +3,7 @@ export const environment = {
   site_title: "Bibliotheca",
   site_custom_style_url: "",
   site_custom_style_name: "skin-default",
-  api_url: "http://localhost:5000",
+  api_url: "http://u4hub-gateway-dev-01.azurewebsites.net",
   web_url: "http://localhost:3000",
   footer_name: "Bibliotheca",
   footer_url: "http://bibliotheca.com",

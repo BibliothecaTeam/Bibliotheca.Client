@@ -86,7 +86,7 @@ export class GatewayClientService {
     }
 
     public updateUser(userId: string, user: User) : Observable<Response> {
-        return this.httpClient.post("/api/users/" + userId, user);
+        return this.httpClient.put("/api/users/" + userId, user);
     }
 
     public deleteUser(userId: string) : Observable<Response> {
