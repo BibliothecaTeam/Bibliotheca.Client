@@ -10,13 +10,13 @@
   <!-- Start: Content -->
   <section class="content">
 
-    <form class="form-horizontal" (ngSubmit)="onSave()">
+    <form novalidate class="form-horizontal" (ngSubmit)="onSave()" #projectForm="ngForm">
 
       <!-- Start: actions -->
       <div class="box box-solid">
         <div class="box-body">
           <a [routerLink]="['/projects']" type="submit" class="btn btn-default btn-sm btn-flat">Cancel</a>
-          <button *ngIf="hasAccessToEdit() | async" type="submit" class="btn btn-primary btn-sm btn-flat">Save</button>
+          <button [disabled]="!projectForm.valid" *ngIf="hasAccessToEdit() | async" type="submit" class="btn btn-primary btn-sm btn-flat">Save</button>
         </div>
       </div>
       <!-- End: actions -->
@@ -36,7 +36,7 @@
                 <label for="id" class="col-sm-3 control-label">Id</label>
                 <div class="col-sm-9">
                   <div *ngIf="!isEditMode">
-                    <input type="text" class="form-control" [(ngModel)]="project.id" name="id" minlength="3" maxlength="30" required #id="ngModel" />
+                    <input type="text" class="form-control" [(ngModel)]="project.id" name="id" minlength="3" maxlength="30" required #id="ngModel" pattern="^([a-z0-9-]+)$" />
                     <div *ngIf="id.errors && (id.dirty || id.touched)">
                         <div [hidden]="!id.errors.required" class="ng-error">
                           Project id is required.
@@ -46,6 +46,9 @@
                         </div>
                         <div [hidden]="!id.errors.maxlength" class="ng-error">
                           Project id cannot be more than 30 characters long.
+                        </div>
+                        <div [hidden]="!id.errors.pattern" class="ng-error">
+                          Project id may only contain lowercase letters, numbers, and hyphens.
                         </div>
                     </div>
                   </div>

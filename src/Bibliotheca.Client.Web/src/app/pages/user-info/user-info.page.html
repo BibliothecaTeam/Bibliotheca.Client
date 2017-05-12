@@ -10,13 +10,13 @@
   <!-- Start:  content -->
   <section class="content">
 
-    <form class="form-horizontal" (ngSubmit)="onSave()">
+    <form novalidate class="form-horizontal" (ngSubmit)="onSave()" #userForm="ngForm">
 
       <!-- Start: actions -->
       <div class="box box-solid">
         <div class="box-body">
           <a [routerLink]="['/users']" type="submit" class="btn btn-default btn-sm btn-flat">Cancel</a>
-          <button *ngIf="canEditUser" type="submit" class="btn btn-primary btn-sm btn-flat">Save</button>
+          <button [disabled]="!userForm.valid" *ngIf="canEditUser" type="submit" class="btn btn-primary btn-sm btn-flat">Save</button>
         </div>
       </div>
       <!-- End: actions -->
@@ -36,10 +36,13 @@
                 <label for="id" class="col-sm-2 control-label">Email</label>
                 <div class="col-sm-10">
                   <div *ngIf="!isEditMode">
-                    <input type="email" class="form-control" [(ngModel)]="user.id" name="id" required #id="ngModel" />
+                    <input type="email" class="form-control" [(ngModel)]="user.id" name="id" required #id="ngModel" pattern="^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$" />
                     <div *ngIf="id.errors && (id.dirty || id.touched)">
                         <div [hidden]="!id.errors.required" class="ng-error">
                           Email is required.
+                        </div>
+                        <div [hidden]="!id.errors.pattern" class="ng-error">
+                          Email is invalid.
                         </div>
                     </div>
                   </div>
