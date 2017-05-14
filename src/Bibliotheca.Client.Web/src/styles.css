@@ -26,6 +26,7 @@ img {
 
 .box .box-footer.branch-footer {
     height: 41px;
+    border: 0px;
 }
 
 .box .box-header {
@@ -43,11 +44,14 @@ img {
 .box .box-title a {
     color: #4a5c69;
     cursor: pointer;
+    font-family: Roboto, Helvetica Neue, sans-serif;
+    font-weight: 700;
 }
 
 .box.box-default .box-body {
-    height: 100px; 
+    height: 130px; 
     overflow: overlay;
+    font-family: Roboto, Helvetica Neue, sans-serif;
 }
 
 .document-content {

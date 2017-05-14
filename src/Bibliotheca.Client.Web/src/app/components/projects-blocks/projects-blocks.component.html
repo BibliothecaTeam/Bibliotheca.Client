@@ -1,6 +1,6 @@
 <div class="{{ style }}" *ngFor="let project of projects">
     <div class="box box-default">
-        <div class="box-header with-border">
+        <div class="box-header">
             <div>
                 <h3 class="box-title"><i *ngIf="project.isAccessLimited" class="fa fa-eye-slash"></i> <a (click)="openDocumentation(project.id)">{{ project.name }}</a></h3>
             </div>
