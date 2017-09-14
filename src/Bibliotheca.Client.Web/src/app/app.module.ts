@@ -31,6 +31,7 @@ import { SearchFieldComponent } from './components/search-field/search-field.com
 import { SearchResultsComponent } from './components/search-results/search-results.component';
 import { TreeViewComponent } from './components/tree-view/tree-view.component';
 import { SettingsMenuComponent } from './components/settings-menu/settings-menu.component';
+import { ServiceHealthComponent } from './components/service-health/service-health.component';
 
 import { DocumentationPage } from './pages/documentation/documentation.page';
 import { HomePage } from './pages/home/home.page';
@@ -70,6 +71,7 @@ export function appInitializationFactory(config: AppConfigService) {
     SearchResultsComponent,
     TreeViewComponent,
     SettingsMenuComponent,
+    ServiceHealthComponent,
     DocumentationPage,
     HomePage,
     LoginPage,

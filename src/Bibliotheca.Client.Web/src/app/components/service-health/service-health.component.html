@@ -1,0 +1,6 @@
+<div *ngIf="!serviceHealth" class="loader">
+    <i class="fa fa-refresh fa-spin"></i>
+</div>
+<div *ngIf="serviceHealth">
+    <span class="{{ getClass() }}">{{ serviceHealth.healthState }}</span>
+</div>

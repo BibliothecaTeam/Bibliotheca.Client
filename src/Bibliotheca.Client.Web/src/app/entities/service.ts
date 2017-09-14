@@ -1,6 +1,8 @@
-import { Instance } from './instance';
-
 export class Service {
     name: string;
-    instances: Instance[];
+    serviceType: string;
+    address: string;
+    tags: string[];
+    id: string;
+    createdDate: Date;
 }

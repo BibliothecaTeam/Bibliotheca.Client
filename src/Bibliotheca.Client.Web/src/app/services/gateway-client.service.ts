@@ -121,6 +121,10 @@ export class GatewayClientService {
         return this.httpClient.get('/api/services');
     }
 
+    public getServiceHealth(serviceId: string) : Observable<Response> {
+        return this.httpClient.get("/api/services/" + serviceId + "/current-health");
+    }
+
     public search(query: string) : Observable<Response>  {
         return this.httpClient.get("/api/search?query=" + query);
     }
