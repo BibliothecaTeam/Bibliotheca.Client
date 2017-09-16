@@ -18,6 +18,7 @@ export class SettingsMenuComponent {
     protected hasAccessToProjects: boolean = false;
     protected hasAccessToUsers: boolean = false;
     protected hasAccessToServices: boolean = false;
+    protected hasAccessToGroups: boolean = false;
 
     constructor(private permissionService: PermissionService) {
 
@@ -31,6 +32,7 @@ export class SettingsMenuComponent {
             if(role == Role.Administrator) {
                 this.hasAccessToUsers = true;
                 this.hasAccessToServices = true;
+                this.hasAccessToGroups = true;
             }
 
         });

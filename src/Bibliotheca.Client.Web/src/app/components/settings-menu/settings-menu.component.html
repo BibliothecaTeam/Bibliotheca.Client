@@ -27,6 +27,12 @@
           <span class="pull-right-container"></span>
         </a>
       </li>
+      <li *ngIf="hasAccessToGroups" class="{{ isActive('groups') }}">
+        <a [routerLink]="['/groups']" routerLinkActive="active">
+          <i class="fa fa-cubes"></i> <span>Groups</span>
+          <span class="pull-right-container"></span>
+        </a>
+      </li>
     </ul>
 
   </section>

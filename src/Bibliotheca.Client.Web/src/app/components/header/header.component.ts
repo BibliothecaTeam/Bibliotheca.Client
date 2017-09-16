@@ -19,6 +19,7 @@ export class HeaderComponent {
     protected hasAccessToProjects: boolean = false;
     protected hasAccessToUsers: boolean = false;
     protected hasAccessToServices: boolean = false;
+    protected hasAccessToGroups: boolean = false;
 
     constructor(protected header: HeaderService, private router: Router, private permissionService: PermissionService) {
         
@@ -32,6 +33,7 @@ export class HeaderComponent {
             if(role == Role.Administrator) {
                 this.hasAccessToUsers = true;
                 this.hasAccessToServices = true;
+                this.hasAccessToGroups = true;
             }
 
         });

@@ -47,6 +47,11 @@
                         <i class="fa fa-gears"></i>
                     </a>
                 </li>
+                <li *ngIf="hasAccessToGroups">
+                    <a [routerLink]="['/groups']" routerLinkActive="active">
+                        <i class="fa fa-cubes"></i>
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>

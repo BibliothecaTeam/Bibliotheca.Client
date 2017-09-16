@@ -113,6 +113,10 @@ export class GatewayClientService {
         return this.httpClient.get('/api/groups');
     }
 
+    public deleteGroup(name: string) : Observable<Response> {
+        return this.httpClient.delete("/api/groups/" + name);
+    }
+
     public getTags() : Observable<Response> {
         return this.httpClient.get('/api/tags');
     }
