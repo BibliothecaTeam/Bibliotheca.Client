@@ -24,11 +24,6 @@ img {
     border-radius: none;
 }
 
-.box .box-footer.branch-footer {
-    height: 41px;
-    border: 0px;
-}
-
 .box .box-header {
     color: #4a5c69;
 }
@@ -52,6 +47,19 @@ img {
     height: 130px; 
     overflow: overlay;
     font-family: Roboto, Helvetica Neue, sans-serif;
+}
+
+.projects .box .box-header {
+    height: 62px;
+}
+
+.projects .box .box-body {
+    height: 130px;
+}
+
+.projects .box .box-footer {
+    height: 42px;
+    border: 0px;
 }
 
 .document-content {
