@@ -30,7 +30,7 @@ export class GroupsPage implements OnInit {
         group["deletionMode"] = true;
     }
 
-    protected cancelDeleteUser(group: Group) {
+    protected cancelDeleteGroup(group: Group) {
         group["deletionMode"] = false;
     }
 

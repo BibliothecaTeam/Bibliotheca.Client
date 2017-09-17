@@ -10,6 +10,8 @@ import { ContactPerson } from '../../entities/contact-person';
 import { EditLink } from '../../entities/edit-link';
 import { ToasterService } from 'angular2-toaster';
 import { PermissionService } from '../../services/permission.service';
+import { Group } from '../../entities/group';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-project-info',
@@ -18,6 +20,7 @@ import { PermissionService } from '../../services/permission.service';
 export class ProjectInfoPage implements OnInit {
 
     protected project: Project;
+    protected groups: Group[];
     protected isEditMode: Boolean;
 
     protected visibleBranchNameRequired: Boolean;
@@ -35,7 +38,8 @@ export class ProjectInfoPage implements OnInit {
         private gatewayClient: GatewayClientService,
         private toaster: ToasterService,
         private router: Router,
-        private permissionService: PermissionService) {
+        private permissionService: PermissionService,
+        private sanitizer: DomSanitizer) {
         
         header.title = "Project";
         this.project = new Project();
@@ -50,19 +54,24 @@ export class ProjectInfoPage implements OnInit {
 
                     return Observable.forkJoin(
                         this.gatewayClient.getProject(params["id"]).map((res: Response) => res.json()),
-                        this.gatewayClient.getProjectAccessToken(params["id"]).map((res: Response) => res.json())
+                        this.gatewayClient.getProjectAccessToken(params["id"]).map((res: Response) => res.json()),
+                        this.gatewayClient.getGroups().map((res: Response) => res.json())
                     );
                 }
                 else {
                     this.project.accessToken = this.newGuid();
-                    return Observable.of(null);
+                    return this.gatewayClient.getGroups().map((res: Response) => res.json());
                 }
             })
             .subscribe(data => {
                 if (Array.isArray(data)) {
                     this.project = data[0];
                     this.project.accessToken = data[1].accessToken;
+                    this.groups = data[2];
                     this.isEditMode = true;
+                }
+                else {
+                    this.groups = data[0];
                 }
             },
                 err => console.error(err)
@@ -261,5 +270,21 @@ export class ProjectInfoPage implements OnInit {
                 }
             });
         }
+    }
+
+    protected getSvgImage(svgIcon: string) {
+        return this.sanitizer.bypassSecurityTrustUrl(svgIcon);
+    }
+
+    protected getGroupItemClass(name: string) {
+        if(name === this.project.group) {
+            return "group-item selected-item";
+        }
+
+        return "group-item";
+    }
+
+    protected chooseGroup(name: string) {
+        this.project.group = name;
     }
 }

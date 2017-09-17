@@ -95,12 +95,20 @@
               <div class="form-group">
                 <label for="group" class="col-sm-3 control-label">Group</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" [(ngModel)]="project.group" name="group" required #group="ngModel" />
-                  <div *ngIf="group.errors && (group.dirty || group.touched)">
-                      <div [hidden]="!group.errors.required" class="ng-error">
-                        Group is required.
-                      </div>
+                  <div *ngIf="!groups" class="loader">
+                      <i class="fa fa-refresh fa-spin"></i>
                   </div>
+                  <div *ngIf="groups"class="dropdown">
+                      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                          {{ project.group }}
+                        <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li *ngFor="let group of groups" [ngClass]="getGroupItemClass(group.name)" (click)="chooseGroup(group.name)">
+                          <img style="height: 14px; width: 22px; vertical-align: middle" alt="" [src]="getSvgImage(group.svgIcon)" /> <span style="vertical-align: middle">{{ group.name }}</span>
+                        </li>
+                      </ul>
+                    </div>
                 </div>
               </div>
 
