@@ -103,7 +103,7 @@
                           {{ project.group }}
                         <span class="caret"></span>
                       </button>
-                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                      <ul class="dropdown-menu groups-dropdown-menu" aria-labelledby="dropdownMenu1">
                         <li *ngFor="let group of groups" [ngClass]="getGroupItemClass(group.name)" (click)="chooseGroup(group.name)">
                           <img style="height: 14px; width: 22px; vertical-align: middle" alt="" [src]="getSvgImage(group.svgIcon)" /> <span style="vertical-align: middle">{{ group.name }}</span>
                         </li>

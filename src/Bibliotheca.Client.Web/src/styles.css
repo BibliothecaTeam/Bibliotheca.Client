@@ -343,20 +343,20 @@ textarea.ng-invalid.ng-touched {
     margin-bottom: 0px;
 }
 
-.dropdown-menu {
+.groups-dropdown-menu {
     background-color: #4a5c69; 
     color: #f5f5f6;
 }
 
-.dropdown-menu li:hover {
+.groups-dropdown-menu li:hover {
     background-color: #40505d;
 }
 
-.dropdown-menu .group-item {
+.groups-dropdown-menu .group-item {
     padding: 8px;
     cursor: pointer;
 }
 
-.dropdown-menu .group-item.selected-item {
+.groups-dropdown-menu .group-item.selected-item {
     background-color: #40505d;
 }
