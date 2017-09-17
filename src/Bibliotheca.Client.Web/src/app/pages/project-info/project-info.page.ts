@@ -273,7 +273,7 @@ export class ProjectInfoPage implements OnInit {
     }
 
     protected getSvgImage(svgIcon: string) {
-        return this.sanitizer.bypassSecurityTrustUrl(svgIcon);
+        return this.sanitizer.bypassSecurityTrustUrl("data:image/svg+xml;base64," + svgIcon);
     }
 
     protected getGroupItemClass(name: string) {
