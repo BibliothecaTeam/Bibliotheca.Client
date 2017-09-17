@@ -1,0 +1,85 @@
+<!-- Header -->
+<app-header></app-header>
+
+<!-- Left sidebar -->
+<app-settings-menu active="groups"></app-settings-menu>
+
+<!-- Start: Content wrapper -->
+<div class="content-wrapper" style="min-height: 1126px;">
+
+  <!-- Start:  content -->
+  <section class="content">
+
+    <form novalidate class="form-horizontal" (ngSubmit)="onSave()" #groupForm="ngForm">
+
+      <!-- Start: actions -->
+      <div class="box box-solid">
+        <div class="box-body">
+          <a [routerLink]="['/groups']" type="submit" class="btn btn-default btn-sm btn-flat">Cancel</a>
+          <button [disabled]="!groupForm.valid" type="submit" class="btn btn-primary btn-sm btn-flat">Save</button>
+        </div>
+      </div>
+      <!-- End: actions -->
+
+      <!-- Start: row -->
+      <div class="row">
+        <!-- Start: Group data -->
+        <div class="col-md-6">
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Group data</h3>
+            </div>
+
+            <div class="box-body">
+
+                <div class="form-group">
+                    <label for="id" class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" [(ngModel)]="group.name" name="groupName" required #groupName="ngModel" />
+                        <div *ngIf="groupName.errors && (groupName.dirty || groupName.touched)">
+                            <div [hidden]="!groupName.errors.required" class="ng-error">
+                                Name is required.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label">SVG Icon <br /><small>(Base64)</small></label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" style="height: 500px;" [(ngModel)]="group.svgIcon" name="svgIcon" required #svgIcon="ngModel"></textarea>
+                        <div *ngIf="svgIcon.errors && (svgIcon.dirty || svgIcon.touched)">
+                            <div [hidden]="!svgIcon.errors.required" class="ng-error">
+                                Icon is required.
+                            </div>
+                        </div>
+                    </div>                
+                </div>
+
+                <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label">Preview</label>
+                    <div class="col-sm-10">
+                        <div *ngIf="group.svgIcon" style="padding: 10px; background-color: #4a5c69; display: inline-block;">
+                            <img style="height: 28px; width: 44px; vertical-align: middle" alt="" [src]="getSvgImage(group.svgIcon)" />
+                        </div>
+                    </div>                
+                </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- End: Group data -->
+
+      </div>
+      <!-- End: row -->
+        
+    </form>
+
+  </section>
+  <!-- End: content -->
+
+</div>
+<!-- End: Content wrapper -->
+
+<!-- Footer -->
+<app-footer></app-footer>

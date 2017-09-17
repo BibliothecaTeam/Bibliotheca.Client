@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Response, ResponseContentType } from '@angular/http';
 import { Project } from '../entities/project'
 import { User } from '../entities/user'
+import { Group } from '../entities/group';
 
 @Injectable()
 export class GatewayClientService {
@@ -113,8 +114,20 @@ export class GatewayClientService {
         return this.httpClient.get('/api/groups');
     }
 
+    public getGroup(name: string) : Observable<Response> {
+        return this.httpClient.get('/api/groups/' + name);
+    }
+
     public deleteGroup(name: string) : Observable<Response> {
         return this.httpClient.delete("/api/groups/" + name);
+    }
+
+    public updateGroup(name: string, group: Group) : Observable<Response> {
+        return this.httpClient.put('/api/groups/' + name, group);
+    }
+
+    public createGroup(group: Group) : Observable<Response> {
+        return this.httpClient.post('/api/groups', group);
     }
 
     public getTags() : Observable<Response> {

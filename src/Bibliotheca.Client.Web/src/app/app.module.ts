@@ -50,6 +50,7 @@ import { AccountPage } from './pages/account/account.page';
 import { ServicesPage } from './pages/services/services.page';
 import { BranchesPage } from './pages/branches/branches.page';
 import { GroupsPage } from './pages/groups/groups.page';
+import { GroupInfoPage } from './pages/group-info/group-info.page';
 
 export function httpClientServiceFactory(backend: XHRBackend, options: RequestOptions, authorization: AuthorizationService, appConfig: AppConfigService, router: Router) {
   return new HttpClientService(backend, options, authorization, appConfig, router);
@@ -89,7 +90,8 @@ export function appInitializationFactory(config: AppConfigService) {
     ForbiddenPage,
     ServicesPage,
     BranchesPage,
-    GroupsPage
+    GroupsPage,
+    GroupInfoPage
   ],
   imports: [
     BrowserModule,
@@ -110,6 +112,8 @@ export function appInitializationFactory(config: AppConfigService) {
         { path: 'users', component: UsersPage, canActivate: [AuthorizationGuardService] },
         { path: 'services', component: ServicesPage, canActivate: [AuthorizationGuardService] },
         { path: 'groups', component: GroupsPage, canActivate: [AuthorizationGuardService] },
+        { path: 'group-info', component: GroupInfoPage, canActivate: [AuthorizationGuardService] },
+        { path: 'group-info/:id', component: GroupInfoPage, canActivate: [AuthorizationGuardService] },
         { path: 'user-info', component: UserInfoPage, canActivate: [AuthorizationGuardService] },
         { path: 'user-info/:id', component: UserInfoPage, canActivate: [AuthorizationGuardService] },
         { path: 'projects', component: ProjectsPage, canActivate: [AuthorizationGuardService] },
