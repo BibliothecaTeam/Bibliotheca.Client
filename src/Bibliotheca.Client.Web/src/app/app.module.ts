@@ -52,6 +52,16 @@ import { BranchesPage } from './pages/branches/branches.page';
 import { GroupsPage } from './pages/groups/groups.page';
 import { GroupInfoPage } from './pages/group-info/group-info.page';
 
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { reducers } from '../shared/reducers';
+import { GroupsEffects } from '../shared/effects/groups';
+import { ProjectsEffects } from '../shared/effects/projects';
+import { GroupsResolver } from '../shared/resolvers/groups.resolver';
+import { ProjectsResolver } from '../shared/resolvers/projects.resolver';
+import { TagsResolver } from '../shared/resolvers/tags.resolver';
+import { TagsEffects } from '../shared/effects/tags';
+
 export function httpClientServiceFactory(backend: XHRBackend, options: RequestOptions, authorization: AuthorizationService, appConfig: AppConfigService, router: Router) {
   return new HttpClientService(backend, options, authorization, appConfig, router);
 }
@@ -94,6 +104,8 @@ export function appInitializationFactory(config: AppConfigService) {
     GroupInfoPage
   ],
   imports: [
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([GroupsEffects, ProjectsEffects, TagsEffects]),
     BrowserModule,
     FormsModule,
     HttpModule,
@@ -103,7 +115,13 @@ export function appInitializationFactory(config: AppConfigService) {
     UiSwitchModule,
     RouterModule.forRoot([
     { path: '', redirectTo: 'home', pathMatch: 'full', canActivate: [AuthorizationGuardService] },
-        { path: 'home', component: HomePage, canActivate: [AuthorizationGuardService] },
+        { path: 'home', component: HomePage, resolve: { 
+            groupsAction: GroupsResolver, 
+            projectsAction: ProjectsResolver,
+            tagsAction: TagsResolver
+          }, 
+          canActivate: [AuthorizationGuardService] 
+        },
         { path: 'search/:query', component: SearchPage, canActivate: [AuthorizationGuardService] },
         { path: 'docs/:project', component: DocumentationPage, canActivate: [AuthorizationGuardService] },
         { path: 'docs/:project/:branch', component: DocumentationPage, canActivate: [AuthorizationGuardService] },
@@ -140,6 +158,9 @@ export function appInitializationFactory(config: AppConfigService) {
     HighlightJsService,
     PermissionService,
     GatewayClientService,
+    GroupsResolver,
+    ProjectsResolver,
+    TagsResolver,
     JwtHelper,
     {
       provide: HttpClientService,

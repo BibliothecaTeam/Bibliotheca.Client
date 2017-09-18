@@ -19,16 +19,12 @@ export class BranchesComponent {
     }
 
     ngOnInit() {
-        this.gatewayClient.getBranches(this.project.id).subscribe(result => {
-            var branches:Branch[] = result.json();
-            this.branches = [];
-
-            for(var item of branches) {
-                if(this.isOnVisibleBranches(item.name)) {
-                    this.branches.push(item);
-                }
+        this.branches = [];
+        for(var item of this.project.branches) {
+            if(this.isOnVisibleBranches(item.name)) {
+                this.branches.push(item);
             }
-        });
+        }
     }
 
     protected isOnVisibleBranches(branchName: string) : boolean {

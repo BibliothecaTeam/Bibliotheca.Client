@@ -1,5 +1,6 @@
 import { ContactPerson } from './contact-person';
 import { EditLink } from './edit-link';
+import { Branch } from './branch';
 
 export class Project {
     id: string;
@@ -14,4 +15,5 @@ export class Project {
     editLinks: EditLink[];
     accessToken: string;
     isAccessLimited: Boolean;
+    branches: Branch[];
 }

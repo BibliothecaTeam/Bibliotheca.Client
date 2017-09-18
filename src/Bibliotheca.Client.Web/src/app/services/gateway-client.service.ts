@@ -22,12 +22,12 @@ export class GatewayClientService {
 
     public getFilteredProjects(selectedGroup: string, selectedTags: string[]) : Observable<Response> {
         var groupfilter = "";
-        if(selectedGroup != "") {
+        if(selectedGroup) {
             groupfilter = "?groups=" + selectedGroup;
         }
 
         var tagsFilter = "";
-        if(selectedTags.length > 0) {
+        if(selectedTags && selectedTags.length > 0) {
             var separator = "&";
             if(groupfilter == "") {
                 separator = "?";
