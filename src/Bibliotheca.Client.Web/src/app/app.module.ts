@@ -55,12 +55,16 @@ import { GroupInfoPage } from './pages/group-info/group-info.page';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { reducers } from '../shared/reducers';
+
 import { GroupsEffects } from '../shared/effects/groups';
 import { ProjectsEffects } from '../shared/effects/projects';
+import { TagsEffects } from '../shared/effects/tags';
+import { FiltersEffects } from '../shared/effects/filters';
+
 import { GroupsResolver } from '../shared/resolvers/groups.resolver';
 import { ProjectsResolver } from '../shared/resolvers/projects.resolver';
 import { TagsResolver } from '../shared/resolvers/tags.resolver';
-import { TagsEffects } from '../shared/effects/tags';
+
 
 export function httpClientServiceFactory(backend: XHRBackend, options: RequestOptions, authorization: AuthorizationService, appConfig: AppConfigService, router: Router) {
   return new HttpClientService(backend, options, authorization, appConfig, router);
@@ -105,7 +109,7 @@ export function appInitializationFactory(config: AppConfigService) {
   ],
   imports: [
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([GroupsEffects, ProjectsEffects, TagsEffects]),
+    EffectsModule.forRoot([GroupsEffects, ProjectsEffects, TagsEffects, FiltersEffects]),
     BrowserModule,
     FormsModule,
     HttpModule,

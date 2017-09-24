@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { AppStore } from '../../../shared/reducers';
 import * as projectsActions from '../../../shared/actions/projects';
+import * as filtersActions from '../../../shared/actions/filters';
 import { Tag } from '../../entities/tag';
 
 @Component({
@@ -22,9 +23,8 @@ export class HomePage {
     protected groups$: Observable<Group[]> = this.store.select(x => x.groups);
     protected projects$: Observable<Project[]> = this.store.select(x => x.projects);
     protected tags$: Observable<Tag[]> = this.store.select(x => x.tags);
-
-    protected selectedTags: string[] = [];
-    protected selectedGroup: string = "";
+    protected selectedTags$: Observable<string[]> = this.store.select(x => x.filters.selectedTags);
+    protected selectedGroup$: Observable<string> = this.store.select(x => x.filters.selectedGroup);
 
     protected mySettings: IMultiSelectSettings = {
         pullRight: true,
@@ -58,44 +58,18 @@ export class HomePage {
     }
 
     protected openHomeEvent(event: any) {
-        this.selectedTags = [];
-        this.selectedGroup = "";
-        this.filterProject();
+        this.store.dispatch(new filtersActions.ClearFiltersAction());
     }
 
-    protected filterProject() {
-        this.store.dispatch(new projectsActions.InitGetProjectsAction(this.selectedTags, this.selectedGroup));
+    protected onSelectGroup(group: string) {
+        this.store.dispatch(new filtersActions.ChangeSelectedGroupAction(group));
     }
 
-    protected showGroup(group: string) {
-        if(group != "All projects") {
-            this.selectedGroup = group;
-        }
-        else {
-            this.selectedGroup = "";
-        }
-
-        this.filterProject();
+    protected onTagsChange(selectedTags:string[]) {
+        this.store.dispatch(new filtersActions.ChangeSelectedTagsAction(selectedTags));
     }
 
     protected getSvgImage(svgIcon: string) {
         return this.sanitizer.bypassSecurityTrustUrl("data:image/svg+xml;base64," + svgIcon);
-    }
-
-    protected onTagsChange(event:string[]) {
-        this.selectedTags = event;
-        this.filterProject();
-    }
-
-    protected getGroupStyle(group: string) {
-        if(this.selectedGroup == group) {
-            return "active";
-        }
-
-        if(this.selectedGroup == "" && group == "All projects") {
-            return "active";
-        }
-
-        return "";
     }
 }

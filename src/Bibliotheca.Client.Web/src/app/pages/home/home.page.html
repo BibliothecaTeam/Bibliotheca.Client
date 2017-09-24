@@ -7,8 +7,8 @@
         
         <ul class="sidebar-menu">
             <li class="header"></li>
-            <li *ngFor="let group of groups$ | async" [class]="getGroupStyle(group.name)">
-                <a class="cursor-pointer" (click)="showGroup(group.name)">
+            <li *ngFor="let group of groups$ | async" [class]="((selectedGroup$ | async) === group.name) || ((selectedGroup$ | async) === '' && group.name === 'All projects') ? 'active' : ''">
+                <a class="cursor-pointer" (click)="onSelectGroup(group.name)">
                     <img style="height: 14px; width: 22px; vertical-align: middle" alt="" [src]="getSvgImage(group.svgIcon)" /> <span style="vertical-align: middle">{{ group.name }}</span>
                     <span class="pull-right-container">
                     </span>
@@ -25,7 +25,7 @@
     <section class="content-header">
         <!-- Tags -->
         <div class="pull-right">
-            <ss-multiselect-dropdown [options]="tags$ | async" [texts]="myTexts" [settings]="mySettings" [ngModel]="selectedTags" (ngModelChange)="onTagsChange($event)"></ss-multiselect-dropdown>
+            <ss-multiselect-dropdown [options]="tags$ | async" [texts]="myTexts" [settings]="mySettings" [ngModel]="selectedTags$ | async" (ngModelChange)="onTagsChange($event)"></ss-multiselect-dropdown>
         </div>
         <div class="clearfix"></div>
     </section>
