@@ -61,7 +61,7 @@ export class DocumentationPage {
         this.ref = this;
 
         this.permissionService.getUserRole().subscribe(role => {
-            if(role == Role.User || role == Role.Writer || role == Role.Administrator) {
+            if(role == Role.Administrator) {
                 this.isDownloadPdfAccessible = true;
             }
         });
