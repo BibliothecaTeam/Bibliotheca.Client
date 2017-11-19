@@ -51,7 +51,7 @@ export class ProjectInfoPage implements OnInit {
         this.route.params
             .switchMap((params: Params) => {
                 if (params["id"]) {
-
+                    this.isEditMode = true;
                     return Observable.forkJoin(
                         this.gatewayClient.getProject(params["id"]).map((res: Response) => res.json()),
                         this.gatewayClient.getProjectAccessToken(params["id"]).map((res: Response) => res.json()),
@@ -64,14 +64,13 @@ export class ProjectInfoPage implements OnInit {
                 }
             })
             .subscribe(data => {
-                if (Array.isArray(data)) {
+                if (this.isEditMode) {
                     this.project = data[0];
                     this.project.accessToken = data[1].accessToken;
                     this.groups = data[2];
-                    this.isEditMode = true;
                 }
                 else {
-                    this.groups = data[0];
+                    this.groups = data;
                 }
             },
                 err => console.error(err)
