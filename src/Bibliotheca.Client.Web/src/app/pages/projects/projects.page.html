@@ -30,12 +30,14 @@
           <tr *ngFor="let project of projects; let i = index">
             <td>{{ i + 1 }}</td>
             <td>
-              {{ project.name }} <small *ngIf="hasAccessToEdit(project.id) | async">(<a [routerLink]="['/projects', project.id, 'branches']">branches</a>)</small>
+              {{ project.name }} <small *ngIf="hasAccessToEdit(project.id) | async">(<a [routerLink]="['/projects', project.id, 'logs']">logs</a>)</small>
             </td>
             <td class="hidden-xs hidden-sm hidden-md">
               <small *ngFor="let tag of project.tags" class="label bg-gray document-tag"> {{ tag }} </small>
             </td>
-            <td class="hidden-xs hidden-sm hidden-md">{{ project.defaultBranch }}</td>
+            <td class="hidden-xs hidden-sm hidden-md">
+              {{ project.defaultBranch }} <small *ngIf="hasAccessToEdit(project.id) | async">(<a [routerLink]="['/projects', project.id, 'branches']">branches</a>)</small>
+            </td>
             <td class="hidden-xs hidden-sm">{{ project.group }}</td>
             <td>
               <a *ngIf="hasAccessToEdit(project.id) | async" [routerLink]="['/project-info', project.id]" class="btn btn-default btn-xs btn-flat">Edit</a>

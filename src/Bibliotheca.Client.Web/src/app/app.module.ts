@@ -51,6 +51,7 @@ import { ServicesPage } from './pages/services/services.page';
 import { BranchesPage } from './pages/branches/branches.page';
 import { GroupsPage } from './pages/groups/groups.page';
 import { GroupInfoPage } from './pages/group-info/group-info.page';
+import { LogsPage } from './pages/logs/logs.page';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -105,7 +106,8 @@ export function appInitializationFactory(config: AppConfigService) {
     ServicesPage,
     BranchesPage,
     GroupsPage,
-    GroupInfoPage
+    GroupInfoPage,
+    LogsPage
   ],
   imports: [
     StoreModule.forRoot(reducers),
@@ -142,6 +144,7 @@ export function appInitializationFactory(config: AppConfigService) {
         { path: 'project-info', component: ProjectInfoPage, canActivate: [AuthorizationGuardService] },
         { path: 'project-info/:id', component: ProjectInfoPage, canActivate: [AuthorizationGuardService] },
         { path: 'projects/:id/branches', component: BranchesPage, canActivate: [AuthorizationGuardService] },
+        { path: 'projects/:id/logs', component: LogsPage, canActivate: [AuthorizationGuardService] },
         { path: 'account', component: AccountPage, canActivate: [AuthorizationGuardService] },
         { path: 'login', component: LoginPage },
         { path: 'error400', component: Error400Page },

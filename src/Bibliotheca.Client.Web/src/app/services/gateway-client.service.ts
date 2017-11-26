@@ -12,6 +12,10 @@ export class GatewayClientService {
     constructor(private httpClient: HttpClientService) {
     }
 
+    public getGraphQLResults(query: string) : Observable<Response> {
+        return this.httpClient.post("/api/graphql", query);
+    }
+
     public getProjects() : Observable<Response> {
         return this.httpClient.get('/api/projects');
     }
@@ -64,6 +68,10 @@ export class GatewayClientService {
 
     public getBranches(projectId: string) : Observable<Response> {
         return this.httpClient.get('/api/projects/' + projectId + '/branches');
+    }
+
+    public getLogs(projectId: string) : Observable<Response> {
+        return this.httpClient.get('/api/logs/' + projectId);
     }
 
     public getBranch(projectId: string, branchName: string) : Observable<Response> {
