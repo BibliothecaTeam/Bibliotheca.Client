@@ -29,10 +29,9 @@
         <div class="clearfix"></div>
       </div>
 
-      <div class="box-body table-responsive no-padding">
-        <textarea readonly="readonly" style="margin: 20px; border: 0px; width: 80%; min-height: 600px;">
-          {{ logs.message }}
-        </textarea>
+      <div class="box-body">
+        <textarea *ngIf="logs.message !== ''" readonly="readonly" style="border: 0px; width: 100%; min-height: 600px;">{{ logs.message }}</textarea>
+        <div style="text-align: center; font-style: italic;" *ngIf="logs.message === ''">Log file is empty.</div>
       </div>
       
     </div>
