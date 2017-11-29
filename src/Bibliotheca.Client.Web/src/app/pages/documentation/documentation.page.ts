@@ -492,7 +492,7 @@ export class DocumentationPage {
 
     private getFullPath(prefixPath: string, suffixPath: string): string {
 
-        var path = prefixPath + "/" + suffixPath;
+        var path = decodeURIComponent(prefixPath + "/" + suffixPath);
         path = path.replace(/\\\\/g, "/");
         path = path.replace(/\\/g, "/");
         path = path.replace(/\/\//g, "/");
