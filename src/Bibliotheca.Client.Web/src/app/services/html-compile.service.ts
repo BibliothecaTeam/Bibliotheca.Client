@@ -1,6 +1,19 @@
 import { Component, Compiler, NgModule, Injectable } from '@angular/core';
 import { HtmlCompileOptions } from "../entities/html-compile-options";
 
+function prepareTemplate(template: string){
+    template = template || '';
+    const regex = /(&#123;&#123;.*?&#125;&#125;|{{.*?}})/g;
+    let m;
+    while ((m = regex.exec(template)) !== null) {
+        if (m.index === regex.lastIndex) {
+            regex.lastIndex++;
+        }
+        template = template.replace(m[0], `<span ngNonBindable>${m[0]}</span>`)
+    }
+    return template;
+}
+
 @Injectable()
 export class HtmlCompileService  {
 
@@ -9,7 +22,7 @@ export class HtmlCompileService  {
     public compile(opts: HtmlCompileOptions) {
 
         @Component({
-            template: opts.template || ''
+            template: prepareTemplate(opts.template)
         })
         class TemplateComponent {
             ref = opts.ref;
